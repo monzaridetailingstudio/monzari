@@ -1,17 +1,25 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Monzari Detailing Studios</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
-    <div class="logo">Monzari Detailing Studios</div>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
     <nav class="navbar">
-      <input type="checkbox" id="menu-toggle">
-      <label for="menu-toggle" class="menu-icon">&#9776;</label>
-      <ul class="menu">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="menu" id="menu">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="servicios.html">Servicios</a></li>
         <li><a href="historia.html">Nuestra Historia</a></li>
@@ -19,39 +27,53 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main>
+  </header>
+
+  <main>
     <section class="hero" style="background-image: url('images/porsche.jpg');">
       <div class="overlay">
         <h1>Bienvenido a Monzari</h1>
         <p>Detalle en el estudio. Monzari Club solo para clientes VIP.</p>
         <a href="club.html" class="btn">Registrate</a>
       </div>
-    </section><section class="hero" style="background-image: url('images/servicios.jpg');">
-  <div class="overlay">
-    <h1>Servicios</h1>
-    <p>Conocé los tratamientos y servicios premium que ofrecemos para tu vehículo.</p>
-    <a href="servicios.html" class="btn">Ver Servicios</a>
-  </div>
-</section>
+    </section>
 
-<section class="hero" style="background-image: url('images/taller.jpg');">
-  <div class="overlay">
-    <h1>Nuestra Historia</h1>
-    <p>Desde el primer día, nos propusimos redefinir el cuidado automotor.</p>
-    <a href="historia.html" class="btn">Historia</a>
-  </div>
-</section>
+    <section class="hero" style="background-image: url('images/servicios.jpg');">
+      <div class="overlay">
+        <h1>Servicios</h1>
+        <p>Conocé los tratamientos y servicios premium que ofrecemos para tu vehículo.</p>
+        <a href="servicios.html" class="btn">Ver Servicios</a>
+      </div>
+    </section>
 
-<section class="hero" style="background-image: url('images/club.jpg');">
-  <div class="overlay">
-    <h1>Monzari Club</h1>
-    <p>Accedé a beneficios exclusivos, productos premium y eventos únicos.</p>
-    <a href="club.html" class="btn">Conocer más</a>
-  </div>
-</section>
+    <section class="hero" style="background-image: url('images/taller.jpg');">
+      <div class="overlay">
+        <h1>Nuestra Historia</h1>
+        <p>Desde el primer día, nos propusimos redefinir el cuidado automotor.</p>
+        <a href="historia.html" class="btn">Historia</a>
+      </div>
+    </section>
 
-  </main>  <footer>
+    <section class="hero" style="background-image: url('images/club.jpg');">
+      <div class="overlay">
+        <h1>Monzari Club</h1>
+        <p>Accedé a beneficios exclusivos, productos premium y eventos únicos.</p>
+        <a href="club.html" class="btn">Conocer más</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
