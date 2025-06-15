@@ -1,70 +1,96 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Monzari Origin - Stage 1</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage 1 - Monzari Origin | Detailing Premium para Autos en Buen Estado</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+    .hero {
+      background-image: url('stage1imagen2.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #FFD700;
+    }
+    .content {
+      background-color: #000;
+      padding: 2rem;
+      background-image: url('logo-fondo-stage1.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+    h2 {
+      color: #FFD700;
+      margin-top: 2rem;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #333;
+    }
+    .duration {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      color: #ccc;
+    }
+    .whatsapp-button {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 2rem;
+    }
+    .whatsapp-button:hover {
+      background-color: #1ebd5a;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="logo-container">
-      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
-      <div class="logo-text">Monzari Detailing Studios</div>
+  <div class="hero">
+    <div class="overlay">
+      <h1>Monzari Origin (Stage 1)</h1>
     </div>
-    <nav class="navbar">
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul class="menu" id="menu">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="historia.html">Nuestra Historia</a></li>
-        <li><a href="club.html">Monzari Club</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+  </div>  <div class="content">
+    <h2>INCLUYE</h2>
+    <ul>
+      <li>Lavado detallado exterior</li>
+      <li>Descontaminación química y física</li>
+      <li>Pulido de brillo con acabado profesional</li>
+      <li>Protección con cera sintética de alto rendimiento</li>
+      <li>Aspirado interior</li>
+      <li>Hidratación de plásticos y gomas exteriores</li>
+      <li>Limpieza de cristales</li>
+    </ul>
+    <p class="duration">⏱ Duración estimada: 1 jornada</p><a class="whatsapp-button" href="https://wa.me/541140948869?text=Hola%20Monzari%20Detailing%20Studio%2C%20me%20encuentro%20interesado%20por%20el%20servicio%20Monzari%20Origin%20(Stage%201)%2C%20%C2%BFqu%C3%A9%20informaci%C3%B3n%20necesitan%20para%20asesorarme%20con%20m%C3%A1s%20claridad%20y%20resolver%20mis%20dudas%3F" target="_blank">Contactar por WhatsApp</a>
 
-  <main>
-    <section class="hero" style="background-image: url('images/stage1.jpg');">
-      <div class="overlay">
-        <h1>Monzari Origin (Stage 1)</h1>
-        <p>Pensado para: Iniciar el camino hacia el brillo y cuidado profesional. Ideal para autos con buen estado general que necesitan una renovación superficial.</p>
-      </div>
-    </section>
-
-    <section class="details">
-      <h2>Incluye:</h2>
-      <ul>
-        <li>Lavado manual con técnica de 2 baldes y guantes de microfibra.</li>
-        <li>Limpieza profunda de llantas y neumáticos.</li>
-        <li>Descontaminado químico de pintura (remoción de alquitrán, resinas y contaminantes).</li>
-        <li>Descontaminado físico con clay bar profesional.</li>
-        <li>Pulido superficial en 1 etapa (remoción de marcas leves y recuperación de brillo).</li>
-        <li>Aplicación de sellador Can Coat.</li>
-        <li>Acondicionado de neumáticos.</li>
-        <li>Limpieza exterior de vidrios.</li>
-      </ul>
-
-      <h2>Duración estimada: 1 jornada completa.</h2>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
-
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
-  </script>
+  </div>
 </body>
 </html>
