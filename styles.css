@@ -1,218 +1,128 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
 body {
-  background-color: #111;
-  color: #fff;
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: black;
+  color: white;
 }
 
 header {
-  background-color: #000;
-  padding: 10px 40px;
-}
-
-.navbar {
+  background-color: black;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
-  width: 120px;
-  height: auto;
+  font-size: 28px;
+  color: #d4af37;
+  font-weight: bold;
 }
 
-.nav-links {
+nav ul {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 20px;
 }
 
-.nav-links a {
-  text-decoration: none;
+nav a {
   color: white;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  transition: background 0.3s ease;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.nav-links a:hover {
-  background-color: #333;
+nav a:hover {
+  color: #d4af37;
 }
 
-.menu-toggle {
-  display: none;
-  font-size: 28px;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* Bienvenida */
-.bienvenida {
-  background-image: url('images/porsche.jpg');
+.banner {
+  position: relative;
   background-size: cover;
   background-position: center;
   height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   text-align: center;
 }
 
-.bienvenida::before {
+.banner::before {
   content: '';
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
-}
-
-.bienvenida .contenido {
-  position: relative;
   z-index: 1;
-  color: white;
+}
+
+.banner .contenido {
+  position: relative;
+  z-index: 2;
   padding: 0 20px;
+  color: white;
 }
 
-.bienvenida h1 {
-  font-size: 48px;
-  margin-bottom: 15px;
+.banner h2 {
+  font-size: 42px;
+  color: #d4af37;
+  margin-bottom: 10px;
 }
 
-.bienvenida p {
-  font-size: 20px;
+.banner p {
+  font-size: 18px;
   margin-bottom: 25px;
 }
 
-/* Botón */
 .btn {
-  display: inline-block;
-  background-color: #d4af37;
+  background: linear-gradient(135deg, #d4af37, #b98e2f);
   color: black;
-  padding: 10px 25px;
+  padding: 12px 30px;
   text-decoration: none;
-  border-radius: 8px;
   font-weight: bold;
-  transition: background 0.3s ease;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px #d4af37aa;
 }
 
 .btn:hover {
-  background-color: #b8902c;
+  background: linear-gradient(135deg, #b98e2f, #d4af37);
+  transform: scale(1.05);
 }
 
-/* Secciones */
-.historia, .club {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: 60px 40px;
-  gap: 40px;
-  background-color: #222;
-}
-
-.historia-texto, .club-info {
-  flex: 1;
-  min-width: 280px;
-}
-
-.historia h2, .club h2 {
-  font-size: 32px;
-  margin-bottom: 10px;
-  color: #d4af37;
-}
-
-.historia p, .club p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.imagen-seccion {
-  flex: 1;
-  width: 100%;
-  max-width: 500px;
-  max-height: 350px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* Carrusel de marcas */
-.marcas {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  padding: 50px 20px;
-  background-color: #111;
-}
-
-.marcas img {
-  width: 100px;
-  height: auto;
-  filter: grayscale(100%);
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.marcas img:hover {
-  filter: none;
-  transform: scale(1.1);
-}
-
-/* Footer */
 footer {
+  background-color: #111;
+  color: #aaa;
   text-align: center;
   padding: 20px;
-  background-color: #000;
   font-size: 14px;
 }
 
 /* Responsive */
-@media screen and (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
+@media (max-width: 768px) {
+  nav ul {
     flex-direction: column;
-    width: 100%;
-    background-color: #111;
-    margin-top: 10px;
+    background: #000;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    display: none;
   }
 
-  .nav-links.active {
+  nav ul.show {
     display: flex;
   }
 
-  .nav-links li {
-    text-align: center;
-    padding: 12px 0;
-    border-top: 1px solid #333;
+  .logo {
+    font-size: 22px;
   }
 
-  .bienvenida h1 {
-    font-size: 32px;
+  .banner h2 {
+    font-size: 28px;
   }
 
-  .bienvenida p {
+  .banner p {
     font-size: 16px;
   }
-
-  .historia, .club {
-    flex-direction: column;
-    padding: 40px 20px;
-  }
-
-  .imagen-seccion {
-    max-width: 100%;
-    height: auto;
-  }
 }
