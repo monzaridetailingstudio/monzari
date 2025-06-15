@@ -2,21 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stage II - Monzari Precisión</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monzari Precision - Stage 2</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <main class="stage-container">
-    <section class="stage-header">
-      <h1>🔹 STAGE II: <em>Monzari Precisión</em></h1>
-      <p><strong>Pensado para:</strong> Clientes que quieren un cambio estético notable con protección duradera, interviniendo también el interior del vehículo.</p>
+  <header>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="club.html">Monzari Club</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="background-image: url('images/stage2.jpg');">
+      <div class="overlay">
+        <h1>Monzari Precision (Stage 2)</h1>
+        <p>Pensado para: Clientes que quieren un cambio estético notable con protección duradera, interviniendo también el interior del vehículo.</p>
+      </div>
     </section>
 
-    <section class="stage-content">
+    <section class="details">
       <h2>Incluye:</h2>
       <ul>
-        <li><strong>Incluye todo lo del Stage I</strong>, y además:</li>
+        <li>Todo lo del Stage I y además:</li>
         <li>Aspirado completo de habitáculo, baúl y rieles de butacas.</li>
         <li>Limpieza húmeda de paneles y plásticos interiores.</li>
         <li>Limpieza interior y exterior de cristales.</li>
@@ -29,8 +53,21 @@
         <li>Aplicación de fragancia premium Monzari.</li>
       </ul>
 
-      <p><strong>Duración estimada:</strong> 2 jornadas.</p>
+      <h2>Duración estimada: 2 jornadas.</h2>
     </section>
   </main>
+
+  <footer>
+    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
