@@ -2,18 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stage I - Monzari Origin</title>
-  <link rel="stylesheet" href="../styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monzari Origin - Stage 1</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <main class="stage-container">
-    <section class="stage-header">
-      <h1>🔹 STAGE I: <em>Monzari Origin</em></h1>
-      <p><strong>Pensado para:</strong> Iniciar el camino hacia el brillo y cuidado profesional. Ideal para autos con buen estado general que necesitan una renovación superficial.</p>
+  <header>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="club.html">Monzari Club</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="background-image: url('images/stage1.jpg');">
+      <div class="overlay">
+        <h1>Monzari Origin (Stage 1)</h1>
+        <p>Pensado para: Iniciar el camino hacia el brillo y cuidado profesional. Ideal para autos con buen estado general que necesitan una renovación superficial.</p>
+      </div>
     </section>
 
-    <section class="stage-content">
+    <section class="details">
       <h2>Incluye:</h2>
       <ul>
         <li>Lavado manual con técnica de 2 baldes y guantes de microfibra.</li>
@@ -26,8 +50,21 @@
         <li>Limpieza exterior de vidrios.</li>
       </ul>
 
-      <p><strong>Duración estimada:</strong> 1 jornada completa.</p>
+      <h2>Duración estimada: 1 jornada completa.</h2>
     </section>
   </main>
+
+  <footer>
+    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
