@@ -8,8 +8,9 @@
 </head>
 <body>
   <header>
-    <h1>Monzari Detailing Studio</h1>
-    <nav>
+    <div class="logo">Monzari Detailing Studio</div>
+    <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+    <nav id="navbar">
       <a href="index.html">Inicio</a>
       <a href="historia.html">Nuestra Historia</a>
       <a href="tratamientos.html">Tratamientos</a>
@@ -24,5 +25,12 @@
   <footer>
     <p>© 2025 Monzari Detailing Studio</p>
   </footer>
+
+  <script>
+    // Script para activar/desactivar el menú en móviles
+    document.getElementById('menu-toggle').addEventListener('click', function () {
+      document.getElementById('navbar').classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
