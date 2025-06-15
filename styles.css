@@ -1,104 +1,218 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
-
 * {
-  margin: 0; padding: 0; box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
+
 body {
-  font-family: 'Cinzel', serif;
-  background-color: #000;
+  background-color: #111;
   color: #fff;
 }
-.navbar {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px;
+
+header {
+  background-color: #000;
+  padding: 10px 40px;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
 .nav-links {
   list-style: none;
-  display: flex; gap: 20px;
-}
-.nav-links a {
-  color: #ddd; text-decoration: none;
-}
-.nav-links a:hover { color: gold; }
-.logo { height: 60px; cursor: pointer; }
-
-.hero {
-  position: relative;
-  height: 100vh;
-  background-size: cover; background-position: center;
-  display: flex; align-items: center; justify-content: center;
-}
-.hero-overlay {
-  position: absolute; inset:0;
-  background: rgba(0,0,0,0.5);
-  background-image: url('images/logo-fondo-oscurecido.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-.hero-content {
-  position: relative; text-align: center;
-  max-width: 600px;
-}
-.hero-content h1 {
-  font-size: 3rem; color: #fff;
-}
-.hero-content p {
-  margin: 20px 0; font-size: 1.2rem;
-}
-.btn {
-  background: linear-gradient(145deg, #d4af37, #b58b25);
-  color: #000; padding: 12px 30px;
-  text-decoration: none; font-weight: bold;
-  border-radius: 8px; display: inline-block;
-}
-.btn:hover { opacity: 0.9; }
-
-.doble {
-  display: flex; flex-direction: column;
-}
-.block {
-  position: relative;
-  height: 60vh;
-  background-size: cover; background-position: center;
-  display: flex; align-items: center; justify-content: center;
-}
-.block h2 {
-  color: #fff; font-size: 2.5rem;
-  background: rgba(0,0,0,0.6);
-  padding: 10px 20px; border-radius: 6px;
-}
-.block-btn {
-  margin-top: 15px;
-}
-.marcas {
-  padding: 50px 0;
-  background: #111;
-  display: flex; justify-content: center;
-}
-.carousel {
   display: flex;
-  overflow-x: auto;
-  gap: 40px;
-  scroll-behavior: smooth;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #333;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Bienvenida */
+.bienvenida {
+  background-image: url('images/porsche.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
 }
-.carousel img {
-  height: 80px;
-  filter: brightness(0.9);
+
+.bienvenida::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 }
+
+.bienvenida .contenido {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 0 20px;
+}
+
+.bienvenida h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.bienvenida p {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+/* Botón */
+.btn {
+  display: inline-block;
+  background-color: #d4af37;
+  color: black;
+  padding: 10px 25px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #b8902c;
+}
+
+/* Secciones */
+.historia, .club {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 40px;
+  gap: 40px;
+  background-color: #222;
+}
+
+.historia-texto, .club-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.historia h2, .club h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #d4af37;
+}
+
+.historia p, .club p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.imagen-seccion {
+  flex: 1;
+  width: 100%;
+  max-width: 500px;
+  max-height: 350px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Carrusel de marcas */
+.marcas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 50px 20px;
+  background-color: #111;
+}
+
+.marcas img {
+  width: 100px;
+  height: auto;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.marcas img:hover {
+  filter: none;
+  transform: scale(1.1);
+}
+
+/* Footer */
 footer {
   text-align: center;
-  background: #000;
-  padding: 15px;
-  font-size: 0.9rem;
+  padding: 20px;
+  background-color: #000;
+  font-size: 14px;
 }
 
 /* Responsive */
-@media (min-width: 768px) {
-  .doble { flex-direction: row; }
-  .block { width: 50%; }
-}
-@media (max-width: 768px) {
-  .carousel img { height: 60px; }
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #111;
+    margin-top: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    text-align: center;
+    padding: 12px 0;
+    border-top: 1px solid #333;
+  }
+
+  .bienvenida h1 {
+    font-size: 32px;
+  }
+
+  .bienvenida p {
+    font-size: 16px;
+  }
+
+  .historia, .club {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .imagen-seccion {
+    max-width: 100%;
+    height: auto;
+  }
 }
