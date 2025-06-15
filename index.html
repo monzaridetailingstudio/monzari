@@ -2,61 +2,73 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Monzari Detailing Studio</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monzari Detailing</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
   <header>
     <nav class="navbar">
-      <img src="images/logo.png" alt="Monzari Logo" class="logo" onclick="location.href='index.html'">
-      <ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="historia.html">Nuestra Historia</a></li>
-        <li><a href="club.html">Monzari Club</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
+      <img src="images/logo.png" alt="Logo Monzari" class="logo">
+      <div class="menu-toggle" id="mobile-menu">&#9776;</div>
+      <ul class="nav-links" id="nav">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Servicios</a></li>
+        <li><a href="#">Nuestra Historia</a></li>
+        <li><a href="#">Monzari Club</a></li>
+        <li><a href="#">Contacto</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <section class="hero" style="background-image: url('images/porsche.jpg');">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>Bienvenido a Monzari Detailing Studio</h1>
-        <p>Registrate al <strong>MONZARI CLUB</strong> solo para clientes VIP</p>
-        <a href="club.html" class="btn">MONZARI CLUB</a>
-      </div>
-    </section>
+  <section class="bienvenida">
+    <div class="contenido">
+      <h1>Bienvenido a Monzari</h1>
+      <p>Detalle en el estudio. Registrate al Monzari Club solo para clientes VIP.</p>
+      <a href="#" class="btn">Registrate</a>
+    </div>
+  </section>
 
-    <section class="doble">
-      <div class="block" style="background-image: url('images/taller.jpg');">
-        <h2>ESTA ES NUESTRA HISTORIA</h2>
-        <a href="historia.html" class="btn block-btn">Historia</a>
-      </div>
-      <div class="block" style="background-image: url('images/ferrari.jpg');">
-        <h2>SERVICIOS MONZARI</h2>
-        <a href="servicios.html" class="btn block-btn">Servicios</a>
-      </div>
-    </section>
+  <section class="historia">
+    <div class="historia-texto">
+      <h2>Nuestra Historia</h2>
+      <p>Desde el primer día, nos propusimos cambiar la forma en que se percibe el cuidado del automóvil.</p>
+      <a href="#" class="btn">Historia</a>
+    </div>
+    <img src="images/taller.jpg" alt="Taller Monzari" class="imagen-seccion">
+  </section>
 
-    <section class="marcas">
-      <div class="carousel">
-        <img src="images/menzerna.png" alt="Menzerna">
-        <img src="images/gyeon.png" alt="Gyeon">
-        <img src="images/carpro.png" alt="CarPro">
-        <img src="images/koch.png" alt="Koch Chemie">
-        <img src="images/sonax.png" alt="Sonax">
-        <img src="images/shinemate.png" alt="Shine Mate">
-        <img src="images/lakecountry.png" alt="Lake Country">
-        <img src="images/mothers.png" alt="Mothers">
-      </div>
-    </section>
-  </main>
+  <section class="club">
+    <div class="club-info">
+      <h2>Monzari Club</h2>
+      <p>Accedé a beneficios exclusivos, productos premium y eventos para nuestros clientes VIP.</p>
+      <a href="#" class="btn">Conocé más</a>
+    </div>
+    <img src="images/club.jpg" alt="Club Monzari" class="imagen-seccion">
+  </section>
+
+  <section class="marcas">
+    <img src="images/menzerna.png" alt="Menzerna">
+    <img src="images/gyeon.png" alt="Gyeon">
+    <img src="images/carpro.png" alt="CarPro">
+    <img src="images/sonax.png" alt="Sonax">
+    <img src="images/kochchemie.png" alt="Koch Chemie">
+    <img src="images/chemicalguys.png" alt="Chemical Guys">
+  </section>
 
   <footer>
-    <p>&copy; 2025 Monzari Detailing Studio. Todos los derechos reservados.</p>
+    <p>&copy; 2025 Monzari Detailing. Todos los derechos reservados.</p>
   </footer>
+
+  <script>
+    const toggle = document.getElementById('mobile-menu');
+    const nav = document.getElementById('nav');
+
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
+
 </body>
 </html>
