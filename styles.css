@@ -31,7 +31,11 @@ header {
 }
 
 .logo-img {
-  height: 40px;
+  height: auto;
+  max-height: 50px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
 }
 
 .logo-text {
