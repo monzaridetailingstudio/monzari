@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -7,9 +7,9 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Playfair Display', serif;
   background-color: #000;
-  color: #d4af37;
+  color: #fff;
   line-height: 1.6;
 }
 
@@ -24,26 +24,40 @@ header {
   z-index: 1000;
 }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #d4af37;
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-nav ul {
+.logo-img {
+  height: 40px;
+}
+
+.logo-text {
+  font-size: 1rem;
+  background: linear-gradient(90deg, #b68d2c, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.navbar ul {
   list-style: none;
   display: flex;
   gap: 1.5rem;
 }
 
-nav a {
+.navbar a {
   text-decoration: none;
-  color: #d4af37;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-nav a:hover {
+.navbar a:hover {
   color: #fff;
 }
 
@@ -52,16 +66,18 @@ nav a:hover {
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  width: 30px;
 }
 
-.hamburger div {
-  width: 25px;
-  height: 3px;
+.hamburger span {
+  height: 4px;
   background-color: #d4af37;
+  width: 100%;
+  border-radius: 2px;
 }
 
 @media (max-width: 768px) {
-  nav ul {
+  .navbar ul {
     display: none;
     flex-direction: column;
     background-color: #000;
@@ -73,7 +89,7 @@ nav a:hover {
     border-radius: 10px;
   }
 
-  nav ul.active {
+  .navbar ul.active {
     display: flex;
   }
 
@@ -82,27 +98,28 @@ nav a:hover {
   }
 }
 
-section {
-  padding: 4rem 2rem;
+.hero {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
 }
 
-.hero {
-  background-image: url('images/porsche.jpg');
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-shadow: 2px 2px 8px #000;
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 10px;
 }
 
 .hero h1 {
   font-size: 3rem;
-  color: #d4af37;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero p {
@@ -115,38 +132,19 @@ section {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: #d4af37;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
   color: #000;
   font-weight: 600;
   border: none;
   border-radius: 5px;
   text-decoration: none;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
 .btn:hover {
-  background-color: #fff;
+  background: #fff;
   color: #000;
-}
-
-.services, .historia, .club {
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  text-shadow: 2px 2px 8px #000;
-  padding: 8rem 2rem;
-}
-
-.services {
-  background-image: url('images/servicios.jpg');
-}
-
-.historia {
-  background-image: url('images/taller.jpg');
-}
-
-.club {
-  background-image: url('images/club.jpg');
 }
 
 footer {
