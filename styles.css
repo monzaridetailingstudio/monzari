@@ -1,31 +1,364 @@
-<!DOCTYPE html><html lang="es">
+css a revisar @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Playfair Display', serif;
+  background-color: #000;
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* Fondo Club Monsari */
+.club-background {
+  background-image: url('images/ImagenClubMonsari1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+header {
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  height: auto;
+  max-height: 45px;
+  width: auto;
+  max-width: 82px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1rem;
+  background: linear-gradient(90deg, #b68d2c, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #fff;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  width: 30px;
+}
+
+.hamburger span {
+  height: 4px;
+  background-color: #d4af37;
+  width: 100%;
+  border-radius: 2px;
+}
+
+/* Responsive navbar */
+@media (max-width: 768px) {
+  .navbar ul {
+    display: none;
+    flex-direction: column;
+    background-color: #000;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    padding: 1rem;
+    border: 1px solid #d4af37;
+    border-radius: 10px;
+  }
+
+  .navbar ul.active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Hero Section */
+.hero {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+.hero p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Animación flecha */
+.arrow-down {
+  font-size: 2.5rem;
+  color: #d4af37;
+  animation: bounce 2s infinite;
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(10px); }
+  60% { transform: translateY(5px); }
+}
+
+footer {
+  background-color: #111;
+  color: #888;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.brands {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  background-color: #000;
+  flex-wrap: wrap;
+  border-top: 1px solid #333;
+}
+
+.brands img {
+  height: 40px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(0.9);
+  opacity: 0.8;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.brands img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  filter: grayscale(0%) brightness(1);
+}
+
+/* Stage 1 específico */
+.gold-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.listado-incluye {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.listado-incluye li {
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.6rem;
+}
+
+.duration {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  color: #ccc;
+}
+
+.btn-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .btn-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-container .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+/* Estilos para formularios modernos */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.formulario input {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Ojito contraseña */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+}
+
+.formulario .btn {
+  margin-top: 1rem;
+}
+/* Mejora del botón Registrarse */
+.btn-gold {
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  color: #000;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  background: #fffbe6;
+  color: #000;
+  box-shadow: 0 0 15px rgba(243, 224, 122, 0.8);
+  transform: scale(1.05);
+}
+
+/* Contenedor de campo de contraseña con ojito */
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* espacio para el ícono */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #d4af37;
+}
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio - Monzari Club</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    /* Menú hamburguesa para móviles */
-    .hamburger {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: white;
-      display: block;
-    }
-    .menu {
-      display: none;
-    }
-    .menu.active {
-      display: block;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - Monzari Detailing Studios</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
@@ -47,76 +380,413 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main class="main-container">
-    <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2><!-- Botones laterales -->
-<div class="sidebar">
-  <button onclick="mostrarSeccion('perfil')">Perfil</button>
-  <button onclick="mostrarSeccion('servicios')">Servicios</button>
-  <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
-</div>
+  </header>
 
-<!-- Secciones -->
-<div id="perfil" class="contenido-seccion" style="display:none">
-  <h3>Tu Perfil</h3>
-  <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
-</div>
+  <main>
+    <section class="hero" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
+      <div class="overlay">
+        <h1>Registrarse</h1>
+        <p>Completá los datos para unirte a Monzari Club</p>
+      </div>
+    </section>
 
-<div id="servicios" class="contenido-seccion" style="display:none">
-  <h3>Servicios contratados</h3>
-  <p>Lista de autos, historial, links para PDF...</p>
-</div>
+    <section class="formulario">
+      <h2 class="gold-title">Registrarse</h2>
+      <form>
+        <input type="text" placeholder="Nombre completo" required />
+        <input type="email" placeholder="Correo electrónico" required />
 
-<div id="beneficios" class="contenido-seccion" style="display:none">
-  <h3>Beneficios exclusivos</h3>
-  <p>Promos, descuentos, contenido especial...</p>
-</div>
+        <div class="password-container">
+          <input type="password" id="password" placeholder="Contraseña" required />
+          <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+        </div>
 
-  </main>  <footer>
+        <div class="password-container">
+          <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
+          <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
+        </div>
+
+        <input type="text" placeholder="Código exclusivo de acceso" required />
+
+        <button type="submit" class="btn btn-gold">Registrarse</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <script>
-    // Menú hamburguesa
+  </footer>
+
+  <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
+
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
 
-    // Mostrar secciones
-    function mostrarSeccion(seccionId) {
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById(seccionId).style.display = 'block';
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
     }
-  </script>  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_AUTH_DOMAIN",
-      projectId: "TU_PROJECT_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const saludo = document.getElementById('saludo');
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const uid = user.uid;
-        const userRef = doc(db, "usuarios", uid);
-        const userSnap = await getDoc(userRef);
-        if (userSnap.exists()) {
-          const datos = userSnap.data();
-          const nombre = datos.nombre || "usuario";
-          saludo.textContent = Hola ${nombre}, bienvenido nuevamente a Monzari Club;
-        }
-      } else {
-        window.location.href = "login.html";
-      }
-    });
-  </script></body>
+  </script>
+</body>
 </html>
+.hero-registro {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.hero-registro .overlay {
+  background-color: rgba(0, 0, 0, 0.6); /* oscurece la imagen */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-registro .contenido {
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.hero-registro h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+  color: #d4af37;
+}
+
+.hero-registro p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.formulario-compacto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formulario-compacto input {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.btn-gold {
+  background-color: #d4af37;
+  color: #000;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-gold:hover {
+  background-color: #bfa331;
+}
+.hero-registro {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 40px 20px;
+}
+
+.hero-registro .overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* para empezar un poco más arriba */
+  padding-top: 10vh; /* para que no esté tan centrado abajo */
+}
+
+.hero-registro .contenido {
+  text-align: center;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.hero-registro h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+  color: #d4af37; /* título en oro */
+}
+
+.hero-registro p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.formulario-compacto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formulario-compacto input {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.btn-gold {
+  background-color: #d4af37;
+  color: #000;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-gold:hover {
+  background-color: #bfa331;
+}
+.form-section {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  text-align: center;
+}
+
+.gold-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #d4af37; /* color oro */
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.formulario label {
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.formulario button {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d4af37;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+  transition: background-color 0.3s;
+}
+
+.formulario button:hover {
+  background-color: #c19e2d;
+}
+/* Fondo Club Monsari */
+.club-background {
+  background-image: url('images/ImagenClubMonsari1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero Section para Inicio de Sesión */
+.hero {
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+.hero p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+/* Estilos para formularios */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.formulario input {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Ojito contraseña */
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+}
+
+/* Botón dorado */
+.btn-gold {
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  color: #000;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  background: #fffbe6;
+  color: #000;
+  box-shadow: 0 0 15px rgba(243, 224, 122, 0.8);
+  transform: scale(1.05);
+}
