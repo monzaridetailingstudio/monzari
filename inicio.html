@@ -1,75 +1,30 @@
 <!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Monzari Club - Área Personal</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - Monzari Club</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    /* Menú hamburguesa para móviles */
+    .hamburger {
+      cursor: pointer;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      background-color: #111;
-      color: white;
-    }main {
-  display: flex;
-  flex: 1;
-}
-
-.sidebar {
-  background-color: #1a1a1a;
-  padding: 20px;
-  min-width: 220px;
-}
-
-.sidebar button {
-  width: 100%;
-  background-color: transparent;
-  color: #d4af37;
-  border: 1px solid #d4af37;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.sidebar button:hover {
-  background-color: #d4af37;
-  color: #000;
-}
-
-.content {
-  flex: 1;
-  padding: 40px;
-}
-
-.hidden {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  main {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 10px;
-    min-width: 100%;
-  }
-
-  .sidebar button {
-    margin: 5px;
-    font-size: 14px;
-  }
-}
-
+      gap: 5px;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      display: block;
+    }
+    .menu {
+      display: none;
+    }
+    .menu.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -92,77 +47,76 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main>
-    <div class="sidebar">
-      <button onclick="mostrarSeccion('bienvenida')">Inicio</button>
-      <button onclick="mostrarSeccion('perfil')">Perfil</button>
-      <button onclick="mostrarSeccion('servicios')">Servicios</button>
-      <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
-    </div><div class="content">
-  <div id="bienvenida" class="seccion">
-    <h1 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h1>
-    <p>Seleccioná una opción del menú para continuar.</p>
-  </div>
-
-  <div id="perfil" class="seccion hidden">
-    <h2>Tu Perfil</h2>
-    <p>Nombre: <span id="perfil-nombre">-</span></p>
-    <p>Email: <span id="perfil-email">-</span></p>
-    <button onclick="cambiarContrasena()">Cambiar contraseña</button>
-  </div>
-
-  <div id="servicios" class="seccion hidden">
-    <h2>Servicios</h2>
-    <p>Acá aparecerán tus autos trabajados:</p>
-    <ul>
-      <li>Golf GTI - Patente JY748</li>
-      <li>Audi TTRS - Patente JY746</li>
-    </ul>
-  </div>
-
-  <div id="beneficios" class="seccion hidden">
-    <h2>Beneficios</h2>
-    <p>Próximamente: beneficios exclusivos por ser miembro del club.</p>
-  </div>
+  </header>  <main class="main-container">
+    <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2><!-- Botones laterales -->
+<div class="sidebar">
+  <button onclick="mostrarSeccion('perfil')">Perfil</button>
+  <button onclick="mostrarSeccion('servicios')">Servicios</button>
+  <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
 </div>
 
-  </main>  <script>
-    // Firebase Auth: obtener usuario logueado
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-        const email = user.email;
+<!-- Secciones -->
+<div id="perfil" class="contenido-seccion" style="display:none">
+  <h3>Tu Perfil</h3>
+  <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
+</div>
 
-        // Mostramos email y buscamos nombre
-        document.getElementById("perfil-email").textContent = email;
+<div id="servicios" class="contenido-seccion" style="display:none">
+  <h3>Servicios contratados</h3>
+  <p>Lista de autos, historial, links para PDF...</p>
+</div>
 
-        firebase.firestore().collection("usuarios").doc(uid).get().then((doc) => {
-          if (doc.exists) {
-            const data = doc.data();
-            document.getElementById("perfil-nombre").textContent = data.nombre;
-            document.getElementById("saludo").textContent = Hola ${data.nombre}, bienvenido nuevamente a Monzari Club;
-          }
-        });
-      } else {
-        location.href = "login.html";
-      }
-    });
+<div id="beneficios" class="contenido-seccion" style="display:none">
+  <h3>Beneficios exclusivos</h3>
+  <p>Promos, descuentos, contenido especial...</p>
+</div>
 
-    function mostrarSeccion(id) {
-      document.querySelectorAll('.seccion').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-    }
-
-    function cambiarContrasena() {
-      firebase.auth().sendPasswordResetEmail(firebase.auth().currentUser.email)
-        .then(() => alert("Te enviamos un enlace para cambiar tu contraseña."))
-        .catch((error) => alert("Error: " + error.message));
-    }
-
+  </main>  <footer>
+    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
+  </footer>  <script>
+    // Menú hamburguesa
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
+    });
+
+    // Mostrar secciones
+    function mostrarSeccion(seccionId) {
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById(seccionId).style.display = 'block';
+    }
+  </script>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_AUTH_DOMAIN",
+      projectId: "TU_PROJECT_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const saludo = document.getElementById('saludo');
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const userRef = doc(db, "usuarios", uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const datos = userSnap.data();
+          const nombre = datos.nombre || "usuario";
+          saludo.textContent = Hola ${nombre}, bienvenido nuevamente a Monzari Club;
+        }
+      } else {
+        window.location.href = "login.html";
+      }
     });
   </script></body>
 </html>
