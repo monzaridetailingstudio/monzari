@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monzari Club - Área Personal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background-color: #111;
+      color: white;
+    }main {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  background-color: #1a1a1a;
+  padding: 20px;
+  min-width: 220px;
+}
+
+.sidebar button {
+  width: 100%;
+  background-color: transparent;
+  color: #d4af37;
+  border: 1px solid #d4af37;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar button:hover {
+  background-color: #d4af37;
+  color: #000;
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    min-width: 100%;
+  }
+
+  .sidebar button {
+    margin: 5px;
+    font-size: 14px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="club.html">Monzari Club</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>  <main>
+    <div class="sidebar">
+      <button onclick="mostrarSeccion('bienvenida')">Inicio</button>
+      <button onclick="mostrarSeccion('perfil')">Perfil</button>
+      <button onclick="mostrarSeccion('servicios')">Servicios</button>
+      <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
+    </div><div class="content">
+  <div id="bienvenida" class="seccion">
+    <h1 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h1>
+    <p>Seleccioná una opción del menú para continuar.</p>
+  </div>
+
+  <div id="perfil" class="seccion hidden">
+    <h2>Tu Perfil</h2>
+    <p>Nombre: <span id="perfil-nombre">-</span></p>
+    <p>Email: <span id="perfil-email">-</span></p>
+    <button onclick="cambiarContrasena()">Cambiar contraseña</button>
+  </div>
+
+  <div id="servicios" class="seccion hidden">
+    <h2>Servicios</h2>
+    <p>Acá aparecerán tus autos trabajados:</p>
+    <ul>
+      <li>Golf GTI - Patente JY748</li>
+      <li>Audi TTRS - Patente JY746</li>
+    </ul>
+  </div>
+
+  <div id="beneficios" class="seccion hidden">
+    <h2>Beneficios</h2>
+    <p>Próximamente: beneficios exclusivos por ser miembro del club.</p>
+  </div>
+</div>
+
+  </main>  <script>
+    // Firebase Auth: obtener usuario logueado
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        const email = user.email;
+
+        // Mostramos email y buscamos nombre
+        document.getElementById("perfil-email").textContent = email;
+
+        firebase.firestore().collection("usuarios").doc(uid).get().then((doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            document.getElementById("perfil-nombre").textContent = data.nombre;
+            document.getElementById("saludo").textContent = Hola ${data.nombre}, bienvenido nuevamente a Monzari Club;
+          }
+        });
+      } else {
+        location.href = "login.html";
+      }
+    });
+
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function cambiarContrasena() {
+      firebase.auth().sendPasswordResetEmail(firebase.auth().currentUser.email)
+        .then(() => alert("Te enviamos un enlace para cambiar tu contraseña."))
+        .catch((error) => alert("Error: " + error.message));
+    }
+
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script></body>
+</html>
