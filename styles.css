@@ -606,3 +606,81 @@ footer {
 .btn-gold:hover {
   background-color: #bfa331;
 }
+.form-section {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  text-align: center;
+}
+
+.gold-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #d4af37; /* color oro */
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.formulario label {
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.formulario button {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #d4af37;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+  transition: background-color 0.3s;
+}
+
+.formulario button:hover {
+  background-color: #c19e2d;
+}
