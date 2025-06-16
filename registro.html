@@ -29,36 +29,34 @@
     </nav>
   </header>
 
-  <main>
-    <section class="hero" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
-      <div class="overlay">
-        <h1>Registrarse</h1>
-        <p>Completá los datos para unirte a Monzari Club</p>
+  <!-- HERO CON FORMULARIO ADENTRO -->
+  <section class="hero-registro" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
+    <div class="overlay">
+      <div class="contenido">
+        <h1>Monzari Club</h1>
+        <p>Completá tus datos para formar parte del club</p>
+
+        <form class="formulario-compacto">
+          <input type="text" placeholder="Nombre completo" required />
+          <input type="email" placeholder="Correo electrónico" required />
+
+          <div class="password-container">
+            <input type="password" id="password" placeholder="Contraseña" required />
+            <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+          </div>
+
+          <div class="password-container">
+            <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
+            <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
+          </div>
+
+          <input type="text" placeholder="Código exclusivo de acceso" required />
+
+          <button type="submit" class="btn btn-gold">Registrarse</button>
+        </form>
       </div>
-    </section>
-
-    <section class="formulario">
-      <h2 class="gold-title">Registrarse</h2>
-      <form>
-        <input type="text" placeholder="Nombre completo" required />
-        <input type="email" placeholder="Correo electrónico" required />
-
-        <div class="password-container">
-          <input type="password" id="password" placeholder="Contraseña" required />
-          <span class="toggle-password" onclick="togglePassword('password')">👁</span>
-        </div>
-
-        <div class="password-container">
-          <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
-          <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
-        </div>
-
-        <input type="text" placeholder="Código exclusivo de acceso" required />
-
-        <button type="submit" class="btn btn-gold">Registrarse</button>
-      </form>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
