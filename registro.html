@@ -1,78 +1,11 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registro - Monzari Detailing Studios</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-  <script type="module">
-    // Importamos Firebase y módulos
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";const firebaseConfig = {
-  apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-  authDomain: "monzariclub.firebaseapp.com",
-  projectId: "monzariclub",
-  storageBucket: "monzariclub.firebasestorage.app",
-  messagingSenderId: "806224561650",
-  appId: "1:806224561650:web:e7b25afbcb51238928576b"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form-registro');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-    const codigo = document.getElementById('codigo').value;
-
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-
-    // Validar código en Firestore
-    const codigoDoc = await getDoc(doc(db, "codigos", codigo));
-    if (!codigoDoc.exists()) {
-      alert('El código exclusivo no es válido');
-      return;
-    }
-
-    const codigoData = codigoDoc.data();
-    if (codigoData.usado) {
-      alert('Este código ya fue utilizado');
-      return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(userCredential.user);
-
-      // Marcar el código como usado
-      await setDoc(doc(db, "codigos", codigo), {
-        usado: true,
-        email: email,
-        nombre: nombre,
-        fecha: new Date()
-      });
-
-      alert('Registro exitoso. Revisa tu correo para verificar tu cuenta.');
-      window.location.href = "verificar.html";
-    } catch (error) {
-      console.error(error);
-      alert('Error al registrar: ' + error.message);
-    }
-  });
-});
-
-  </script>
 </head>
 <body>
   <header>
@@ -82,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <nav class="navbar">
       <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
       <ul class="menu" id="menu">
         <li><a href="index.html">Inicio</a></li>
@@ -92,34 +27,41 @@ document.addEventListener('DOMContentLoaded', () => {
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <section class="hero-registro" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
+  </header>
+
+  <section class="hero-registro" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
     <div class="overlay">
       <div class="contenido">
         <h1>Monzari Club</h1>
-        <p>Completá tus datos para formar parte del club</p><form class="formulario-compacto" id="form-registro">
-      <input type="text" placeholder="Nombre completo" id="nombre" required />
-      <input type="email" placeholder="Correo electrónico" id="email" required />
+        <p>Completá tus datos para formar parte del club</p>
 
-      <div class="password-container">
-        <input type="password" id="password" placeholder="Contraseña" required />
-        <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+        <form class="formulario-compacto">
+          <input type="text" placeholder="Nombre completo" required />
+          <input type="email" placeholder="Correo electrónico" required />
+
+          <div class="password-container">
+            <input type="password" id="password" placeholder="Contraseña" required />
+            <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+          </div>
+
+          <div class="password-container">
+            <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
+            <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
+          </div>
+
+          <input type="text" placeholder="Código exclusivo de acceso" required />
+
+          <button type="submit" class="btn btn-gold">Registrarse</button>
+        </form>
       </div>
+    </div>
+  </section>
 
-      <div class="password-container">
-        <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
-        <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
-      </div>
-
-      <input type="text" placeholder="Código exclusivo de acceso" id="codigo" required />
-
-      <button type="submit" class="btn btn-gold">Registrarse</button>
-    </form>
-  </div>
-</div>
-
-  </section>  <footer>
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <script>
+  </footer>
+
+  <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
 
@@ -131,5 +73,69 @@ document.addEventListener('DOMContentLoaded', () => {
       const input = document.getElementById(id);
       input.type = input.type === "password" ? "text" : "password";
     }
-  </script></body>
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.firebasestorage.app",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.querySelector(".formulario-compacto");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nombre = form[0].value.trim();
+      const email = form[1].value.trim();
+      const password = form[2].value.trim();
+      const confirmPassword = form[3].value.trim();
+      const codigo = form[4].value.trim().toUpperCase();
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      try {
+        const docRef = doc(db, "Codigos", codigo);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+          alert("El código exclusivo no es válido.");
+          return;
+        }
+
+        if (docSnap.data().usado) {
+          alert("Este código ya fue utilizado.");
+          return;
+        }
+
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(userCredential.user);
+
+        await setDoc(docRef, { usado: true }, { merge: true });
+
+        alert("Registro exitoso. Verificá tu email para continuar.");
+        window.location.href = "verificacion.html";
+
+      } catch (error) {
+        console.error(error);
+        alert("Error al registrar: " + error.message);
+      }
+    });
+  </script>
+</body>
 </html>
