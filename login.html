@@ -6,6 +6,20 @@
   <title>Iniciar sesión - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    .olvide-contrasena {
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: right;
+    }
+    .olvide-contrasena a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+    .olvide-contrasena a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -36,11 +50,11 @@
         <form class="formulario-compacto" id="login-form">
           <input type="email" id="email" placeholder="Correo electrónico" required />
           <input type="password" id="password" placeholder="Contraseña" required />
+          <div class="olvide-contrasena">
+            <a href="#" onclick="recuperarContrasena()">Olvidé mi contraseña</a>
+          </div>
           <button type="submit" class="btn btn-gold">Iniciar sesión</button>
         </form>
-        <p class="olvide-contrasena">
-          <a href="#" onclick="recuperarContrasena()">Olvidé mi contraseña</a>
-        </p>
       </div>
     </div>
   </section>
