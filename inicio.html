@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,24 +7,130 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Menú hamburguesa para móviles */
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #111;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      color: gold;
+    }
+
+    /* Menú hamburguesa */
     .hamburger {
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
     }
+
     .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: white;
+      width: 24px;
+      height: 2px;
+      background: gold;
       display: block;
+      border-radius: 1px;
     }
+
     .menu {
       display: none;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
+
     .menu.active {
       display: block;
+    }
+
+    .menu li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      display: block;
+    }
+
+    .main-container {
+      padding: 30px 20px;
+    }
+
+    #saludo {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Botones */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar button {
+      background-color: transparent;
+      border: 2px solid gold;
+      color: gold;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .sidebar button:hover {
+      background-color: gold;
+      color: black;
+    }
+
+    .contenido-seccion {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #111;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      color: white;
+    }
+
+    /* Responsive para móvil */
+    @media (min-width: 768px) {
+      .main-container {
+        display: flex;
+        gap: 40px;
+      }
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .contenido-seccion {
+        flex-grow: 1;
+      }
     }
   </style>
 </head>
@@ -47,33 +154,39 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main class="main-container">
-    <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2><!-- Botones laterales -->
-<div class="sidebar">
-  <button onclick="mostrarSeccion('perfil')">Perfil</button>
-  <button onclick="mostrarSeccion('servicios')">Servicios</button>
-  <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
-</div>
+  </header>
 
-<!-- Secciones -->
-<div id="perfil" class="contenido-seccion" style="display:none">
-  <h3>Tu Perfil</h3>
-  <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
-</div>
+  <main class="main-container">
+    <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2>
 
-<div id="servicios" class="contenido-seccion" style="display:none">
-  <h3>Servicios contratados</h3>
-  <p>Lista de autos, historial, links para PDF...</p>
-</div>
+    <div class="sidebar">
+      <button onclick="mostrarSeccion('perfil')">Perfil</button>
+      <button onclick="mostrarSeccion('servicios')">Servicios</button>
+      <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
+    </div>
 
-<div id="beneficios" class="contenido-seccion" style="display:none">
-  <h3>Beneficios exclusivos</h3>
-  <p>Promos, descuentos, contenido especial...</p>
-</div>
+    <div id="perfil" class="contenido-seccion" style="display:none">
+      <h3>Tu Perfil</h3>
+      <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
+    </div>
 
-  </main>  <footer>
+    <div id="servicios" class="contenido-seccion" style="display:none">
+      <h3>Servicios contratados</h3>
+      <p>Lista de autos, historial, links para PDF...</p>
+    </div>
+
+    <div id="beneficios" class="contenido-seccion" style="display:none">
+      <h3>Beneficios exclusivos</h3>
+      <p>Promos, descuentos, contenido especial...</p>
+    </div>
+  </main>
+
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <script>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
     // Menú hamburguesa
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
@@ -87,7 +200,10 @@
       secciones.forEach(sec => sec.style.display = 'none');
       document.getElementById(seccionId).style.display = 'block';
     }
-  </script>  <script type="module">
+  </script>
+
+  <!-- Firebase: obtener nombre -->
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -118,5 +234,6 @@
         window.location.href = "login.html";
       }
     });
-  </script></body>
+  </script>
+</body>
 </html>
