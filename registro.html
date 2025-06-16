@@ -30,6 +30,13 @@
   </header>
 
   <main>
+    <section class="hero" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
+      <div class="overlay">
+        <h1>Registrarse</h1>
+        <p>Completá los datos para unirte a Monzari Club</p>
+      </div>
+    </section>
+
     <section class="formulario">
       <h2 class="gold-title">Registrarse</h2>
       <form>
@@ -38,13 +45,15 @@
 
         <div class="password-container">
           <input type="password" id="password" placeholder="Contraseña" required />
-          <span class="toggle-password" onclick="togglePassword('password', this)">👁</span>
+          <span class="toggle-password" onclick="togglePassword('password')">👁</span>
         </div>
 
         <div class="password-container">
           <input type="password" id="confirm-password" placeholder="Confirmar contraseña" required />
-          <span class="toggle-password" onclick="togglePassword('confirm-password', this)">👁</span>
+          <span class="toggle-password" onclick="togglePassword('confirm-password')">👁</span>
         </div>
+
+        <input type="text" placeholder="Código exclusivo de acceso" required />
 
         <button type="submit" class="btn btn-gold">Registrarse</button>
       </form>
@@ -63,15 +72,9 @@
       menu.classList.toggle('active');
     });
 
-    function togglePassword(id, el) {
+    function togglePassword(id) {
       const input = document.getElementById(id);
-      if (input.type === "password") {
-        input.type = "text";
-        el.textContent = "🙈";
-      } else {
-        input.type = "password";
-        el.textContent = "👁";
-      }
+      input.type = input.type === "password" ? "text" : "password";
     }
   </script>
 </body>
