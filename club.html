@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Club Monzari</title>
+  <title>Monsari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
@@ -32,13 +32,15 @@
   <main>
     <section class="hero" style="background-image: url('images/ImagenClubMonsari1.jpg');">
       <div class="overlay">
-        <h1>Club Monzari</h1>
-        <p>Accedé a un espacio exclusivo para nuestros clientes premium.</p>
-        <p><strong>Necesitás un código único otorgado por Monzari para registrarte.</strong></p>
-        <div style="margin-top: 2rem;">
-          <a href="registro.html" class="btn" style="margin-right: 1rem;">Registrarse</a>
+        <h1>Monsari Club</h1>
+        <p>Accedé a un espacio exclusivo para nuestros clientes.</p>
+        <div class="btn-container" style="margin-top: 2rem;">
+          <a href="registro.html" class="btn">Registrarse</a>
           <a href="login.html" class="btn">Iniciar Sesión</a>
         </div>
+        <p style="margin-top: 2rem; color: #ccc; font-size: 1rem;">
+          Para ser parte del club, necesitás un código exclusivo otorgado por Monzari.
+        </p>
       </div>
     </section>
   </main>
@@ -50,7 +52,6 @@
   <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
-
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
