@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Monzari Club - Ingreso</title>
+  <title>Iniciar sesión - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
@@ -29,23 +29,18 @@
     </nav>
   </header>
 
-  <!-- HERO CON FORMULARIO DE INICIO DE SESIÓN -->
   <section class="hero-registro" style="background-image: url('images/IMAGEN CLUB MONZARI 1.jpg');">
     <div class="overlay">
       <div class="contenido">
-        <h1>Monzari Club</h1>
-        <p>Completá tus datos para ingresar al club</p>
-
-        <form class="formulario-compacto">
-          <input type="email" placeholder="Correo electrónico" required />
-
-          <div class="password-container">
-            <input type="password" id="login-password" placeholder="Contraseña" required />
-            <span class="toggle-password" onclick="togglePassword('login-password')">👁</span>
-          </div>
-
-          <button type="submit" class="btn btn-gold">Ingresar</button>
+        <h1>Iniciar sesión</h1>
+        <form class="formulario-compacto" id="login-form">
+          <input type="email" id="email" placeholder="Correo electrónico" required />
+          <input type="password" id="password" placeholder="Contraseña" required />
+          <button type="submit" class="btn btn-gold">Iniciar sesión</button>
         </form>
+        <p class="olvide-contrasena">
+          <a href="#" onclick="recuperarContrasena()">Olvidé mi contraseña</a>
+        </p>
       </div>
     </div>
   </section>
@@ -61,11 +56,60 @@
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
+  </script>
 
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === "password" ? "text" : "password";
-    }
+  <!-- Firebase Login + Recuperar contraseña -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.appspot.com",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Inicio de sesión exitoso.");
+          window.location.href = "inicio.html"; // Redireccionar después del login
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Error al iniciar sesión: " + error.message);
+        });
+    });
+
+    // Recuperar contraseña
+    window.recuperarContrasena = () => {
+      const email = prompt("Ingresá tu correo electrónico para recuperar tu contraseña:");
+      if (!email) return;
+
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("Te enviamos un correo con instrucciones para recuperar tu contraseña.");
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Error al enviar el correo de recuperación. Revisá el correo ingresado.");
+        });
+    };
   </script>
 </body>
 </html>
