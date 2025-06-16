@@ -13,6 +13,19 @@ body {
   line-height: 1.6;
 }
 
+/* Fondo Club Monsari */
+.club-background {
+  background-image: url('images/ImagenClubMonsari1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
 header {
   background-color: #000;
   display: flex;
@@ -80,6 +93,7 @@ header {
   border-radius: 2px;
 }
 
+/* Responsive navbar */
 @media (max-width: 768px) {
   .navbar ul {
     display: none;
@@ -102,6 +116,7 @@ header {
   }
 }
 
+/* Hero Section */
 .hero {
   background-size: cover;
   background-position: center;
@@ -130,7 +145,7 @@ header {
 
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2rem; /* REDUCIDO EN CELULAR */
+    font-size: 2rem;
   }
 }
 
@@ -159,6 +174,7 @@ header {
   color: #000;
 }
 
+/* Animación flecha */
 .arrow-down {
   font-size: 2.5rem;
   color: #d4af37;
@@ -168,17 +184,9 @@ header {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-
-  40% {
-    transform: translateY(10px);
-  }
-
-  60% {
-    transform: translateY(5px);
-  }
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(10px); }
+  60% { transform: translateY(5px); }
 }
 
 footer {
@@ -213,7 +221,8 @@ footer {
   transform: scale(1.05);
   filter: grayscale(0%) brightness(1);
 }
-/* --- Stage 1 específico --- */
+
+/* Stage 1 específico */
 .gold-title {
   font-size: 2rem;
   margin-bottom: 1.5rem;
@@ -244,6 +253,7 @@ footer {
   margin-top: 20px;
   color: #ccc;
 }
+
 .btn-container {
   display: flex;
   gap: 1rem;
@@ -262,6 +272,8 @@ footer {
     max-width: 250px;
   }
 }
+
+/* Estilos para formularios modernos */
 .formulario {
   display: flex;
   flex-direction: column;
@@ -280,80 +292,7 @@ footer {
   font-size: 1rem;
 }
 
-.formulario .btn {
-  margin-top: 1rem;
-}
-/* Estilos generales ya usados */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  color: white;
-}
-
-.club-background {
-  background-image: url('images/ImagenClubMonsari1.jpg');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-}
-
-/* Encabezado */
-.club-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.club-logo {
-  height: 40px;
-}
-
-.back-button {
-  font-size: 24px;
-  color: white;
-  text-decoration: none;
-}
-
-/* Contenido */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 4rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.form-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.form-box input {
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 0.5rem;
-}
-
-.form-button {
-  background-color: #ffffff;
-  color: black;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
+/* Ojito contraseña */
 .password-wrapper {
   position: relative;
 }
@@ -369,6 +308,9 @@ body, html {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  user-select: none;
-  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.formulario .btn {
+  margin-top: 1rem;
 }
