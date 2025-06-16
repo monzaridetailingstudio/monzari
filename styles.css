@@ -314,3 +314,40 @@ footer {
 .formulario .btn {
   margin-top: 1rem;
 }
+/* Mejora del botón Registrarse */
+.btn-gold {
+  background: linear-gradient(90deg, #f3e07a, #b68d2c);
+  color: #000;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  background: #fffbe6;
+  color: #000;
+  box-shadow: 0 0 15px rgba(243, 224, 122, 0.8);
+  transform: scale(1.05);
+}
+
+/* Contenedor de campo de contraseña con ojito */
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* espacio para el ícono */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #d4af37;
+}
