@@ -2,60 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro - Monsari Club</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <script defer>
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const toggleIcon = document.getElementById("toggleIcon");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.textContent = "🙈";
+      } else {
+        passwordInput.type = "password";
+        toggleIcon.textContent = "👁";
+      }
+    }
+  </script>
 </head>
-<body>
-  <header>
-    <div class="logo-container">
-      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
-      <div class="logo-text">Monzari Detailing Studios</div>
-    </div>
-    <nav class="navbar">
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul class="menu" id="menu">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="historia.html">Nuestra Historia</a></li>
-        <li><a href="club.html">Monzari Club</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </ul>
-    </nav>
+<body class="club-background">
+  <header class="club-header">
+    <a href="index.html" class="back-button">☰</a>
+    <img src="images/logo_monsari.png" alt="Logo Monsari" class="club-logo" />
   </header>
 
-  <main>
-    <section class="hero" style="background-image: url('images/ImagenClubMonsari1.jpg');">
-      <div class="overlay">
-        <h1>Registro</h1>
-        <form class="formulario" action="#" method="POST">
-          <input type="text" placeholder="Nombre completo" required />
-          <input type="email" placeholder="Correo electrónico" required />
-          <input type="password" placeholder="Contraseña" required />
-          <input type="password" placeholder="Confirmar contraseña" required />
-          <input type="text" placeholder="Código de invitación" required />
-          <button type="submit" class="btn">Registrarse</button>
-        </form>
-        <p style="margin-top: 1.5rem; font-size: 0.95rem;">¿Ya tenés cuenta? <a href="login.html" style="color: #ffffff; text-decoration: underline;">Iniciar sesión</a></p>
+  <main class="form-container">
+    <h1>Crear cuenta</h1>
+    <p>Registrate para acceder al Monsari Club</p>
+
+    <form class="form-box">
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Contraseña:</label>
+      <div class="password-wrapper">
+        <input type="password" id="password" name="password" required />
+        <span id="toggleIcon" class="toggle-password" onclick="togglePassword()">👁</span>
       </div>
-    </section>
+
+      <label for="code">Código del club:</label>
+      <input type="text" id="code" name="code" required />
+
+      <button type="submit" class="form-button">Registrarse</button>
+    </form>
   </main>
-
-  <footer>
-    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
-
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
-  </script>
 </body>
 </html>
