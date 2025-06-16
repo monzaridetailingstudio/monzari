@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,133 +11,163 @@
       color: white;
       font-family: 'Playfair Display', serif;
       margin: 0;
-    }
+    }header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #111;
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #111;
-    }
+.logo-container {
+  display: flex;
+  align-items: center;
+}
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
+.logo-img {
+  height: 50px;
+  margin-right: 10px;
+}
 
-    .logo-img {
-      height: 50px;
-      margin-right: 10px;
-    }
+.logo-text {
+  font-size: 1rem;
+  color: gold;
+  line-height: 1.2;
+}
 
-    .logo-text {
-      font-size: 1.2rem;
-      color: gold;
-    }
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+}
 
-    /* Menú hamburguesa */
-    .hamburger {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: gold;
+  display: block;
+  border-radius: 1px;
+}
 
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: gold;
-      display: block;
-      border-radius: 1px;
-    }
+.menu {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
 
-    .menu {
-      display: none;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+.menu li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+}
 
-    .menu.active {
-      display: block;
-    }
+.main-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 30px 20px;
+  min-height: calc(100vh - 120px);
+}
 
-    .menu li a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 16px;
-      display: block;
-    }
+.sidebar {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-    .main-container {
-      padding: 30px 20px;
-    }
+.sidebar button {
+  background-color: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
 
-    #saludo {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+.sidebar button:hover {
+  background-color: gold;
+  color: black;
+}
 
-    /* Botones */
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+#saludo {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
 
-    .sidebar button {
-      background-color: transparent;
-      border: 2px solid gold;
-      color: gold;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 8px;
-      transition: background 0.3s, color 0.3s;
-    }
+.contenido-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .sidebar button:hover {
-      background-color: gold;
-      color: black;
-    }
+.contenido-seccion {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #111;
+  border-radius: 10px;
+  width: 100%;
+}
 
-    .contenido-seccion {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #111;
-      border-radius: 10px;
-    }
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #111;
+  color: white;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #111;
-      color: white;
-    }
+@media (max-width: 767px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    /* Responsive para móvil */
-    @media (min-width: 768px) {
-      .main-container {
-        display: flex;
-        gap: 40px;
-      }
+  .sidebar {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
 
-      .sidebar {
-        width: 200px;
-      }
+  .contenido-principal {
+    width: 100%;
+  }
 
-      .contenido-seccion {
-        flex-grow: 1;
-      }
-    }
+  .hamburger {
+    display: flex;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #111;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .logo-text {
+    font-size: 0.9rem;
+  }
+}
+
   </style>
 </head>
 <body>
   <header>
     <div class="logo-container">
       <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
-      <div class="logo-text">Monzari Detailing Studios</div>
+      <div class="logo-text">Monzari Detailing<br>Studios</div>
     </div>
     <nav class="navbar">
       <div class="hamburger" id="hamburger">
@@ -154,86 +183,42 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>
-
-  <main class="main-container">
-    <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2>
-
+  </header>  <main class="main-container">
     <div class="sidebar">
       <button onclick="mostrarSeccion('perfil')">Perfil</button>
       <button onclick="mostrarSeccion('servicios')">Servicios</button>
       <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
     </div>
+    <div class="contenido-principal">
+      <h2 id="saludo">Hola, bienvenido nuevamente a Monzari Club</h2><div id="perfil" class="contenido-seccion" style="display:none">
+    <h3>Tu Perfil</h3>
+    <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
+  </div>
 
-    <div id="perfil" class="contenido-seccion" style="display:none">
-      <h3>Tu Perfil</h3>
-      <p>Nombre, apellido, correo, opción para cambiar contraseña...</p>
-    </div>
+  <div id="servicios" class="contenido-seccion" style="display:none">
+    <h3>Servicios contratados</h3>
+    <p>Lista de autos, historial, links para PDF...</p>
+  </div>
 
-    <div id="servicios" class="contenido-seccion" style="display:none">
-      <h3>Servicios contratados</h3>
-      <p>Lista de autos, historial, links para PDF...</p>
-    </div>
+  <div id="beneficios" class="contenido-seccion" style="display:none">
+    <h3>Beneficios exclusivos</h3>
+    <p>Promos, descuentos, contenido especial...</p>
+  </div>
+</div>
 
-    <div id="beneficios" class="contenido-seccion" style="display:none">
-      <h3>Beneficios exclusivos</h3>
-      <p>Promos, descuentos, contenido especial...</p>
-    </div>
-  </main>
-
-  <footer>
+  </main>  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- Scripts -->
-  <script>
-    // Menú hamburguesa
+  </footer>  <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
 
-    // Mostrar secciones
     function mostrarSeccion(seccionId) {
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
       document.getElementById(seccionId).style.display = 'block';
     }
-  </script>
-
-  <!-- Firebase: obtener nombre -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_AUTH_DOMAIN",
-      projectId: "TU_PROJECT_ID"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const saludo = document.getElementById('saludo');
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const uid = user.uid;
-        const userRef = doc(db, "usuarios", uid);
-        const userSnap = await getDoc(userRef);
-        if (userSnap.exists()) {
-          const datos = userSnap.data();
-          const nombre = datos.nombre || "usuario";
-          saludo.textContent = Hola ${nombre}, bienvenido nuevamente a Monzari Club;
-        }
-      } else {
-        window.location.href = "login.html";
-      }
-    });
-  </script>
-</body>
+  </script></body>
 </html>
