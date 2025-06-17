@@ -245,5 +245,46 @@
       alert('Función para cambiar la contraseña (futura implementación).');
     }
   </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.firebasestorage.app",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const db = getFirestore();
+
+  const bienvenida = document.getElementById('bienvenida');
+  const inputNombre = document.getElementById('nombre');
+  const inputEmail = document.getElementById('email');
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const docRef = doc(db, "Usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const datos = docSnap.data();
+        const nombre = datos.nombre || "Usuario";
+        bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
+        inputNombre.value = nombre;
+        inputEmail.value = user.email;
+      } else {
+        bienvenida.textContent = Hola, Usuario, bienvenido nuevamente a Monzari Club;
+        inputEmail.value = user.email;
+      }
+    } else {
+      window.location.href = "login.html"; // o como llames a tu página de login
+    }
+  });
+</script>
 </body>
 </html>
