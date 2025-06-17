@@ -2,62 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio de prueba - Monzari Club</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: 'Playfair Display', serif;
-      padding: 20px;
-    }
-    .contenedor {
-      max-width: 500px;
-      margin: auto;
-      background-color: #111;
-      border-radius: 10px;
-      padding: 20px;
-    }
-    h2 {
-      color: gold;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio - Monzari Club</title>
 </head>
 <body>
-  <div class="contenedor">
-    <h2 id="bienvenida">Cargando datos...</h2>
+  <h1 id="bienvenida">Cargando datos...</h1>
 
-    <div class="form-group">
-      <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" value="" />
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" value="" readonly />
-    </div>
+  <div>
+    <label>Nombre completo:</label>
+    <input type="text" id="nombre" readonly />
+  </div>
+  <div>
+    <label>Email:</label>
+    <input type="text" id="email" readonly />
   </div>
 
-  <!-- Firebase sin módulos -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <button id="cerrarSesion">Cerrar sesión</button>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
   <script>
+    // Configuración de Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -67,6 +35,7 @@
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
 
+    // Inicialización
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -74,36 +43,45 @@
     const bienvenida = document.getElementById('bienvenida');
     const inputNombre = document.getElementById('nombre');
     const inputEmail = document.getElementById('email');
+    const btnCerrarSesion = document.getElementById('cerrarSesion');
 
+    // Escuchamos el estado de autenticación
     auth.onAuthStateChanged(async (user) => {
       if (user) {
+        console.log("✅ Usuario logueado:", user.uid, user.email);
+        bienvenida.textContent = Logueado como: ${user.email};
+
         try {
-          const ref = db.collection("TestUsuarios").doc(user.uid);
-
-          // Guardamos datos de prueba
-          await ref.set({
-            nombre: "Prueba Gonzalo",
-            email: user.email
-          }, { merge: true });
-
-          // Leemos los datos
+          const ref = db.collection("Usuarios").doc(user.uid); // Cambiar "Usuarios" si usás otra colección
           const snap = await ref.get();
-          const datos = snap.data();
 
-          if (datos) {
-            bienvenida.textContent = Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club;
-            inputNombre.value = datos.nombre;
-            inputEmail.value = datos.email;
-          } else {
-            bienvenida.textContent = "Usuario sin datos guardados.";
+          if (!snap.exists) {
+            bienvenida.textContent = "⚠ No se encontraron datos en Firestore.";
+            console.warn("Documento no existe en Firestore.");
+            return;
           }
+
+          const datos = snap.data();
+          console.log("📄 Datos obtenidos desde Firestore:", datos);
+
+          bienvenida.textContent = Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club;
+          inputNombre.value = datos.nombre || "[Nombre no disponible]";
+          inputEmail.value = datos.email || "[Email no disponible]";
         } catch (e) {
-          console.error("Error accediendo a Firestore:", e);
+          console.error("❌ Error accediendo a Firestore:", e);
           bienvenida.textContent = "Error accediendo a los datos.";
         }
       } else {
+        console.log("🚫 No hay usuario logueado. Redirigiendo a login...");
         window.location.href = "login.html";
       }
+    });
+
+    // Cerrar sesión
+    btnCerrarSesion.addEventListener("click", () => {
+      auth.signOut().then(() => {
+        window.location.href = "login.html";
+      });
     });
   </script>
 </body>
