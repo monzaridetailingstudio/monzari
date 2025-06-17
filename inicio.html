@@ -190,7 +190,6 @@
       <button class="btn" onclick="mostrarSeccion('servicios')">Servicios</button>
       <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
     </div>
-
     <div class="contenido-principal">
       <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
 
@@ -245,11 +244,12 @@
     }
   </script>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <!-- Firebase sin módulos (compatibilidad total) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -259,29 +259,33 @@
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
     const bienvenida = document.getElementById('bienvenida');
     const inputNombre = document.getElementById('nombre');
     const inputEmail = document.getElementById('email');
 
-    onAuthStateChanged(auth, async (user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const docRef = doc(db, "Usuarios", user.uid);
-        const docSnap = await getDoc(docRef);
+        try {
+          const docRef = db.collection("Usuarios").doc(user.uid);
+          const docSnap = await docRef.get();
 
-        if (docSnap.exists()) {
-          const datos = docSnap.data();
-          const nombre = datos.nombre || "Usuario";
+          if (docSnap.exists) {
+            const datos = docSnap.data();
+            const nombre = datos.nombre || "Usuario";
 
-          bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
-          inputNombre.value = nombre;
-          inputEmail.value = user.email;
-        } else {
-          bienvenida.textContent = Hola, Usuario, bienvenido nuevamente a Monzari Club;
-          inputEmail.value = user.email;
+            bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
+            inputNombre.value = nombre;
+            inputEmail.value = user.email;
+          } else {
+            bienvenida.textContent = Hola, Usuario, bienvenido nuevamente a Monzari Club;
+            inputEmail.value = user.email;
+          }
+        } catch (error) {
+          console.error("Error obteniendo datos:", error);
         }
       } else {
         window.location.href = "login.html";
