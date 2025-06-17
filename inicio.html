@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html><html lang="es">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio - Monzari Club</title>
@@ -100,7 +101,6 @@
     #bienvenida {
       font-size: 2rem;
       margin-bottom: 20px;
-      text-align: center;
     }
     .recuadro {
       background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
@@ -125,6 +125,24 @@
       padding: 20px;
       background-color: #111;
       color: white;
+    }
+    .btn-section {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .btn {
+      background-color: #d4af37;
+      color: black;
+      padding: 12px 24px;
+      margin: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: gold;
     }
     @media (max-width: 767px) {
       .main-container {
@@ -188,6 +206,11 @@
     </div>
     <div class="contenido-principal">
       <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
+      <div class="btn-section">
+        <a href="servicios.html" class="btn">Ver Servicios</a>
+        <a href="historia.html" class="btn">Historia</a>
+        <a href="club.html" class="btn">Conocer más</a>
+      </div>
       <div id="perfil" class="contenido-seccion">
         <div class="recuadro">
           <h3>Tu Perfil</h3>
@@ -201,50 +224,25 @@
           </div>
           <button onclick="cambiarContrasena()">Cambiar contraseña</button>
         </div>
-      </div>
-      <div id="servicios" class="contenido-seccion">
-        <h3>Servicios contratados</h3>
-        <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
-      </div>
-      <div id="beneficios" class="contenido-seccion">
-        <h3>Beneficios exclusivos</h3>
-        <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
-      </div>
-    </div>
+      </div><div id="servicios" class="contenido-seccion">
+    <h3>Servicios contratados</h3>
+    <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
+  </div>
+
+  <div id="beneficios" class="contenido-seccion">
+    <h3>Beneficios exclusivos</h3>
+    <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
+  </div>
+</div>
+
   </main>
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_BUCKET",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    const docRef = doc(db, "usuarios", user.uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const datos = docSnap.data();
-      document.getElementById("nombre").value = datos.nombre;
-      document.getElementById("email").value = datos.email;
-      document.getElementById("bienvenida").innerText = Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club;
-    }
-  }
-});
-
-function mostrarSeccion(seccionId) {
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => menu.classList.toggle('active'));function mostrarSeccion(seccionId) {
   document.getElementById('bienvenida').style.display = 'none';
   const secciones = document.querySelectorAll('.contenido-seccion');
   secciones.forEach(sec => sec.style.display = 'none');
@@ -254,10 +252,6 @@ function mostrarSeccion(seccionId) {
 function cambiarContrasena() {
   alert('Función para cambiar la contraseña (futura implementación).');
 }
-
-const hamburger = document.getElementById('hamburger');
-const menu = document.getElementById('menu');
-hamburger.addEventListener('click', () => menu.classList.toggle('active'));
 
   </script>
 </body>
