@@ -1,25 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Inicio Simple</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio de prueba - Monzari Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      padding: 20px;
+    }
+    .contenedor {
+      max-width: 500px;
+      margin: auto;
+      background-color: #111;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    h2 {
+      color: gold;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-  <h1 id="bienvenida">Cargando usuario...</h1>
+  <div class="contenedor">
+    <h2 id="bienvenida">Cargando datos...</h2>
 
-  <div id="perfil">
-    <h2>Perfil</h2>
-    <p><strong>Nombre:</strong> <span id="nombre"></span></p>
-    <p><strong>Email:</strong> <span id="email"></span></p>
+    <div class="form-group">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" value="" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" value="" readonly />
+    </div>
   </div>
 
-  <!-- Firebase -->
+  <!-- Firebase sin módulos -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // Configuración Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -29,36 +67,41 @@
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
 
-    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Esperar usuario logueado
+    const bienvenida = document.getElementById('bienvenida');
+    const inputNombre = document.getElementById('nombre');
+    const inputEmail = document.getElementById('email');
+
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const uid = user.uid;
         try {
-          const docRef = db.collection("Usuarios").doc(uid);
-          const docSnap = await docRef.get();
+          const ref = db.collection("TestUsuarios").doc(user.uid);
 
-          if (docSnap.exists) {
-            const datos = docSnap.data();
-            const nombre = datos.nombre || "Sin nombre";
-            const email = datos.email || user.email;
+          // Guardamos datos de prueba
+          await ref.set({
+            nombre: "Prueba Gonzalo",
+            email: user.email
+          }, { merge: true });
 
-            document.getElementById("bienvenida").textContent = Hola, ${nombre};
-            document.getElementById("nombre").textContent = nombre;
-            document.getElementById("email").textContent = email;
+          // Leemos los datos
+          const snap = await ref.get();
+          const datos = snap.data();
+
+          if (datos) {
+            bienvenida.textContent = Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club;
+            inputNombre.value = datos.nombre;
+            inputEmail.value = datos.email;
           } else {
-            document.getElementById("bienvenida").textContent = "No se encontró el documento del usuario.";
-            console.log("Documento de usuario no encontrado en Firestore.");
+            bienvenida.textContent = "Usuario sin datos guardados.";
           }
-        } catch (error) {
-          console.error("Error leyendo Firestore:", error);
+        } catch (e) {
+          console.error("Error accediendo a Firestore:", e);
+          bienvenida.textContent = "Error accediendo a los datos.";
         }
       } else {
-        // No hay usuario logueado
         window.location.href = "login.html";
       }
     });
