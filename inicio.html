@@ -183,12 +183,14 @@
       </ul>
     </nav>
   </header>
+
   <main class="main-container">
     <div class="sidebar">
       <button class="btn" onclick="mostrarSeccion('perfil')">Perfil</button>
       <button class="btn" onclick="mostrarSeccion('servicios')">Servicios</button>
       <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
     </div>
+
     <div class="contenido-principal">
       <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
 
@@ -218,6 +220,7 @@
       </div>
     </div>
   </main>
+
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
@@ -272,11 +275,12 @@
         if (docSnap.exists()) {
           const datos = docSnap.data();
           const nombre = datos.nombre || "Usuario";
+
           bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
           inputNombre.value = nombre;
           inputEmail.value = user.email;
         } else {
-          bienvenida.textContent = "Hola, Usuario, bienvenido nuevamente a Monzari Club";
+          bienvenida.textContent = Hola, Usuario, bienvenido nuevamente a Monzari Club;
           inputEmail.value = user.email;
         }
       } else {
