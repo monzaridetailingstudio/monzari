@@ -64,7 +64,7 @@
           const datos = snap.data();
           console.log("📄 Datos obtenidos desde Firestore:", datos);
 
-          bienvenida.textContent = Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club;
+          bienvenida.textContent = 'Hola, ${datos.nombre}, bienvenido nuevamente a Monzari Club';
           inputNombre.value = datos.nombre || "[Nombre no disponible]";
           inputEmail.value = datos.email || "[Email no disponible]";
         } catch (e) {
