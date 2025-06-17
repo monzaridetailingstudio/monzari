@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perfil - Monzari Club</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .card {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 id="saludo">Bienvenido</h2>
+    <div class="input-group">
+      <label>Nombre completo</label>
+      <input type="text" id="nombre" disabled />
+    </div>
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" id="email" disabled />
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (modo compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.appspot.com",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const saludo = document.getElementById('saludo');
+    const inputNombre = document.getElementById('nombre');
+    const inputEmail = document.getElementById('email');
+
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const docRef = db.collection("Usuarios").doc(user.uid);
+          const doc = await docRef.get();
+          if (doc.exists) {
+            const datos = doc.data();
+            const nombre = datos.nombre || "Usuario";
+            saludo.textContent = Hola, ${nombre}, bienvenido a Monzari Club;
+            inputNombre.value = nombre;
+            inputEmail.value = user.email;
+          } else {
+            saludo.textContent = Hola, ${user.email}, bienvenido a Monzari Club;
+            inputEmail.value = user.email;
+          }
+        } catch (e) {
+          console.error("Error al obtener perfil:", e);
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>
