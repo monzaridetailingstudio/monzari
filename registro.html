@@ -122,7 +122,6 @@
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
 
-        // Guardar nombre en Firestore
         await setDoc(doc(db, "Usuarios", uid), {
           nombre,
           email
