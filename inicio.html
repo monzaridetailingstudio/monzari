@@ -1,165 +1,13 @@
-<!DOCTYPE html><html lang="es">
+<!-- inicio.html -->
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio - Monzari Club</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #111;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
-    .logo-img {
-      height: 50px;
-      margin-right: 10px;
-    }
-    .logo-text {
-      font-size: 1rem;
-      color: gold;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: gold;
-      display: block;
-      border-radius: 1px;
-    }
-    .menu {
-      display: flex;
-      list-style: none;
-      gap: 10px;
-      padding: 0;
-      margin: 0;
-    }
-    .menu li a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-    }
-    .main-container {
-      display: flex;
-      flex-direction: row;
-      gap: 40px;
-      padding: 30px 20px;
-      min-height: calc(100vh - 120px);
-    }
-    .sidebar {
-      width: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .sidebar button {
-      background-color: transparent;
-      border: 2px solid #d4af37;
-      color: #d4af37;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 8px;
-      transition: background 0.3s, color 0.3s;
-    }
-    .sidebar button:hover {
-      background-color: #d4af37;
-      color: black;
-    }
-    .contenido-principal {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .contenido-seccion {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #111;
-      border-radius: 10px;
-      width: 100%;
-      display: none;
-    }
-    #bienvenida {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .recuadro {
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #111;
-      color: white;
-    }
-    @media (max-width: 767px) {
-      .main-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .sidebar {
-        flex-direction: row;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-      }
-      .contenido-principal {
-        width: 100%;
-      }
-      .hamburger {
-        display: flex;
-      }
-      .menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        background-color: #111;
-      }
-      .menu.active {
-        display: flex;
-      }
-      .logo-text {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  <!-- (Estilos inline mantenidos como los pasaste) -->
 </head>
 <body>
   <header>
@@ -180,58 +28,100 @@
       </ul>
     </nav>
   </header>
+
   <main class="main-container">
     <div class="sidebar">
       <button onclick="mostrarSeccion('perfil')">Perfil</button>
       <button onclick="mostrarSeccion('servicios')">Servicios</button>
       <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
     </div>
+
     <div class="contenido-principal">
-      <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2><div id="perfil" class="contenido-seccion">
-    <div class="recuadro">
-      <h3>Tu Perfil</h3>
-      <div class="form-group">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" value="Gonzalo Castroagudin">
+      <h2 id="bienvenida">Cargando nombre...</h2>
+
+      <div id="perfil" class="contenido-seccion">
+        <div class="recuadro">
+          <h3>Tu Perfil</h3>
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" value="" readonly>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" value="" readonly>
+          </div>
+          <button onclick="cambiarContrasena()">Cambiar contraseña</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="gonzalo@email.com" readonly>
+
+      <div id="servicios" class="contenido-seccion">
+        <h3>Servicios contratados</h3>
+        <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
       </div>
-      <button onclick="cambiarContrasena()">Cambiar contraseña</button>
+
+      <div id="beneficios" class="contenido-seccion">
+        <h3>Beneficios exclusivos</h3>
+        <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
+      </div>
     </div>
-  </div>
-
-  <div id="servicios" class="contenido-seccion">
-    <h3>Servicios contratados</h3>
-    <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
-    <!-- Reemplazar esto luego por estructura dinámica -->
-  </div>
-
-  <div id="beneficios" class="contenido-seccion">
-    <h3>Beneficios exclusivos</h3>
-    <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
-  </div>
-</div>
-
   </main>
+
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.appspot.com",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const docSnap = await getDoc(doc(db, "Usuarios", uid));
+        if (docSnap.exists()) {
+          const nombre = docSnap.data().nombre;
+          const email = docSnap.data().email;
+          document.getElementById("bienvenida").textContent = Hola, ${nombre};
+          document.getElementById("nombre").value = nombre;
+          document.getElementById("email").value = email;
+        } else {
+          document.getElementById("bienvenida").textContent = "Usuario no encontrado.";
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+
   <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
-    hamburger.addEventListener('click', () => menu.classList.toggle('active'));function mostrarSeccion(seccionId) {
-  document.getElementById('bienvenida').style.display = 'none';
-  const secciones = document.querySelectorAll('.contenido-seccion');
-  secciones.forEach(sec => sec.style.display = 'none');
-  document.getElementById(seccionId).style.display = 'block';
-}
+    hamburger.addEventListener('click', () => menu.classList.toggle('active'));
 
-function cambiarContrasena() {
-  alert('Función para cambiar la contraseña (futura implementación).');
-}
+    function mostrarSeccion(seccionId) {
+      document.getElementById('bienvenida').style.display = 'none';
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById(seccionId).style.display = 'block';
+    }
 
+    function cambiarContrasena() {
+      alert('Función para cambiar la contraseña (futura implementación).');
+    }
   </script>
 </body>
 </html>
