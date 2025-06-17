@@ -286,5 +286,48 @@
     }
   });
 </script>
+<script type="module">
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.appspot.com",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      console.log("🟢 Usuario logueado:", user.uid);
+      const docRef = doc(db, "Usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        console.log("✅ Datos del usuario:", data);
+
+        // MOSTRAR NOMBRE EN EL SALUDO
+        document.getElementById("bienvenida").innerText = Hola ${data.nombre}, bienvenido nuevamente a Monzari Club;
+
+        // MOSTRAR DATOS EN PERFIL
+        document.getElementById("nombre").value = data.nombre;
+        document.getElementById("email").value = data.email;
+      } else {
+        console.log("❌ Documento de usuario no encontrado");
+      }
+    } else {
+      console.log("🔴 Usuario no logueado");
+      // Redirigí al login si querés
+    }
+  });
+</script>
 </body>
 </html>
