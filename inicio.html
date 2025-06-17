@@ -276,7 +276,6 @@
           if (docSnap.exists) {
             const datos = docSnap.data();
             const nombre = datos.nombre || "Usuario";
-
             bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
             inputNombre.value = nombre;
             inputEmail.value = user.email;
