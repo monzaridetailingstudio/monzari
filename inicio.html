@@ -1,178 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio - Monzari Club</title>
+  <title>Perfil - Monzari Detailing Studios</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #000;
-      color: white;
-      font-family: 'Playfair Display', serif;
-      margin: 0;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #111;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
-    .logo-img {
-      height: 50px;
-      margin-right: 10px;
-    }
-    .logo-text {
-      font-size: 1rem;
-      color: gold;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .hamburger span {
-      width: 24px;
-      height: 2px;
-      background: gold;
-      display: block;
-      border-radius: 1px;
-    }
-    .menu {
-      display: flex;
-      list-style: none;
-      gap: 10px;
-      padding: 0;
-      margin: 0;
-    }
-    .menu li a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-    }
-    .main-container {
-      display: flex;
-      flex-direction: row;
-      gap: 40px;
-      padding: 30px 20px;
-      min-height: calc(100vh - 120px);
-    }
-    .sidebar {
-      width: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .btn {
-      background-color: gold;
-      color: black;
-      padding: 10px 20px;
-      text-decoration: none;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s, transform 0.2s;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background-color: #e6c200;
-      transform: scale(1.05);
-    }
-    .contenido-principal {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .contenido-seccion {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #111;
-      border-radius: 10px;
-      width: 100%;
-      display: none;
-    }
-    #bienvenida {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .recuadro {
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #111;
-      color: white;
-    }
-    @media (max-width: 767px) {
-      .main-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .sidebar {
-        flex-direction: row;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-      }
-      .contenido-principal {
-        width: 100%;
-      }
-      .hamburger {
-        display: flex;
-      }
-      .menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        background-color: #111;
-      }
-      .menu.active {
-        display: flex;
-      }
-      .logo-text {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <header>
     <div class="logo-container">
-      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img" />
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
       <div class="logo-text">Monzari Detailing Studios</div>
     </div>
     <nav class="navbar">
       <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
       <ul class="menu" id="menu">
         <li><a href="index.html">Inicio</a></li>
@@ -182,68 +26,152 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>
-
-  <main class="main-container">
-    <div class="sidebar">
-      <button class="btn" onclick="mostrarSeccion('perfil')">Perfil</button>
-      <button class="btn" onclick="mostrarSeccion('servicios')">Servicios</button>
-      <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
-    </div>
-
-    <div class="contenido-principal">
-      <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
-
-      <div id="perfil" class="contenido-seccion">
-        <div class="recuadro">
-          <h3>Tu Perfil</h3>
-          <div class="form-group">
-            <label for="nombre">Nombre completo</label>
-            <input type="text" id="nombre" value="Gonzalo Castroagudin" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" value="gonzalo@email.com" readonly />
-          </div>
-          <button class="btn" onclick="cambiarContrasena()">Cambiar contraseña</button>
-        </div>
+  </header>  <main>
+    <section class="perfil">
+      <h2>Tu Perfil</h2>
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" value="">
       </div>
-
-      <div id="servicios" class="contenido-seccion">
-        <h3>Servicios contratados</h3>
-        <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
-        <!-- Reemplazar esto luego por estructura dinámica -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="" readonly>
       </div>
-
-      <div id="beneficios" class="contenido-seccion">
-        <h3>Beneficios exclusivos</h3>
-        <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
-      </div>
-    </div>
-  </main>
-
-  <footer>
+    </section>
+  </main>  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
+  </footer>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Tu configuración de Firebase -->  <script>
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_DOMINIO.firebaseapp.com",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_BUCKET.appspot.com",
+      messagingSenderId: "TU_SENDER_ID",
+      appId: "TU_APP_ID"
+    };
 
-  <script>
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>  <!-- Cargar perfil desde Firebase -->  <script>
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const email = user.email;
+        document.getElementById('email').value = email;
+
+        try {
+          const doc = await db.collection("usuarios").doc(uid).get();
+          if (doc.exists) {
+            const data = doc.data();
+            document.getElementById('nombre').value = data.nombre || "Sin nombre";
+          } else {
+            console.log("No hay datos del usuario");
+          }
+        } catch (error) {
+          console.error("Error al obtener el perfil:", error);
+        }
+
+      } else {
+        alert("Tenés que iniciar sesión primero");
+        window.location.href = "login.html";
+      }
+    });
+  </script>  <!-- Menu hamburguesa -->  <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
 
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
+  </script></body>
+</html><!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil - Monzari Detailing Studios</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="club.html">Monzari Club</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>  <main>
+    <section class="perfil">
+      <h2>Tu Perfil</h2>
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" value="">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="" readonly>
+      </div>
+    </section>
+  </main>  <footer>
+    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
+  </footer>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Tu configuración de Firebase -->  <script>
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_DOMINIO.firebaseapp.com",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_BUCKET.appspot.com",
+      messagingSenderId: "TU_SENDER_ID",
+      appId: "TU_APP_ID"
+    };
 
-    function mostrarSeccion(seccionId) {
-      document.getElementById('bienvenida').style.display = 'none';
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById(seccionId).style.display = 'block';
-    }
+    firebase.initializeApp(firebaseConfig);
 
-    function cambiarContrasena() {
-      alert('Función para cambiar la contraseña (futura implementación).');
-    }
-  </script>
-</body>
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>  <!-- Cargar perfil desde Firebase -->  <script>
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const email = user.email;
+        document.getElementById('email').value = email;
+
+        try {
+          const doc = await db.collection("usuarios").doc(uid).get();
+          if (doc.exists) {
+            const data = doc.data();
+            document.getElementById('nombre').value = data.nombre || "Sin nombre";
+          } else {
+            console.log("No hay datos del usuario");
+          }
+        } catch (error) {
+          console.error("Error al obtener el perfil:", error);
+        }
+
+      } else {
+        alert("Tenés que iniciar sesión primero");
+        window.location.href = "login.html";
+      }
+    });
+  </script>  <!-- Menu hamburguesa -->  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script></body>
 </html>
