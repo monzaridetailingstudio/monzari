@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil - Monzari Detailing Studios</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monzari Detailing Studios</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
@@ -19,159 +20,91 @@
         <span></span>
       </div>
       <ul class="menu" id="menu">
-        <li><a href="index.html">Inicio</a></li>
+        <li><a href="inicio.html">Inicio</a></li>
         <li><a href="servicios.html">Servicios</a></li>
         <li><a href="historia.html">Nuestra Historia</a></li>
         <li><a href="club.html">Monzari Club</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main>
-    <section class="perfil">
-      <h2>Tu Perfil</h2>
-      <div class="form-group">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" value="">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="" readonly>
+  </header>
+
+  <main>
+    <section class="hero" style="background-image: url('images/porsche.jpg');">
+      <div class="overlay">
+        <h1 id="saludo">Hola, Usuario</h1>
+        <p>Bienvenido a tu espacio personalizado.</p>
+        <input type="text" id="nuevoNombre" placeholder="Editar nombre..." />
+        <button class="btn" onclick="guardarNombre()">Guardar nombre</button>
+        <div class="arrow-down">&#8595;</div>
       </div>
     </section>
-  </main>  <footer>
+  </main>
+
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Tu configuración de Firebase -->  <script>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
     const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_DOMINIO.firebaseapp.com",
-      projectId: "TU_PROJECT_ID",
-      storageBucket: "TU_BUCKET.appspot.com",
-      messagingSenderId: "TU_SENDER_ID",
-      appId: "TU_APP_ID"
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.firebasestorage.app",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore();
 
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-  </script>  <!-- Cargar perfil desde Firebase -->  <script>
-    auth.onAuthStateChanged(async (user) => {
+    const saludo = document.getElementById('saludo');
+    const inputNombre = document.getElementById('nuevoNombre');
+
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const uid = user.uid;
-        const email = user.email;
-        document.getElementById('email').value = email;
+        const userRef = doc(db, "Usuarios", user.uid);
+        const docSnap = await getDoc(userRef);
 
-        try {
-          const doc = await db.collection("usuarios").doc(uid).get();
-          if (doc.exists) {
-            const data = doc.data();
-            document.getElementById('nombre').value = data.nombre || "Sin nombre";
-          } else {
-            console.log("No hay datos del usuario");
-          }
-        } catch (error) {
-          console.error("Error al obtener el perfil:", error);
+        if (docSnap.exists()) {
+          const datos = docSnap.data();
+          const nombre = datos.nombre || "Usuario";
+          saludo.textContent = Hola, ${nombre};
+          inputNombre.value = nombre;
+        } else {
+          saludo.textContent = "Hola, Usuario";
         }
-
       } else {
-        alert("Tenés que iniciar sesión primero");
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // o como se llame tu página de login
       }
     });
-  </script>  <!-- Menu hamburguesa -->  <script>
+
+    window.guardarNombre = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, "Usuarios", user.uid);
+        await updateDoc(userRef, {
+          nombre: inputNombre.value
+        });
+        saludo.textContent = Hola, ${inputNombre.value};
+        alert("Nombre actualizado correctamente.");
+      }
+    };
+  </script>
+
+  <script>
+    // Menú hamburguesa
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
-
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
-  </script></body>
-</html><!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil - Monzari Detailing Studios</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <header>
-    <div class="logo-container">
-      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img">
-      <div class="logo-text">Monzari Detailing Studios</div>
-    </div>
-    <nav class="navbar">
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <ul class="menu" id="menu">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="historia.html">Nuestra Historia</a></li>
-        <li><a href="club.html">Monzari Club</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>  <main>
-    <section class="perfil">
-      <h2>Tu Perfil</h2>
-      <div class="form-group">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" value="">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="" readonly>
-      </div>
-    </section>
-  </main>  <footer>
-    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>  <!-- Tu configuración de Firebase -->  <script>
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_DOMINIO.firebaseapp.com",
-      projectId: "TU_PROJECT_ID",
-      storageBucket: "TU_BUCKET.appspot.com",
-      messagingSenderId: "TU_SENDER_ID",
-      appId: "TU_APP_ID"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-  </script>  <!-- Cargar perfil desde Firebase -->  <script>
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const uid = user.uid;
-        const email = user.email;
-        document.getElementById('email').value = email;
-
-        try {
-          const doc = await db.collection("usuarios").doc(uid).get();
-          if (doc.exists) {
-            const data = doc.data();
-            document.getElementById('nombre').value = data.nombre || "Sin nombre";
-          } else {
-            console.log("No hay datos del usuario");
-          }
-        } catch (error) {
-          console.error("Error al obtener el perfil:", error);
-        }
-
-      } else {
-        alert("Tenés que iniciar sesión primero");
-        window.location.href = "login.html";
-      }
-    });
-  </script>  <!-- Menu hamburguesa -->  <script>
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
-  </script></body>
+  </script>
+</body>
 </html>
