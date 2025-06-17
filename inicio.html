@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -181,43 +182,47 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </nav>
-  </header>  <main class="main-container">
+  </header>
+  <main class="main-container">
     <div class="sidebar">
       <button class="btn" onclick="mostrarSeccion('perfil')">Perfil</button>
       <button class="btn" onclick="mostrarSeccion('servicios')">Servicios</button>
       <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
-    </div><div class="contenido-principal">
-  <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
-
-  <div id="perfil" class="contenido-seccion">
-    <div class="recuadro">
-      <h3>Tu Perfil</h3>
-      <div class="form-group">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" value="" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" value="" readonly />
-      </div>
-      <button class="btn" onclick="cambiarContrasena()">Cambiar contraseña</button>
     </div>
-  </div>
+    <div class="contenido-principal">
+      <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
 
-  <div id="servicios" class="contenido-seccion">
-    <h3>Servicios contratados</h3>
-    <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
-  </div>
+      <div id="perfil" class="contenido-seccion">
+        <div class="recuadro">
+          <h3>Tu Perfil</h3>
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" value="" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" value="" readonly />
+          </div>
+          <button class="btn" onclick="cambiarContrasena()">Cambiar contraseña</button>
+        </div>
+      </div>
 
-  <div id="beneficios" class="contenido-seccion">
-    <h3>Beneficios exclusivos</h3>
-    <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
-  </div>
-</div>
+      <div id="servicios" class="contenido-seccion">
+        <h3>Servicios contratados</h3>
+        <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
+      </div>
 
-  </main>  <footer>
+      <div id="beneficios" class="contenido-seccion">
+        <h3>Beneficios exclusivos</h3>
+        <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
+      </div>
+    </div>
+  </main>
+  <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>  <script>
+  </footer>
+
+  <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
 
@@ -235,7 +240,9 @@
     function cambiarContrasena() {
       alert('Función para cambiar la contraseña (futura implementación).');
     }
-  </script>  <script type="module">
+  </script>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -265,17 +272,17 @@
         if (docSnap.exists()) {
           const datos = docSnap.data();
           const nombre = datos.nombre || "Usuario";
-
           bienvenida.textContent = Hola, ${nombre}, bienvenido nuevamente a Monzari Club;
           inputNombre.value = nombre;
           inputEmail.value = user.email;
         } else {
-          bienvenida.textContent = Hola, Usuario, bienvenido nuevamente a Monzari Club;
+          bienvenida.textContent = "Hola, Usuario, bienvenido nuevamente a Monzari Club";
           inputEmail.value = user.email;
         }
       } else {
         window.location.href = "login.html";
       }
     });
-  </script></body>
+  </script>
+</body>
 </html>
