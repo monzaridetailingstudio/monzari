@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -72,20 +73,21 @@
       gap: 15px;
     }
     .sidebar button {
-      background: linear-gradient(135deg, #d4af37, #c29e3f);
-      border: none;
+      background: linear-gradient(135deg, #d4af37, #ffd700);
+      border: 2px solid #f5c518;
       color: black;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 30px;
-      cursor: pointer;
       font-weight: bold;
-      text-transform: uppercase;
-      transition: background 0.3s, transform 0.2s;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
     }
     .sidebar button:hover {
+      background: linear-gradient(135deg, #ffd700, #f5c518);
+      color: #000;
       transform: scale(1.05);
-      background: linear-gradient(135deg, #c29e3f, #d4af37);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 5px rgba(255, 255, 255, 0.1);
     }
     .contenido-principal {
       flex: 1;
@@ -185,7 +187,7 @@
   </header>
   <main class="main-container">
     <div class="sidebar">
-      <button onclick="mostrarSeccion('inicio')">Inicio</button>
+      <button onclick="mostrarInicio()">Inicio</button>
       <button onclick="mostrarSeccion('perfil')">Perfil</button>
       <button onclick="mostrarSeccion('servicios')">Servicios</button>
       <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
@@ -218,7 +220,13 @@
   </main>
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer> <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>  <script>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
     // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -233,21 +241,23 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Mostrar secciones
     function mostrarSeccion(seccionId) {
-      document.getElementById('bienvenida').style.display = (seccionId === 'inicio') ? 'block' : 'none';
+      document.getElementById('bienvenida').style.display = 'none';
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
-      if (seccionId !== 'inicio') {
-        document.getElementById(seccionId).style.display = 'block';
-      }
+      document.getElementById(seccionId).style.display = 'block';
+    }
+
+    function mostrarInicio() {
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById('bienvenida').style.display = 'block';
     }
 
     function cambiarContrasena() {
       alert('Función para cambiar la contraseña (futura implementación).');
     }
 
-    // Mostrar datos del usuario logueado
     auth.onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
@@ -265,16 +275,15 @@
             console.error("Error al obtener los datos:", error);
           });
       } else {
-        // Redirigir si no está logueado
         window.location.href = "login.html";
       }
     });
 
-    // Menú responsive
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
-  </script></body>
+  </script>
+</body>
 </html>
