@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,7 +12,6 @@
       font-family: 'Playfair Display', serif;
       margin: 0;
     }
-
     header {
       display: flex;
       justify-content: space-between;
@@ -21,31 +19,26 @@
       padding: 10px 20px;
       background-color: #111;
     }
-
     .logo-container {
       display: flex;
       align-items: center;
     }
-
     .logo-img {
       height: 50px;
       margin-right: 10px;
     }
-
     .logo-text {
       font-size: 1rem;
       color: gold;
       line-height: 1.2;
       white-space: nowrap;
     }
-
     .hamburger {
       display: none;
       cursor: pointer;
       flex-direction: column;
       gap: 4px;
     }
-
     .hamburger span {
       width: 24px;
       height: 2px;
@@ -53,7 +46,6 @@
       display: block;
       border-radius: 1px;
     }
-
     .menu {
       display: flex;
       list-style: none;
@@ -61,13 +53,11 @@
       padding: 0;
       margin: 0;
     }
-
     .menu li a {
       color: white;
       text-decoration: none;
       padding: 8px 12px;
     }
-
     .main-container {
       display: flex;
       flex-direction: row;
@@ -75,38 +65,32 @@
       padding: 30px 20px;
       min-height: calc(100vh - 120px);
     }
-
     .sidebar {
       width: 200px;
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
-
     .sidebar button {
       background-color: transparent;
       border: 2px solid white;
       color: white;
       padding: 10px 20px;
       font-size: 1rem;
-      border-radius: 8px;
+      border-radius: 30px;
       transition: background-color 0.3s, color 0.3s;
       cursor: pointer;
     }
-
     .sidebar button:hover {
       background-color: gold;
       color: black;
-      border-color: gold;
     }
-
     .contenido-principal {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     .contenido-seccion {
       margin-top: 30px;
       padding: 20px;
@@ -115,41 +99,34 @@
       width: 100%;
       display: none;
     }
-
     #bienvenida {
       font-size: 2rem;
       margin-bottom: 20px;
     }
-
     .recuadro {
       background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
       padding: 20px;
       border-radius: 12px;
     }
-
     .form-group {
       margin-bottom: 15px;
     }
-
     .form-group label {
       display: block;
       margin-bottom: 5px;
     }
-
     .form-group input {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 6px;
     }
-
     footer {
       text-align: center;
       padding: 20px;
       background-color: #111;
       color: white;
     }
-
     @media (max-width: 767px) {
       .main-container {
         flex-direction: column;
@@ -204,7 +181,6 @@
       </ul>
     </nav>
   </header>
-
   <main class="main-container">
     <div class="sidebar">
       <button onclick="mostrarInicio()">Inicio</button>
@@ -238,17 +214,10 @@
       </div>
     </div>
   </main>
-
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <script>
+  </footer> <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>  <script>
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -262,7 +231,7 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Mostrar sección
+    // Mostrar secciones
     function mostrarSeccion(seccionId) {
       document.getElementById('bienvenida').style.display = 'none';
       const secciones = document.querySelectorAll('.contenido-seccion');
@@ -280,7 +249,7 @@
       alert('Función para cambiar la contraseña (futura implementación).');
     }
 
-    // Cargar datos del usuario logueado
+    // Mostrar datos del usuario logueado
     auth.onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
@@ -290,10 +259,6 @@
               const data = doc.data();
               document.getElementById("nombre").value = data.nombre || "";
               document.getElementById("email").value = data.email || "";
-
-              // Personalizar saludo
-              const saludo = document.getElementById("bienvenida");
-              saludo.textContent = Hola, ${data.nombre || "usuario"}, bienvenido nuevamente a Monzari Club;
             } else {
               console.log("No se encontró el documento del usuario.");
             }
@@ -302,6 +267,7 @@
             console.error("Error al obtener los datos:", error);
           });
       } else {
+        // Redirigir si no está logueado
         window.location.href = "login.html";
       }
     });
@@ -312,6 +278,5 @@
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
-  </script>
-</body>
+  </script></body>
 </html>
