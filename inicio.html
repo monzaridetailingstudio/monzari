@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -73,21 +72,19 @@
       gap: 15px;
     }
     .sidebar button {
-      background: linear-gradient(135deg, #d4af37, #ffd700);
-      border: 2px solid #f5c518;
-      color: black;
-      font-weight: bold;
+      background-color: transparent;
+      border: 2px solid #d4af37;
+      color: #d4af37;
       padding: 12px 20px;
       font-size: 1rem;
       border-radius: 25px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
     }
     .sidebar button:hover {
-      background: linear-gradient(135deg, #ffd700, #f5c518);
-      color: #000;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 5px rgba(255, 255, 255, 0.1);
+      background-color: #d4af37;
+      color: black;
     }
     .contenido-principal {
       flex: 1;
@@ -220,14 +217,7 @@
   </main>
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
-  </footer>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-  <script>
-    // Firebase config
+  </footer>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -284,6 +274,5 @@
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
-  </script>
-</body>
+  </script></body>
 </html>
