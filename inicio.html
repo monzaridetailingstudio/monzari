@@ -258,6 +258,7 @@
               const data = doc.data();
               document.getElementById("nombre").value = data.nombre || "";
               document.getElementById("email").value = data.email || "";
+              document.getElementById("bienvenida").textContent = Hola, ${data.nombre || "usuario"}, bienvenido nuevamente a Monzari Club;
             } else {
               console.log("No se encontró el documento del usuario.");
             }
