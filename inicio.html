@@ -79,7 +79,7 @@
 
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const docRef = db.collection('usuarios').doc(user.uid);
+        const docRef = db.collection('Usuarios').doc(user.uid);
         const doc = await docRef.get();
 
         if (doc.exists) {
