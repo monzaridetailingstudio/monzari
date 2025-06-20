@@ -72,18 +72,20 @@
       gap: 15px;
     }
     .sidebar button {
-      background-color: transparent;
-      border: 2px solid white;
-      color: white;
-      padding: 10px 20px;
+      background: linear-gradient(135deg, #d4af37, #c29e3f);
+      border: none;
+      color: black;
+      padding: 12px;
       font-size: 1rem;
       border-radius: 30px;
-      transition: background-color 0.3s, color 0.3s;
       cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.2s;
     }
     .sidebar button:hover {
-      background-color: gold;
-      color: black;
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #c29e3f, #d4af37);
     }
     .contenido-principal {
       flex: 1;
@@ -183,7 +185,7 @@
   </header>
   <main class="main-container">
     <div class="sidebar">
-      <button onclick="mostrarInicio()">Inicio</button>
+      <button onclick="mostrarSeccion('inicio')">Inicio</button>
       <button onclick="mostrarSeccion('perfil')">Perfil</button>
       <button onclick="mostrarSeccion('servicios')">Servicios</button>
       <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
@@ -233,16 +235,12 @@
 
     // Mostrar secciones
     function mostrarSeccion(seccionId) {
-      document.getElementById('bienvenida').style.display = 'none';
+      document.getElementById('bienvenida').style.display = (seccionId === 'inicio') ? 'block' : 'none';
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById(seccionId).style.display = 'block';
-    }
-
-    function mostrarInicio() {
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById('bienvenida').style.display = 'block';
+      if (seccionId !== 'inicio') {
+        document.getElementById(seccionId).style.display = 'block';
+      }
     }
 
     function cambiarContrasena() {
