@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -80,6 +79,7 @@
       font-size: 1rem;
       border-radius: 8px;
       transition: background 0.3s, color 0.3s;
+      cursor: pointer;
     }
     .sidebar button:hover {
       background-color: #d4af37;
@@ -120,6 +120,20 @@
       padding: 10px;
       border: none;
       border-radius: 6px;
+    }
+    .btn-estilo {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #d4af37;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .btn-estilo:hover {
+      background-color: gold;
     }
     footer {
       text-align: center;
@@ -183,6 +197,7 @@
   </header>
   <main class="main-container">
     <div class="sidebar">
+      <button onclick="mostrarInicio()">Inicio</button>
       <button onclick="mostrarSeccion('perfil')">Perfil</button>
       <button onclick="mostrarSeccion('servicios')">Servicios</button>
       <button onclick="mostrarSeccion('beneficios')">Beneficios</button>
@@ -200,29 +215,28 @@
             <label for="email">Email</label>
             <input type="email" id="email" readonly />
           </div>
-          <button onclick="cambiarContrasena()">Cambiar contraseña</button>
+          <a href="#" class="btn-estilo">Cambiar contraseña</a>
         </div>
       </div>
       <div id="servicios" class="contenido-seccion">
         <h3>Servicios contratados</h3>
         <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
+        <a href="#" class="btn-estilo">Ver Servicios</a>
       </div>
       <div id="beneficios" class="contenido-seccion">
         <h3>Beneficios exclusivos</h3>
         <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
+        <a href="#" class="btn-estilo">Ver Beneficios</a>
       </div>
     </div>
   </main>
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
-
- <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -231,52 +245,44 @@
       messagingSenderId: "806224561650",
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const db = firebase.firestore();function mostrarSeccion(seccionId) {
+  document.getElementById('bienvenida').style.display = 'none';
+  const secciones = document.querySelectorAll('.contenido-seccion');
+  secciones.forEach(sec => sec.style.display = 'none');
+  document.getElementById(seccionId).style.display = 'block';
+}
 
-    // Mostrar secciones
-    function mostrarSeccion(seccionId) {
-      document.getElementById('bienvenida').style.display = 'none';
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById(seccionId).style.display = 'block';
-    }
+function mostrarInicio() {
+  const secciones = document.querySelectorAll('.contenido-seccion');
+  secciones.forEach(sec => sec.style.display = 'none');
+  document.getElementById('bienvenida').style.display = 'block';
+}
 
-    function cambiarContrasena() {
-      alert('Función para cambiar la contraseña (futura implementación).');
-    }
+auth.onAuthStateChanged(user => {
+  if (user) {
+    const uid = user.uid;
+    db.collection("Usuarios").doc(uid).get()
+      .then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          document.getElementById("nombre").value = data.nombre || "";
+          document.getElementById("email").value = data.email || "";
+          document.getElementById("bienvenida").textContent = Hola, ${data.nombre}, bienvenido nuevamente a Monzari Club;
+        }
+      });
+  } else {
+    window.location.href = "login.html";
+  }
+});
 
-    // Mostrar datos del usuario logueado
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        const uid = user.uid;
-        db.collection("Usuarios").doc(uid).get()
-          .then(doc => {
-            if (doc.exists) {
-              const data = doc.data();
-              document.getElementById("nombre").value = data.nombre || "";
-              document.getElementById("email").value = data.email || "";
-            } else {
-              console.log("No se encontró el documento del usuario.");
-            }
-          })
-          .catch(error => {
-            console.error("Error al obtener los datos:", error);
-          });
-      } else {
-        // Redirigir si no está logueado
-        window.location.href = "login.html";
-      }
-    });
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('menu');
+hamburger.addEventListener('click', () => {
+  menu.classList.toggle('active');
+});
 
-    // Menú responsive
-    const hamburger = document.getElementById('hamburger');
-    const menu = document.getElementById('menu');
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
   </script>
 </body>
 </html>
