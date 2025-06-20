@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,6 +13,7 @@
       font-family: 'Playfair Display', serif;
       margin: 0;
     }
+
     header {
       display: flex;
       justify-content: space-between;
@@ -19,26 +21,31 @@
       padding: 10px 20px;
       background-color: #111;
     }
+
     .logo-container {
       display: flex;
       align-items: center;
     }
+
     .logo-img {
       height: 50px;
       margin-right: 10px;
     }
+
     .logo-text {
       font-size: 1rem;
       color: gold;
       line-height: 1.2;
       white-space: nowrap;
     }
+
     .hamburger {
       display: none;
       cursor: pointer;
       flex-direction: column;
       gap: 4px;
     }
+
     .hamburger span {
       width: 24px;
       height: 2px;
@@ -46,6 +53,7 @@
       display: block;
       border-radius: 1px;
     }
+
     .menu {
       display: flex;
       list-style: none;
@@ -53,11 +61,13 @@
       padding: 0;
       margin: 0;
     }
+
     .menu li a {
       color: white;
       text-decoration: none;
       padding: 8px 12px;
     }
+
     .main-container {
       display: flex;
       flex-direction: row;
@@ -65,32 +75,38 @@
       padding: 30px 20px;
       min-height: calc(100vh - 120px);
     }
+
     .sidebar {
       width: 200px;
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
+
     .sidebar button {
       background-color: transparent;
-      border: 2px solid #d4af37;
-      color: #d4af37;
+      border: 2px solid white;
+      color: white;
       padding: 10px 20px;
       font-size: 1rem;
       border-radius: 8px;
-      transition: background 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
       cursor: pointer;
     }
+
     .sidebar button:hover {
-      background-color: #d4af37;
+      background-color: gold;
       color: black;
+      border-color: gold;
     }
+
     .contenido-principal {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .contenido-seccion {
       margin-top: 30px;
       padding: 20px;
@@ -99,48 +115,41 @@
       width: 100%;
       display: none;
     }
+
     #bienvenida {
       font-size: 2rem;
       margin-bottom: 20px;
     }
+
     .recuadro {
       background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
       padding: 20px;
       border-radius: 12px;
     }
+
     .form-group {
       margin-bottom: 15px;
     }
+
     .form-group label {
       display: block;
       margin-bottom: 5px;
     }
+
     .form-group input {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 6px;
     }
-    .btn-estilo {
-      display: inline-block;
-      margin-top: 20px;
-      background-color: #d4af37;
-      color: black;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    .btn-estilo:hover {
-      background-color: gold;
-    }
+
     footer {
       text-align: center;
       padding: 20px;
       background-color: #111;
       color: white;
     }
+
     @media (max-width: 767px) {
       .main-container {
         flex-direction: column;
@@ -195,6 +204,7 @@
       </ul>
     </nav>
   </header>
+
   <main class="main-container">
     <div class="sidebar">
       <button onclick="mostrarInicio()">Inicio</button>
@@ -215,27 +225,29 @@
             <label for="email">Email</label>
             <input type="email" id="email" readonly />
           </div>
-          <a href="#" class="btn-estilo">Cambiar contraseña</a>
+          <button onclick="cambiarContrasena()">Cambiar contraseña</button>
         </div>
       </div>
       <div id="servicios" class="contenido-seccion">
         <h3>Servicios contratados</h3>
         <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
-        <a href="#" class="btn-estilo">Ver Servicios</a>
       </div>
       <div id="beneficios" class="contenido-seccion">
         <h3>Beneficios exclusivos</h3>
         <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
-        <a href="#" class="btn-estilo">Ver Beneficios</a>
       </div>
     </div>
   </main>
+
   <footer>
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
+
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -245,44 +257,61 @@
       messagingSenderId: "806224561650",
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();function mostrarSeccion(seccionId) {
-  document.getElementById('bienvenida').style.display = 'none';
-  const secciones = document.querySelectorAll('.contenido-seccion');
-  secciones.forEach(sec => sec.style.display = 'none');
-  document.getElementById(seccionId).style.display = 'block';
-}
+    const db = firebase.firestore();
 
-function mostrarInicio() {
-  const secciones = document.querySelectorAll('.contenido-seccion');
-  secciones.forEach(sec => sec.style.display = 'none');
-  document.getElementById('bienvenida').style.display = 'block';
-}
+    // Mostrar sección
+    function mostrarSeccion(seccionId) {
+      document.getElementById('bienvenida').style.display = 'none';
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById(seccionId).style.display = 'block';
+    }
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    const uid = user.uid;
-    db.collection("Usuarios").doc(uid).get()
-      .then(doc => {
-        if (doc.exists) {
-          const data = doc.data();
-          document.getElementById("nombre").value = data.nombre || "";
-          document.getElementById("email").value = data.email || "";
-          document.getElementById("bienvenida").textContent = Hola, ${data.nombre}, bienvenido nuevamente a Monzari Club;
-        }
-      });
-  } else {
-    window.location.href = "login.html";
-  }
-});
+    function mostrarInicio() {
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById('bienvenida').style.display = 'block';
+    }
 
-const hamburger = document.getElementById('hamburger');
-const menu = document.getElementById('menu');
-hamburger.addEventListener('click', () => {
-  menu.classList.toggle('active');
-});
+    function cambiarContrasena() {
+      alert('Función para cambiar la contraseña (futura implementación).');
+    }
 
+    // Cargar datos del usuario logueado
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        const uid = user.uid;
+        db.collection("Usuarios").doc(uid).get()
+          .then(doc => {
+            if (doc.exists) {
+              const data = doc.data();
+              document.getElementById("nombre").value = data.nombre || "";
+              document.getElementById("email").value = data.email || "";
+
+              // Personalizar saludo
+              const saludo = document.getElementById("bienvenida");
+              saludo.textContent = Hola, ${data.nombre || "usuario"}, bienvenido nuevamente a Monzari Club;
+            } else {
+              console.log("No se encontró el documento del usuario.");
+            }
+          })
+          .catch(error => {
+            console.error("Error al obtener los datos:", error);
+          });
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Menú responsive
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
   </script>
 </body>
 </html>
