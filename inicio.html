@@ -73,18 +73,19 @@
     }
     .sidebar button {
       background-color: transparent;
-      border: 2px solid #d4af37;
       color: #d4af37;
-      padding: 12px 20px;
+      border: 2px solid #d4af37;
+      padding: 12px 24px;
       font-size: 1rem;
-      border-radius: 25px;
-      text-decoration: none;
+      border-radius: 30px;
+      text-transform: uppercase;
       font-weight: bold;
-      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
     .sidebar button:hover {
-      background-color: #d4af37;
-      color: black;
+      background: linear-gradient(145deg, #d4af37, #bfa14a);
+      color: #000;
     }
     .contenido-principal {
       flex: 1;
@@ -202,7 +203,7 @@
             <label for="email">Email</label>
             <input type="email" id="email" readonly />
           </div>
-          <button onclick="cambiarContrasena()">Cambiar contraseña</button>
+          <button onclick="cambiarContrasena()" class="btn">Cambiar contraseña</button>
         </div>
       </div>
       <div id="servicios" class="contenido-seccion">
@@ -231,17 +232,17 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    function mostrarInicio() {
+      document.getElementById('bienvenida').style.display = 'block';
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+    }
+
     function mostrarSeccion(seccionId) {
       document.getElementById('bienvenida').style.display = 'none';
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
       document.getElementById(seccionId).style.display = 'block';
-    }
-
-    function mostrarInicio() {
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById('bienvenida').style.display = 'block';
     }
 
     function cambiarContrasena() {
