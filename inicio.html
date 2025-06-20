@@ -217,9 +217,9 @@
     <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
   </footer>
 
- <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <script>
     // Firebase config
@@ -248,7 +248,7 @@
       alert('Función para cambiar la contraseña (futura implementación).');
     }
 
-    // Mostrar datos del usuario logueado
+    // Mostrar datos del usuario logueado + saludo personalizado
     auth.onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid;
@@ -256,9 +256,10 @@
           .then(doc => {
             if (doc.exists) {
               const data = doc.data();
-              document.getElementById("nombre").value = data.nombre || "";
+              const nombreCompleto = data.nombre || "";
+              document.getElementById("nombre").value = nombreCompleto;
               document.getElementById("email").value = data.email || "";
-              document.getElementById("bienvenida").textContent = Hola, ${data.nombre || "usuario"}, bienvenido nuevamente a Monzari Club;
+              document.getElementById("bienvenida").textContent = Hola, ${nombreCompleto}, bienvenido nuevamente a Monzari Club;
             } else {
               console.log("No se encontró el documento del usuario.");
             }
@@ -267,7 +268,6 @@
             console.error("Error al obtener los datos:", error);
           });
       } else {
-        // Redirigir si no está logueado
         window.location.href = "login.html";
       }
     });
