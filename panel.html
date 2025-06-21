@@ -137,55 +137,9 @@
       document.getElementById(id).style.display = 'block';
     }
   </script>
-
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-      authDomain: "monzariclub.firebaseapp.com",
-      projectId: "monzariclub",
-      storageBucket: "monzariclub.appspot.com",
-      messagingSenderId: "806224561650",
-      appId: "1:806224561650:web:e7b25afbcb51238928576b"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const form = document.getElementById("formNuevoVehiculo");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const uid = document.getElementById("uid").value.trim();
-
-      const data = {
-        uid,
-        nombre: document.getElementById("nombre").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        marca: document.getElementById("marca").value.trim(),
-        modelo: document.getElementById("modelo").value.trim(),
-        patente: document.getElementById("patente").value.trim().toUpperCase(),
-        color: document.getElementById("color").value.trim(),
-        pdfUrl: document.getElementById("pdfUrl").value.trim(),
-        fechaCarga: new Date()
-      };
-
-      try {
-        await setDoc(doc(db, "usuarios_club", uid), data);
-        alert("Vehículo cargado correctamente.");
-        form.reset();
-      } catch (error) {
-        console.error("Error al guardar:", error);
-        alert("Error al guardar el vehículo.");
-      }
-    });
-  </script>
- <script type="module">
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -198,15 +152,15 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
   const listaVehiculos = document.getElementById("listaVehiculos");
 
   async function cargarVehiculos() {
     const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-    listaVehiculos.innerHTML = ""; // Limpiar antes
+    listaVehiculos.innerHTML = "";
 
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const id = docSnap.id;
 
       const tarjeta = document.createElement("div");
       tarjeta.style.background = "#222";
@@ -214,25 +168,63 @@
       tarjeta.style.marginBottom = "15px";
       tarjeta.style.borderRadius = "10px";
       tarjeta.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)";
+      tarjeta.style.color = "gold";
 
       tarjeta.innerHTML = `
-        <h3>${data.nombre} (${data.patente})</h3>
-        <p><strong>Marca:</strong> ${data.marca} - <strong>Modelo:</strong> ${data.modelo}</p>
-        <p><strong>Color:</strong> ${data.color}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><a href="${data.pdfUrl}" target="_blank" style="color: gold;">Ver PDF</a></p>
+        <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
+        <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
+        <p><strong>Color:</strong> ${data.color || ''}</p>
+        <p><strong>Email:</strong> ${data.email || ''}</p>
+        <p><strong>PDF:</strong> <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a></p>
+        <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
       `;
 
       listaVehiculos.appendChild(tarjeta);
     });
   }
 
-  // Cargar tarjetas automáticamente al entrar a esa sección
+  // Cargar tarjetas al entrar a la sección
   document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
     .addEventListener("click", () => {
       mostrarSeccion('actualizarDocumentacion');
       cargarVehiculos();
     });
-</script> 
+
+  // Función para editar un vehículo
+  window.editarVehiculo = async function (uid) {
+    const docRef = doc(db, "usuarios_club", uid);
+    const snap = await getDocs(collection(db, "usuarios_club"));
+    const vehiculo = snap.docs.find(d => d.id === uid)?.data();
+
+    if (!vehiculo) {
+      alert("No se encontró el vehículo.");
+      return;
+    }
+
+    const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
+    const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
+    const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
+    const nuevoColor = prompt("Editar color:", vehiculo.color);
+    const nuevoEmail = prompt("Editar email:", vehiculo.email);
+    const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
+
+    try {
+      await updateDoc(docRef, {
+        nombre: nuevoNombre,
+        marca: nuevaMarca,
+        modelo: nuevoModelo,
+        color: nuevoColor,
+        email: nuevoEmail,
+        pdfUrl: nuevoPdfUrl,
+        fechaCarga: new Date()
+      });
+      alert("Vehículo actualizado correctamente.");
+      cargarVehiculos();
+    } catch (err) {
+      console.error(err);
+      alert("Error al actualizar.");
+    }
+  };
+</script>
 </body>
 </html>
