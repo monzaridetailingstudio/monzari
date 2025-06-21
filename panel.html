@@ -137,48 +137,6 @@
       document.getElementById(id).style.display = 'block';
     }
   </script>
-  <!-- Script ÚNICO para guardar vehículo con link de Drive -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-    authDomain: "monzariclub.firebaseapp.com",
-    projectId: "monzariclub",
-    storageBucket: "monzariclub.appspot.com",
-    messagingSenderId: "806224561650",
-    appId: "1:806224561650:web:e7b25afbcb51238928576b"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const form = document.getElementById("formNuevoVehiculo");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const data = {
-      uid: document.getElementById("uid").value.trim(),
-      nombre: document.getElementById("nombre").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      marca: document.getElementById("marca").value.trim(),
-      modelo: document.getElementById("modelo").value.trim(),
-      patente: document.getElementById("patente").value.trim().toUpperCase(),
-      color: document.getElementById("color").value.trim(),
-      pdfUrl: document.getElementById("pdfUrl").value.trim(),
-      fechaCarga: new Date()
-    };
-
-    try {
-      await addDoc(collection(db, "usuarios_club"), data);
-      alert("Vehículo cargado correctamente.");
-      form.reset();
-    } catch (error) {
-      console.error("Error al guardar:", error);
-      alert("Error al guardar el vehículo.");
-    }
-  });
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
