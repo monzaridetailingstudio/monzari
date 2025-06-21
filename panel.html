@@ -14,6 +14,7 @@
     }
     .main-container {
       display: flex;
+      flex-direction: row;
       gap: 40px;
       padding: 30px 20px;
       min-height: 100vh;
@@ -40,13 +41,21 @@
     }
     .btn {
       padding: 10px 15px;
-      background-color: gold;
+      background: linear-gradient(90deg, #f3e07a, #b68d2c);
       color: black;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
-      margin: 5px 0;
+    }
+    .gold-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #f3e07a, #b68d2c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      font-weight: bold;
     }
     .form-group {
       margin-bottom: 15px;
@@ -54,12 +63,29 @@
     .form-group label {
       display: block;
       margin-bottom: 5px;
+      color: #f3e07a;
     }
     .form-group input {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 6px;
+    }
+    .tarjeta-vehiculo {
+      background: #222;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      color: #f3e07a;
+      display: flex;
+      flex-direction: column;
+    }
+    .acciones {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: flex-end;
     }
     @media (max-width: 768px) {
       .main-container {
@@ -71,20 +97,9 @@
         width: 100%;
         margin-bottom: 20px;
       }
-      .contenido-principal {
-        align-items: stretch;
-      }
-      .vehiculo-card {
-        display: flex;
+      .acciones {
+        justify-content: center;
         flex-direction: column;
-        align-items: flex-start;
-      }
-      .vehiculo-actions {
-        display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
       }
     }
   </style>
@@ -98,11 +113,11 @@
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
-        <h2>Hola Gonzalo, bienvenido nuevamente</h2>
+        <h2 class="gold-title">Hola Gonzalo, bienvenido nuevamente</h2>
         <p>Seleccioná una opción del panel lateral para comenzar.</p>
-      </div> 
+      </div>
       <div id="nuevoVehiculo" class="contenido-seccion">
-        <h2 style="color: gold">Cargar nuevo vehículo</h2>
+        <h2 class="gold-title">Cargar nuevo vehículo</h2>
         <form id="formNuevoVehiculo">
           <div class="form-group">
             <label for="uid">UID del cliente</label>
@@ -138,109 +153,20 @@
           </div>
           <button type="submit" class="btn">Guardar</button>
         </form>
-      </div>
-      <div id="actualizarDocumentacion" class="contenido-seccion">
-        <h2 style="color: gold">Actualizar documentación</h2>
-        <div class="form-group">
-          <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
-        </div>
-        <div id="listaVehiculos"></div>
-      </div>
+      </div><div id="actualizarDocumentacion" class="contenido-seccion">
+    <h2 class="gold-title">Actualizar documentación</h2>
+    <div class="form-group">
+      <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
     </div>
+    <div id="listaVehiculos"></div>
+  </div>
+</div>
+
   </main>  <script>
     function mostrarSeccion(id) {
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
       document.getElementById(id).style.display = 'block';
     }
-  </script>  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-      authDomain: "monzariclub.firebaseapp.com",
-      projectId: "monzariclub",
-      storageBucket: "monzariclub.appspot.com",
-      messagingSenderId: "806224561650",
-      appId: "1:806224561650:web:e7b25afbcb51238928576b"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const listaVehiculos = document.getElementById("listaVehiculos");
-
-    async function cargarVehiculos() {
-      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-      listaVehiculos.innerHTML = "";
-
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "vehiculo-card";
-        tarjeta.style.background = "#222";
-        tarjeta.style.padding = "15px";
-        tarjeta.style.marginBottom = "15px";
-        tarjeta.style.borderRadius = "10px";
-        tarjeta.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)";
-        tarjeta.style.color = "gold";
-
-        tarjeta.innerHTML = `
-          <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-          <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-          <p><strong>Color:</strong> ${data.color || ''}</p>
-          <p><strong>Email:</strong> ${data.email || ''}</p>
-          <div class="vehiculo-actions">
-            <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-            <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-          </div>
-        `;
-
-        listaVehiculos.appendChild(tarjeta);
-      });
-    }
-
-    document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-      .addEventListener("click", () => {
-        mostrarSeccion('actualizarDocumentacion');
-        cargarVehiculos();
-      });
-
-    window.editarVehiculo = async function (uid) {
-      const docRef = doc(db, "usuarios_club", uid);
-      const snap = await getDocs(collection(db, "usuarios_club"));
-      const vehiculo = snap.docs.find(d => d.id === uid)?.data();
-
-      if (!vehiculo) {
-        alert("No se encontró el vehículo.");
-        return;
-      }
-
-      const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
-      const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
-      const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
-      const nuevoColor = prompt("Editar color:", vehiculo.color);
-      const nuevoEmail = prompt("Editar email:", vehiculo.email);
-      const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
-
-      try {
-        await updateDoc(docRef, {
-          nombre: nuevoNombre,
-          marca: nuevaMarca,
-          modelo: nuevoModelo,
-          color: nuevoColor,
-          email: nuevoEmail,
-          pdfUrl: nuevoPdfUrl,
-          fechaCarga: new Date()
-        });
-        alert("Vehículo actualizado correctamente.");
-        cargarVehiculos();
-      } catch (err) {
-        console.error(err);
-        alert("Error al actualizar.");
-      }
-    };
   </script></body>
 </html>
