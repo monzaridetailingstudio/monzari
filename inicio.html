@@ -175,7 +175,7 @@
       <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
     </div>
     <div class="contenido-principal">
-      <h2 id="bienvenida">Hola, bienvenido nuevamente a Monzari Club</h2>
+      <h2 id="bienvenida">Hola,<span id="nombreBienvenida"></span>, bienvenido nuevamente a Monzari Club</h2>
       <div id="perfil" class="contenido-seccion">
         <div class="recuadro">
           <h3>Tu Perfil</h3>
@@ -240,7 +240,7 @@
           .then(doc => {
             if (doc.exists) {
               const data = doc.data();
-              document.getElementById("nombre").value = data.nombre || "";
+              document.getElementById("nombreBienvenida").textContent = data.nombre || "usuario";
               document.getElementById("email").value = data.email || "";
             } else {
               console.log("No se encontró el documento del usuario.");
