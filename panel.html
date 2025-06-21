@@ -158,17 +158,17 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const data = {
-      uid: document.getElementById("uid").value.trim(),
-      nombre: document.getElementById("nombre").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      marca: document.getElementById("marca").value.trim(),
-      modelo: document.getElementById("modelo").value.trim(),
-      patente: document.getElementById("patente").value.trim().toUpperCase(),
-      color: document.getElementById("color").value.trim(),
-      pdfUrl: document.getElementById("pdfUrl").value.trim()
-    };
-
+   const data = {
+  uid: uid,
+  nombre: document.getElementById("nombre").value.trim(),
+  email: document.getElementById("email").value.trim(),
+  marca: document.getElementById("marca").value.trim(),
+  modelo: document.getElementById("modelo").value.trim(),
+  patente: document.getElementById("patente").value.trim().toUpperCase(),
+  color: document.getElementById("color").value.trim(),
+  pdfUrl: document.getElementById("pdfUrl").value.trim(),
+  fechaCarga: new Date()
+};
     const uid = data.uid;
 
     try {
