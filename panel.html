@@ -183,5 +183,56 @@
       }
     });
   </script>
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.appspot.com",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const listaVehiculos = document.getElementById("listaVehiculos");
+
+  async function cargarVehiculos() {
+    const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+    listaVehiculos.innerHTML = ""; // Limpiar antes
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+      const tarjeta = document.createElement("div");
+      tarjeta.style.background = "#222";
+      tarjeta.style.padding = "15px";
+      tarjeta.style.marginBottom = "15px";
+      tarjeta.style.borderRadius = "10px";
+      tarjeta.style.boxShadow = "0 0 10px rgba(255,255,255,0.1)";
+
+      tarjeta.innerHTML = `
+        <h3>${data.nombre} (${data.patente})</h3>
+        <p><strong>Marca:</strong> ${data.marca} - <strong>Modelo:</strong> ${data.modelo}</p>
+        <p><strong>Color:</strong> ${data.color}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><a href="${data.pdfUrl}" target="_blank" style="color: gold;">Ver PDF</a></p>
+      `;
+
+      listaVehiculos.appendChild(tarjeta);
+    });
+  }
+
+  // Cargar tarjetas automáticamente al entrar a esa sección
+  document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
+    .addEventListener("click", () => {
+      mostrarSeccion('actualizarDocumentacion');
+      cargarVehiculos();
+    });
+</script> 
 </body>
 </html>
