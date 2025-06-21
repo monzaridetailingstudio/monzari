@@ -260,6 +260,67 @@
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
-  </script></body>
+  </script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.appspot.com",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const serviciosDiv = document.getElementById("servicios");
+
+  async function cargarServiciosCliente() {
+    const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-vehiculo";
+      tarjeta.innerHTML = `
+        <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
+        <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
+        <p><strong>Color:</strong> ${data.color || ''}</p>
+        <div class="acciones">
+          <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
+        </div>
+      `;
+
+      serviciosDiv.appendChild(tarjeta);
+    });
+  }
+
+  document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
+    .addEventListener("click", () => {
+      mostrarSeccion('servicios');
+      cargarServiciosCliente();
+    });
+</script><style>
+  .tarjeta-vehiculo {
+    background: #222;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    color: #f3e07a;
+    display: flex;
+    flex-direction: column;
+  }
+  .acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+</style>
+</body>
 </html>
 
