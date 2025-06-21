@@ -261,9 +261,10 @@
       menu.classList.toggle('active');
     });
   </script>
-  <script type="module">
+ <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -276,10 +277,21 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const auth = getAuth(app);
+
   const serviciosDiv = document.getElementById("servicios");
 
-  async function cargarServiciosCliente() {
-    const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+  async function cargarServiciosCliente(uid) {
+    const q = query(collection(db, "usuarios_club"), where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    serviciosDiv.innerHTML = ""; // Limpiar contenido anterior
+
+    if (querySnapshot.empty) {
+      serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
+      return;
+    }
+
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
 
@@ -301,8 +313,14 @@
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
       mostrarSeccion('servicios');
-      cargarServiciosCliente();
+
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarServiciosCliente(user.uid);
+        }
+      });
     });
+</script>
 </script><style>
   .tarjeta-vehiculo {
     background: #222;
