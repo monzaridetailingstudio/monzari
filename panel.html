@@ -69,48 +69,58 @@
       <button class="btn" onclick="mostrarSeccion('nuevoVehiculo')">Cargar nuevo vehículo</button>
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
     </div>
-    <div class="contenido-principal">
-      <div id="inicio" class="contenido-seccion" style="display:block">
-        <h2>Hola Gonzalo, bienvenido nuevamente</h2>
-        <p>Seleccioná una opción del panel lateral para comenzar.</p>
-      </div><div id="nuevoVehiculo" class="contenido-seccion">
-    <h2>Cargar nuevo vehículo</h2>
-    <form id="formNuevoVehiculo">
-      <div class="form-group">
-        <label for="nombre">Nombre del dueño</label>
-        <input type="text" id="nombre" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" required />
-      </div>
-      <div class="form-group">
-        <label for="marca">Marca</label>
-        <input type="text" id="marca" required />
-      </div>
-      <div class="form-group">
-        <label for="modelo">Modelo</label>
-        <input type="text" id="modelo" required />
-      </div>
-      <div class="form-group">
-        <label for="patente">Patente</label>
-        <input type="text" id="patente" required />
-      </div>
-      <div class="form-group">
-        <label for="color">Color</label>
-        <input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required />
-      </div>
-      <div class="form-group">
-        <label for="pdf">Subir documento PDF</label>
-        <input type="file" id="pdf" accept="application/pdf" required />
-      </div>
-      <button type="submit" class="btn">Guardar</button>
-    </form>
+    <!-- NUEVO VEHÍCULO -->
+<div id="nuevoVehiculo" class="contenido-seccion">
+  <h2>Cargar nuevo vehículo</h2>
+  <form id="formNuevoVehiculo">
+    <div class="form-group">
+      <label for="uid">UID del cliente</label>
+      <input type="text" id="uid" required />
+    </div>
+    <div class="form-group">
+      <label for="nombre">Nombre del dueño</label>
+      <input type="text" id="nombre" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+    </div>
+    <div class="form-group">
+      <label for="marca">Marca</label>
+      <input type="text" id="marca" required />
+    </div>
+    <div class="form-group">
+      <label for="modelo">Modelo</label>
+      <input type="text" id="modelo" required />
+    </div>
+    <div class="form-group">
+      <label for="patente">Patente</label>
+      <input type="text" id="patente" required />
+    </div>
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required />
+    </div>
+    <div class="form-group">
+      <label for="pdf">Subir documento PDF</label>
+      <input type="file" id="pdf" accept="application/pdf" required />
+    </div>
+    <button type="submit" class="btn">Guardar</button>
+  </form>
+</div>
+
+<!-- ACTUALIZAR DOCUMENTACIÓN -->
+<div id="actualizarDocumentacion" class="contenido-seccion">
+  <h2>Actualizar documentación</h2>
+
+  <!-- Buscador -->
+  <div class="form-group">
+    <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
   </div>
 
-  <div id="actualizarDocumentacion" class="contenido-seccion">
-    <h2>Actualizar documentación</h2>
-    <p>Acá iría el buscador de vehículos por patente/email y el botón para subir nuevo PDF. Esto lo programamos después.</p>
+  <!-- Lista de tarjetas de vehículos -->
+  <div id="listaVehiculos">
+    <!-- Las tarjetas se van a cargar dinámicamente desde Firestore -->
   </div>
 </div>
 
