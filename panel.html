@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -71,117 +72,116 @@
     </div>
     <div class="contenido-principal">
       
-     <div id="inicio" class="contenido-seccion" style="display:block">
-  <h2>Hola Gonzalo, bienvenido nuevamente</h2>
-  <p>Seleccioná una opción del panel lateral para comenzar.</p>
-</div> 
-    <!-- NUEVO VEHÍCULO -->
-<div id="nuevoVehiculo" class="contenido-seccion">
-  <h2>Cargar nuevo vehículo</h2>
-  <form id="formNuevoVehiculo">
-    <div class="form-group">
-      <label for="uid">UID del cliente</label>
-      <input type="text" id="uid" required />
-    </div>
-    <div class="form-group">
-      <label for="nombre">Nombre del dueño</label>
-      <input type="text" id="nombre" required />
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" required />
-    </div>
-    <div class="form-group">
-      <label for="marca">Marca</label>
-      <input type="text" id="marca" required />
-    </div>
-    <div class="form-group">
-      <label for="modelo">Modelo</label>
-      <input type="text" id="modelo" required />
-    </div>
-    <div class="form-group">
-      <label for="patente">Patente</label>
-      <input type="text" id="patente" required />
-    </div>
-    <div class="form-group">
-      <label for="color">Color</label>
-      <input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required />
-    </div>
-    <div class="form-group">
-  <label for="pdfUrl">Link del documento PDF (Drive)</label>
-  <input type="url" id="pdfUrl" placeholder="Pegá acá el link de Drive" required />
-   </div>
-    <button type="submit" class="btn">Guardar</button>
-  </form>
-</div>  
+      <div id="inicio" class="contenido-seccion" style="display:block">
+        <h2>Hola Gonzalo, bienvenido nuevamente</h2>
+        <p>Seleccioná una opción del panel lateral para comenzar.</p>
+      </div> 
 
-<!-- ACTUALIZAR DOCUMENTACIÓN -->
-<div id="actualizarDocumentacion" class="contenido-seccion">
-  <h2>Actualizar documentación</h2>
+      <!-- NUEVO VEHÍCULO -->
+      <div id="nuevoVehiculo" class="contenido-seccion">
+        <h2>Cargar nuevo vehículo</h2>
+        <form id="formNuevoVehiculo">
+          <div class="form-group">
+            <label for="uid">UID del cliente</label>
+            <input type="text" id="uid" required />
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre del dueño</label>
+            <input type="text" id="nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+          </div>
+          <div class="form-group">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" required />
+          </div>
+          <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" required />
+          </div>
+          <div class="form-group">
+            <label for="patente">Patente</label>
+            <input type="text" id="patente" required />
+          </div>
+          <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required />
+          </div>
+          <div class="form-group">
+            <label for="pdfUrl">Link del documento PDF (Drive)</label>
+            <input type="url" id="pdfUrl" placeholder="Pegá acá el link de Drive" required />
+          </div>
+          <button type="submit" class="btn">Guardar</button>
+        </form>
+      </div>  
 
-  <!-- Buscador -->
-  <div class="form-group">
-    <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
-  </div>
+      <!-- ACTUALIZAR DOCUMENTACIÓN -->
+      <div id="actualizarDocumentacion" class="contenido-seccion">
+        <h2>Actualizar documentación</h2>
+        <div class="form-group">
+          <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
+        </div>
+        <div id="listaVehiculos">
+          <!-- Las tarjetas se van a cargar dinámicamente desde Firestore -->
+        </div>
+      </div>
+    </div>
+  </main>
 
-  <!-- Lista de tarjetas de vehículos -->
-  <div id="listaVehiculos">
-    <!-- Las tarjetas se van a cargar dinámicamente desde Firestore -->
-  </div>
-</div>
-
-  </main>  <script>
+  <script>
     function mostrarSeccion(id) {
       const secciones = document.querySelectorAll('.contenido-seccion');
       secciones.forEach(sec => sec.style.display = 'none');
       document.getElementById(id).style.display = 'block';
     }
   </script>
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-    authDomain: "monzariclub.firebaseapp.com",
-    projectId: "monzariclub",
-    storageBucket: "monzariclub.appspot.com",
-    messagingSenderId: "806224561650",
-    appId: "1:806224561650:web:e7b25afbcb51238928576b"
-  };
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.appspot.com",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
 
-  const form = document.getElementById("formNuevoVehiculo");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-   const data = {
-  uid: uid,
-  nombre: document.getElementById("nombre").value.trim(),
-  email: document.getElementById("email").value.trim(),
-  marca: document.getElementById("marca").value.trim(),
-  modelo: document.getElementById("modelo").value.trim(),
-  patente: document.getElementById("patente").value.trim().toUpperCase(),
-  color: document.getElementById("color").value.trim(),
-  pdfUrl: document.getElementById("pdfUrl").value.trim(),
-  fechaCarga: new Date()
-};
-    const uid = data.uid;
+    const form = document.getElementById("formNuevoVehiculo");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    try {
-      // Guardamos el documento con el UID como ID del documento
-      await setDoc(doc(db, "usuarios_club", uid), data);
-      alert("Vehículo cargado correctamente.");
-      form.reset();
-    } catch (error) {
-      console.error("Error al guardar:", error);
-      alert("Error al guardar el vehículo.");
-    }
-  });
-</script>
-</script>
+      const uid = document.getElementById("uid").value.trim();
+
+      const data = {
+        uid,
+        nombre: document.getElementById("nombre").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        marca: document.getElementById("marca").value.trim(),
+        modelo: document.getElementById("modelo").value.trim(),
+        patente: document.getElementById("patente").value.trim().toUpperCase(),
+        color: document.getElementById("color").value.trim(),
+        pdfUrl: document.getElementById("pdfUrl").value.trim(),
+        fechaCarga: new Date()
+      };
+
+      try {
+        await setDoc(doc(db, "usuarios_club", uid), data);
+        alert("Vehículo cargado correctamente.");
+        form.reset();
+      } catch (error) {
+        console.error("Error al guardar:", error);
+        alert("Error al guardar el vehículo.");
+      }
+    });
+  </script>
 </body>
 </html>
