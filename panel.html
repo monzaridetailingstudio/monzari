@@ -180,9 +180,9 @@
     }
   });
 </script>
-  <script type="module">
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -211,8 +211,11 @@
       pdfUrl: document.getElementById("pdfUrl").value.trim()
     };
 
+    const uid = data.uid;
+
     try {
-      await addDoc(collection(db, "usuarios_club"), data);
+      // Guardamos el documento con el UID como ID del documento
+      await setDoc(doc(db, "usuarios_club", uid), data);
       alert("Vehículo cargado correctamente.");
       form.reset();
     } catch (error) {
@@ -220,6 +223,7 @@
       alert("Error al guardar el vehículo.");
     }
   });
+</script>
 </script>
 </body>
 </html>
