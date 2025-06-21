@@ -2,50 +2,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel Admin - Monzari Club</title>
+  <title>Panel - Monzari Admin</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
+      background-image: url('images/imagenlogin-panel.jpg');
+      background-size: cover;
+      background-position: center;
       color: white;
-      background: url('images/imagenlogin-panel.jpg') no-repeat center center/cover;
     }
-    .main-container {
-      display: flex;
-      gap: 40px;
-      padding: 30px 20px;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
       min-height: 100vh;
-      background-color: rgba(0, 0, 0, 0.8);
+      padding: 40px 20px;
     }
-    .sidebar {
-      width: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .contenido-principal {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .contenido-seccion {
-      display: none;
+    .contenido {
+      max-width: 700px;
+      margin: 0 auto;
       background-color: #111;
-      padding: 20px;
-      border-radius: 10px;
-      width: 100%;
+      padding: 30px;
+      border-radius: 12px;
     }
-    .btn {
-      padding: 10px 15px;
-      background-color: gold;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
+    h1, h2, h3 {
+      color: gold;
     }
     .form-group {
       margin-bottom: 15px;
@@ -54,35 +36,65 @@
       display: block;
       margin-bottom: 5px;
     }
-    .form-group input {
+    .form-group input, .form-group select {
       width: 100%;
       padding: 10px;
       border: none;
       border-radius: 6px;
     }
+    .btn {
+      background-color: gold;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background-color: #d4af37;
+    }
+    .section {
+      margin-top: 40px;
+    }
+    .search-bar {
+      margin-bottom: 20px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    .listado-vehiculos {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .vehiculo-item {
+      padding: 10px;
+      border-bottom: 1px solid #444;
+    }
   </style>
 </head>
 <body>
-  <main class="main-container">
-    <div class="sidebar">
-      <button class="btn" onclick="mostrarSeccion('inicio')">Inicio</button>
-      <button class="btn" onclick="mostrarSeccion('nuevoVehiculo')">Cargar nuevo vehículo</button>
-      <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
-    </div>
-    <div class="contenido-principal">
-      <div id="inicio" class="contenido-seccion" style="display:block">
-        <h2>Hola Gonzalo, bienvenido nuevamente</h2>
-        <p>Seleccioná una opción del panel lateral para comenzar.</p>
-      </div><div id="nuevoVehiculo" class="contenido-seccion">
-    <h2>Cargar nuevo vehículo</h2>
-    <form id="formNuevoVehiculo">
+  <div class="overlay">
+    <div class="contenido">
+      <h1>Hola Gonzalo, bienvenido nuevamente</h1><div class="section">
+    <h2>Inicio</h2>
+    <p>Desde este panel podés administrar la información de cada cliente y actualizar la documentación cargada.</p>
+  </div>
+
+  <div class="section">
+    <h2 style="color: gold;">Cargar nuevo vehículo</h2>
+    <form id="form-nuevo-auto">
       <div class="form-group">
-        <label for="nombre">Nombre del dueño</label>
-        <input type="text" id="nombre" required />
+        <label for="nombre-dueno">Nombre del dueño</label>
+        <input type="text" id="nombre-dueno" required />
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" required />
+        <label for="email-dueno">Email</label>
+        <input type="email" id="email-dueno" required />
       </div>
       <div class="form-group">
         <label for="marca">Marca</label>
@@ -97,28 +109,30 @@
         <input type="text" id="patente" required />
       </div>
       <div class="form-group">
-        <label for="color">Color</label>
-        <input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required />
+        <label for="color">Color (con código)</label>
+        <input type="text" id="color" required />
       </div>
       <div class="form-group">
-        <label for="pdf">Subir documento PDF</label>
-        <input type="file" id="pdf" accept="application/pdf" required />
+        <label for="archivo-pdf">Seleccionar archivo PDF</label>
+        <input type="file" id="archivo-pdf" accept="application/pdf" required />
       </div>
-      <button type="submit" class="btn">Guardar</button>
+      <button class="btn" type="submit">Cargar vehículo</button>
     </form>
   </div>
 
-  <div id="actualizarDocumentacion" class="contenido-seccion">
+  <div class="section">
     <h2>Actualizar documentación</h2>
-    <p>Acá iría el buscador de vehículos por patente/email y el botón para subir nuevo PDF. Esto lo programamos después.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar por nombre, modelo o patente..." />
+    </div>
+    <div class="listado-vehiculos" id="lista-vehiculos">
+      <div class="vehiculo-item">Audi A4 - Patente ABC123 - Gonzalo</div>
+      <div class="vehiculo-item">BMW 320i - Patente XYZ987 - Pablo</div>
+      <!-- Esto se llenará dinámicamente desde Firestore -->
+    </div>
   </div>
 </div>
 
-  </main>  <script>
-    function mostrarSeccion(id) {
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
-    }
-  </script></body>
+  </div>
+</body>
 </html>
