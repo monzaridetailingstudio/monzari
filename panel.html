@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Administrativo - Monzari</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      color: white;
+    }
+
+    .hero-panel {
+      background-image: url('images/imagen-panel.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .overlay h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: gold;
+    }
+
+    .btn {
+      background-color: gold;
+      border: none;
+      color: black;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      margin: 10px 0;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #e6c200;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-panel">
+    <div class="overlay">
+      <h1>Panel administrativo de Monzari</h1>
+      <button class="btn" onclick="cargarNuevo()">Cargar nuevo vehículo</button>
+      <button class="btn" onclick="actualizarDoc()">Actualizar documentación</button>
+    </div>
+  </div>
+
+  <script>
+    function cargarNuevo() {
+      alert("Función para cargar nuevo vehículo. Próximamente...");
+    }
+
+    function actualizarDoc() {
+      alert("Función para actualizar documentación. Próximamente...");
+    }
+  </script>
+</body>
+</html>
