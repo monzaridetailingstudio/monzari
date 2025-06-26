@@ -216,38 +216,9 @@ const db = getFirestore(app);
 
 // ===================== VEHÍCULOS =====================
 
-const listaVehiculos = document.getElementById("listaVehiculos");
-
-async function cargarVehiculos() {
-  const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-  listaVehiculos.innerHTML = "";
-
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
-
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-vehiculo";
-
-    tarjeta.innerHTML = `
-      <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-      <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-      <p><strong>Color:</strong> ${data.color || ''}</p>
-      <p><strong>Email:</strong> ${data.email || ''}</p>
-      <div class="acciones">
-        <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-        <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-      </div>`;
-
-    listaVehiculos.appendChild(tarjeta);
-  });
-}
-
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarDocumentacion');
-    cargarVehiculos();
-  });
+import {
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; // Asegurate de que esté en los imports
 
 document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -263,7 +234,7 @@ document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e
     fechaCarga: new Date()
   };
   try {
-    await addDoc(collection(db, "usuarios_club"), data);
+    await setDoc(doc(db, "usuarios_club", data.uid), data); // ahora usa el UID como ID
     alert("Vehículo guardado exitosamente.");
     document.getElementById("formNuevoVehiculo").reset();
   } catch (err) {
