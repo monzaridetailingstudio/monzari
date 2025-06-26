@@ -111,8 +111,6 @@
       <button class="btn" onclick="mostrarSeccion('inicio')">Inicio</button>
       <button class="btn" onclick="mostrarSeccion('nuevoVehiculo')">Cargar nuevo vehículo</button>
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
-      <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
-      <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
@@ -138,43 +136,6 @@
         <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
         <div id="listaVehiculos"></div>
       </div>
-<div id="nuevoBeneficio" class="contenido-seccion">
-  <h2 class="gold-title">Cargar nuevo beneficio</h2>
-  <form id="formNuevoBeneficio">
-    <div class="form-group">
-      <label for="uidBeneficio">UID del cliente</label>
-      <input type="text" id="uidBeneficio" required />
-    </div>
-    <div class="form-group">
-      <label for="nombreBeneficio">Nombre completo</label>
-      <input type="text" id="nombreBeneficio" required />
-    </div>
-    <div class="form-group">
-      <label for="emailBeneficio">Email</label>
-      <input type="email" id="emailBeneficio" required />
-    </div>
-    <div class="form-group">
-      <label for="descuentoBeneficio">Porcentaje de descuento</label>
-      <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
-    </div>
-    <div class="form-group">
-      <label for="servicioBeneficio">Servicio en descuento</label>
-      <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
-      <div class="form-group">
-  <label for="fechaFinalizacion">Fecha de finalización</label>
-  <input type="date" id="fechaFinalizacion" required />
-    </div>
-    <button type="submit" class="btn">Guardar</button>
-      <!-- ACTUALIZAR BENEFICIOS -->
-<div id="actualizarBeneficio" class="contenido-seccion">
-  <h2 class="gold-title">Actualizar beneficios</h2>
-  <div class="form-group">
-    <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
-  </div>
-  <div id="listaBeneficios"></div>
-</div>
-  </form>
-</div>
     </div>
   </main>
   <script>
@@ -286,132 +247,6 @@
         alert("Error al actualizar.");
       }
     }
-    document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const data = {
-  uid: document.getElementById("uidBeneficio").value,
-  nombre: document.getElementById("nombreBeneficio").value,
-  email: document.getElementById("emailBeneficio").value,
-  descuento: document.getElementById("descuentoBeneficio").value,
-  servicio: document.getElementById("servicioBeneficio").value,
-  fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
-  fechaCarga: new Date()
-};
-
-  try {
-    await addDoc(collection(db, "beneficios"), data);
-    alert("Beneficio guardado exitosamente.");
-    document.getElementById("formNuevoBeneficio").reset();
-  } catch (err) {
-    console.error(err);
-    alert("Error al guardar el beneficio.");
-  }
-});
-    async function cargarBeneficios() {
-  const querySnapshot = await getDocs(collection(db, "beneficios"));
-  const listaBeneficios = document.getElementById("listaBeneficios");
-  const buscador = document.getElementById("buscadorBeneficio");
-  listaBeneficios.innerHTML = "";
-
-  const beneficios = [];
-
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
-    beneficios.push({ ...data, id });
-  });
-
-  function renderizarLista(filtro = "") {
-    listaBeneficios.innerHTML = "";
-
-    const hoy = new Date().toISOString().split("T")[0];
-
-    beneficios
-      .filter((b) =>
-        Object.values(b).some((val) =>
-          val?.toString().toLowerCase().includes(filtro.toLowerCase())
-        )
-      )
-      .forEach((data) => {
-        const vencido = data.fechaFinalizacion < hoy;
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta-vehiculo";
-        tarjeta.style.opacity = vencido ? "0.5" : "1";
-
-        tarjeta.innerHTML = `
-          <h3>${data.nombre} (${data.email})</h3>
-          <p><strong>UID:</strong> ${data.uid}</p>
-          <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
-          <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
-          <div class="acciones">
-            <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
-            <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
-          </div>
-        `;
-
-        if (vencido) {
-          tarjeta.innerHTML += <p style="color: red;"><strong>Estado:</strong> Cupón vencido</p>;
-        }
-
-        listaBeneficios.appendChild(tarjeta);
-      });
-  }
-
-  renderizarLista();
-
-  buscador.addEventListener("input", (e) => {
-    renderizarLista(e.target.value);
-  });
-}
-    window.editarBeneficio = async function (id) {
-  const ref = doc(db, "beneficios", id);
-  const snapshot = await getDocs(collection(db, "beneficios"));
-  const beneficio = snapshot.docs.find(d => d.id === id)?.data();
-
-  if (!beneficio) return alert("No se encontró el beneficio.");
-
-  const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
-  const nuevoEmail = prompt("Editar email:", beneficio.email);
-  const nuevoUID = prompt("Editar UID:", beneficio.uid);
-  const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
-  const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
-  const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
-
-  try {
-    await updateDoc(ref, {
-      nombre: nuevoNombre,
-      email: nuevoEmail,
-      uid: nuevoUID,
-      descuento: nuevoDescuento,
-      servicio: nuevoServicio,
-      fechaFinalizacion: nuevaFecha
-    });
-    alert("Beneficio actualizado correctamente.");
-    cargarBeneficios();
-  } catch (err) {
-    console.error(err);
-    alert("Error al actualizar.");
-  }
-};
-
-window.borrarBeneficio = async function (id) {
-  if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
-  try {
-    await deleteDoc(doc(db, "beneficios", id));
-    alert("Beneficio eliminado.");
-    cargarBeneficios();
-  } catch (err) {
-    console.error(err);
-    alert("Error al eliminar.");
-  }
-};
-    document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarBeneficio');
-    cargarBeneficios(); // esta función ya la definimos antes
-  });
   </script>
 </body>
 </html>
