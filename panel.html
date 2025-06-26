@@ -306,11 +306,18 @@ window.editarVehiculo = async function (uid) {
 
 // ===================== BENEFICIOS =====================
 
+import {
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; // Asegurate de tenerlo en tus imports
+
 document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const uid = document.getElementById("uidBeneficio").value;
+
   const data = {
-    uid: document.getElementById("uidBeneficio").value,
+    uid: uid,
     nombre: document.getElementById("nombreBeneficio").value,
     email: document.getElementById("emailBeneficio").value,
     descuento: document.getElementById("descuentoBeneficio").value,
@@ -320,7 +327,7 @@ document.getElementById("formNuevoBeneficio").addEventListener("submit", async (
   };
 
   try {
-    await addDoc(collection(db, "beneficios"), data);
+    await setDoc(doc(db, "beneficios", uid), data); // Ahora el documento se guarda con ese UID
     alert("Beneficio guardado exitosamente.");
     document.getElementById("formNuevoBeneficio").reset();
   } catch (err) {
@@ -328,7 +335,6 @@ document.getElementById("formNuevoBeneficio").addEventListener("submit", async (
     alert("Error al guardar el beneficio.");
   }
 });
-
 async function cargarBeneficios() {
   const querySnapshot = await getDocs(collection(db, "beneficios"));
   const listaBeneficios = document.getElementById("listaBeneficios");
