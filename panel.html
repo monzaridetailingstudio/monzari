@@ -139,6 +139,36 @@
         <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
         <div id="listaVehiculos"></div>
       </div>
+      <div id="nuevoBeneficio" class="contenido-seccion">
+  <h2 class="gold-title">Cargar nuevo beneficio</h2>
+  <form id="formNuevoBeneficio">
+    <div class="form-group">
+      <label for="uidBeneficio">UID del cliente</label>
+      <input type="text" id="uidBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="nombreBeneficio">Nombre completo</label>
+      <input type="text" id="nombreBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="emailBeneficio">Email</label>
+      <input type="email" id="emailBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="descuentoBeneficio">Porcentaje de descuento</label>
+      <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
+    </div>
+    <div class="form-group">
+      <label for="servicioBeneficio">Servicio en descuento</label>
+      <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
+    </div>
+    <div class="form-group">
+      <label for="fechaFinalizacion">Fecha de finalización</label>
+      <input type="date" id="fechaFinalizacion" required />
+    </div>
+    <button type="submit" class="btn">Guardar</button>
+  </form>
+</div>
     </div>
   </main>
 
