@@ -459,5 +459,136 @@
         cargarBeneficios();
       });
   </script>
+  // ===================== BENEFICIOS =====================
+
+document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const uid = document.getElementById("uidBeneficio").value;
+
+  const data = {
+    uid: uid,
+    nombre: document.getElementById("nombreBeneficio").value,
+    email: document.getElementById("emailBeneficio").value,
+    descuento: document.getElementById("descuentoBeneficio").value,
+    servicio: document.getElementById("servicioBeneficio").value,
+    fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
+    fechaCarga: new Date()
+  };
+
+  try {
+    await setDoc(doc(db, "beneficios", uid), data);
+    alert("Beneficio guardado exitosamente.");
+    document.getElementById("formNuevoBeneficio").reset();
+  } catch (err) {
+    console.error(err);
+    alert("Error al guardar el beneficio.");
+  }
+});
+
+async function cargarBeneficios() {
+  const querySnapshot = await getDocs(collection(db, "beneficios"));
+  const listaBeneficios = document.getElementById("listaBeneficios");
+  const buscador = document.getElementById("buscadorBeneficio");
+  listaBeneficios.innerHTML = "";
+
+  const beneficios = [];
+
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    const id = docSnap.id;
+    beneficios.push({ ...data, id });
+  });
+
+  function renderizarLista(filtro = "") {
+    listaBeneficios.innerHTML = "";
+    const hoy = new Date().toISOString().split("T")[0];
+
+    beneficios
+      .filter((b) =>
+        Object.values(b).some((val) =>
+          val?.toString().toLowerCase().includes(filtro.toLowerCase())
+        )
+      )
+      .forEach((data) => {
+        const vencido = data.fechaFinalizacion < hoy;
+
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta-vehiculo";
+        tarjeta.style.opacity = vencido ? "0.5" : "1";
+
+        tarjeta.innerHTML = `
+          <h3>${data.nombre} (${data.email})</h3>
+          <p><strong>UID:</strong> ${data.uid}</p>
+          <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
+          <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
+          <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
+          <div class="acciones">
+            <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
+            <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
+          </div>
+        `;
+
+        listaBeneficios.appendChild(tarjeta);
+      });
+  }
+
+  renderizarLista();
+
+  buscador.addEventListener("input", (e) => {
+    renderizarLista(e.target.value);
+  });
+}
+
+window.editarBeneficio = async function (id) {
+  const ref = doc(db, "beneficios", id);
+  const snapshot = await getDocs(collection(db, "beneficios"));
+  const beneficio = snapshot.docs.find(d => d.id === id)?.data();
+
+  if (!beneficio) return alert("No se encontró el beneficio.");
+
+  const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
+  const nuevoEmail = prompt("Editar email:", beneficio.email);
+  const nuevoUID = prompt("Editar UID:", beneficio.uid);
+  const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
+  const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
+  const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
+
+  try {
+    await updateDoc(ref, {
+      nombre: nuevoNombre,
+      email: nuevoEmail,
+      uid: nuevoUID,
+      descuento: nuevoDescuento,
+      servicio: nuevoServicio,
+      fechaFinalizacion: nuevaFecha
+    });
+    alert("Beneficio actualizado correctamente.");
+    cargarBeneficios();
+  } catch (err) {
+    console.error(err);
+    alert("Error al actualizar.");
+  }
+};
+
+window.borrarBeneficio = async function (id) {
+  if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
+  try {
+    await deleteDoc(doc(db, "beneficios", id));
+    alert("Beneficio eliminado.");
+    cargarBeneficios();
+  } catch (err) {
+    console.error(err);
+    alert("Error al eliminar.");
+  }
+};
+
+// Esto asegura que al hacer clic en el botón de la sidebar, se muestre la sección y se carguen los datos
+document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
+  .addEventListener("click", () => {
+    mostrarSeccion('actualizarBeneficio');
+    cargarBeneficios();
+  });
+  </script>
 </body>
 </html>
