@@ -131,6 +131,7 @@
           <button type="submit" class="btn">Guardar</button>
         </form>
       </div>
+
       <div id="actualizarDocumentacion" class="contenido-seccion">
         <h2 class="gold-title">Actualizar documentación</h2>
         <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
@@ -138,6 +139,7 @@
       </div>
     </div>
   </main>
+
   <script>
     function mostrarSeccion(id) {
       const secciones = document.querySelectorAll('.contenido-seccion');
@@ -147,7 +149,16 @@
   </script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      addDoc,
+      doc,
+      setDoc,
+      updateDoc,
+      deleteDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
@@ -160,39 +171,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const listaVehiculos = document.getElementById("listaVehiculos");
 
-    async function cargarVehiculos() {
-      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-      listaVehiculos.innerHTML = "";
-
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta-vehiculo";
-
-        tarjeta.innerHTML = `
-          <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-          <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-          <p><strong>Color:</strong> ${data.color || ''}</p>
-          <p><strong>Email:</strong> ${data.email || ''}</p>
-          <div class="acciones">
-            <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-            <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-          </div>`;
-
-        listaVehiculos.appendChild(tarjeta);
-      });
-    }
-
-    document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-      .addEventListener("click", () => {
-        mostrarSeccion('actualizarDocumentacion');
-        cargarVehiculos();
-      });
-
+    // FORM NUEVO VEHÍCULO
     document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
@@ -206,8 +186,9 @@
         pdfUrl: document.getElementById("pdfUrl").value,
         fechaCarga: new Date()
       };
+
       try {
-        await addDoc(collection(db, "usuarios_club"), data);
+        await setDoc(doc(db, "usuarios_club", data.uid), data);
         alert("Vehículo guardado exitosamente.");
         document.getElementById("formNuevoVehiculo").reset();
       } catch (err) {
@@ -216,10 +197,56 @@
       }
     });
 
+    // CARGAR VEHÍCULOS
+    async function cargarVehiculos() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+      const listaVehiculos = document.getElementById("listaVehiculos");
+      const buscador = document.getElementById("buscador");
+      const vehiculos = [];
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        vehiculos.push({ ...data, id: docSnap.id });
+      });
+
+      function renderizarVehiculos(filtro = "") {
+        listaVehiculos.innerHTML = "";
+        vehiculos
+          .filter((v) =>
+            Object.values(v).some(val =>
+              val?.toString().toLowerCase().includes(filtro.toLowerCase())
+            )
+          )
+          .forEach((data) => {
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-vehiculo";
+            tarjeta.innerHTML = `
+              <h3>${data.nombre} (${data.email})</h3>
+              <p><strong>UID:</strong> ${data.uid}</p>
+              <p><strong>Patente:</strong> ${data.patente}</p>
+              <p><strong>Vehículo:</strong> ${data.marca} ${data.modelo}</p>
+              <p><strong>Color:</strong> ${data.color}</p>
+              <p><a href="${data.pdfUrl}" target="_blank" style="color: lightblue;">Ver documentación</a></p>
+              <div class="acciones">
+                <button class="btn" onclick="editarVehiculo('${data.id}')">Editar</button>
+                <button class="btn" onclick="borrarVehiculo('${data.id}')">Eliminar</button>
+              </div>
+            `;
+            listaVehiculos.appendChild(tarjeta);
+          });
+      }
+
+      renderizarVehiculos();
+
+      buscador.addEventListener("input", (e) => {
+        renderizarVehiculos(e.target.value);
+      });
+    }
+
     window.editarVehiculo = async function (uid) {
-      const docRef = doc(db, "usuarios_club", uid);
-      const snap = await getDocs(collection(db, "usuarios_club"));
-      const vehiculo = snap.docs.find(d => d.id === uid)?.data();
+      const ref = doc(db, "usuarios_club", uid);
+      const snapshot = await getDocs(collection(db, "usuarios_club"));
+      const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
 
       if (!vehiculo) return alert("No se encontró el vehículo.");
 
@@ -231,7 +258,7 @@
       const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
 
       try {
-        await updateDoc(docRef, {
+        await updateDoc(ref, {
           nombre: nuevoNombre,
           marca: nuevaMarca,
           modelo: nuevoModelo,
@@ -246,7 +273,152 @@
         console.error(err);
         alert("Error al actualizar.");
       }
+    };
+
+    window.borrarVehiculo = async function (id) {
+      if (!confirm("¿Seguro que querés eliminar este vehículo?")) return;
+      try {
+        await deleteDoc(doc(db, "usuarios_club", id));
+        alert("Vehículo eliminado.");
+        cargarVehiculos();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar.");
+      }
+    };
+
+    document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
+      .addEventListener("click", () => {
+        mostrarSeccion('actualizarDocumentacion');
+        cargarVehiculos();
+      });
+    document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const uid = document.getElementById("uidBeneficio").value;
+
+      const data = {
+        uid: uid,
+        nombre: document.getElementById("nombreBeneficio").value,
+        email: document.getElementById("emailBeneficio").value,
+        descuento: document.getElementById("descuentoBeneficio").value,
+        servicio: document.getElementById("servicioBeneficio").value,
+        fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
+        fechaCarga: new Date()
+      };
+
+      try {
+        await setDoc(doc(db, "beneficios", uid), data);
+        alert("Beneficio guardado exitosamente.");
+        document.getElementById("formNuevoBeneficio").reset();
+      } catch (err) {
+        console.error(err);
+        alert("Error al guardar el beneficio.");
+      }
+    });
+
+    async function cargarBeneficios() {
+      const querySnapshot = await getDocs(collection(db, "beneficios"));
+      const listaBeneficios = document.getElementById("listaBeneficios");
+      const buscador = document.getElementById("buscadorBeneficio");
+      listaBeneficios.innerHTML = "";
+
+      const beneficios = [];
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const id = docSnap.id;
+        beneficios.push({ ...data, id });
+      });
+
+      function renderizarLista(filtro = "") {
+        listaBeneficios.innerHTML = "";
+        const hoy = new Date().toISOString().split("T")[0];
+
+        beneficios
+          .filter((b) =>
+            Object.values(b).some((val) =>
+              val?.toString().toLowerCase().includes(filtro.toLowerCase())
+            )
+          )
+          .forEach((data) => {
+            const vencido = data.fechaFinalizacion < hoy;
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-vehiculo";
+            tarjeta.style.opacity = vencido ? "0.5" : "1";
+
+            tarjeta.innerHTML = `
+              <h3>${data.nombre} (${data.email})</h3>
+              <p><strong>UID:</strong> ${data.uid}</p>
+              <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
+              <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
+              <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
+              <div class="acciones">
+                <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
+                <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
+              </div>
+            `;
+
+            listaBeneficios.appendChild(tarjeta);
+          });
+      }
+
+      renderizarLista();
+
+      buscador.addEventListener("input", (e) => {
+        renderizarLista(e.target.value);
+      });
     }
+
+    window.editarBeneficio = async function (id) {
+      const ref = doc(db, "beneficios", id);
+      const snapshot = await getDocs(collection(db, "beneficios"));
+      const beneficio = snapshot.docs.find(d => d.id === id)?.data();
+
+      if (!beneficio) return alert("No se encontró el beneficio.");
+
+      const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
+      const nuevoEmail = prompt("Editar email:", beneficio.email);
+      const nuevoUID = prompt("Editar UID:", beneficio.uid);
+      const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
+      const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
+      const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
+
+      try {
+        await updateDoc(ref, {
+          nombre: nuevoNombre,
+          email: nuevoEmail,
+          uid: nuevoUID,
+          descuento: nuevoDescuento,
+          servicio: nuevoServicio,
+          fechaFinalizacion: nuevaFecha
+        });
+        alert("Beneficio actualizado correctamente.");
+        cargarBeneficios();
+      } catch (err) {
+        console.error(err);
+        alert("Error al actualizar.");
+      }
+    };
+
+    window.borrarBeneficio = async function (id) {
+      if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
+      try {
+        await deleteDoc(doc(db, "beneficios", id));
+        alert("Beneficio eliminado.");
+        cargarBeneficios();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar.");
+      }
+    };
+
+    document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
+      .addEventListener("click", () => {
+        mostrarSeccion('actualizarBeneficio');
+        cargarBeneficios();
+      });
   </script>
 </body>
 </html>
