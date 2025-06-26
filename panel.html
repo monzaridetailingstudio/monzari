@@ -407,6 +407,11 @@ window.borrarBeneficio = async function (id) {
     alert("Error al eliminar.");
   }
 };
+    document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
+  .addEventListener("click", () => {
+    mostrarSeccion('actualizarBeneficio');
+    cargarBeneficios(); // esta función ya la definimos antes
+  });
   </script>
 </body>
 </html>
