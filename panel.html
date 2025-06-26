@@ -144,92 +144,25 @@
     <div class="form-group">
       <label for="uidBeneficio">UID del cliente</label>
       <input type="text" id="uidBeneficio" required />
-<main class="main-container">
-  <div class="sidebar">
-    <button class="btn" onclick="mostrarSeccion('inicio')">Inicio</button>
-    <button class="btn" onclick="mostrarSeccion('nuevoVehiculo')">Cargar nuevo vehículo</button>
-    <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
-    <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
-    <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
-  </div>
-  <div class="contenido-principal">
-    <div id="inicio" class="contenido-seccion" style="display:block">
-      <h2 class="gold-title">Hola Gonzalo, bienvenido nuevamente</h2>
-      <p>Seleccioná una opción del panel lateral para comenzar.</p>
     </div>
     <div class="form-group">
       <label for="nombreBeneficio">Nombre completo</label>
       <input type="text" id="nombreBeneficio" required />
-
-    <div id="nuevoVehiculo" class="contenido-seccion">
-      <h2 class="gold-title">Cargar nuevo vehículo</h2>
-      <form id="formNuevoVehiculo">
-        <div class="form-group"><label for="uid">UID del cliente</label><input type="text" id="uid" required /></div>
-        <div class="form-group"><label for="nombre">Nombre del dueño</label><input type="text" id="nombre" required /></div>
-        <div class="form-group"><label for="email">Email</label><input type="email" id="email" required /></div>
-        <div class="form-group"><label for="marca">Marca</label><input type="text" id="marca" required /></div>
-        <div class="form-group"><label for="modelo">Modelo</label><input type="text" id="modelo" required /></div>
-        <div class="form-group"><label for="patente">Patente</label><input type="text" id="patente" required /></div>
-        <div class="form-group"><label for="color">Color</label><input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required /></div>
-        <div class="form-group"><label for="pdfUrl">Link del documento PDF (Drive)</label><input type="url" id="pdfUrl" placeholder="Pegá acá el link de Drive" required /></div>
-        <button type="submit" class="btn">Guardar</button>
-      </form>
     </div>
     <div class="form-group">
       <label for="emailBeneficio">Email</label>
       <input type="email" id="emailBeneficio" required />
-
-    <div id="actualizarDocumentacion" class="contenido-seccion">
-      <h2 class="gold-title">Actualizar documentación</h2>
-      <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
-      <div id="listaVehiculos"></div>
     </div>
     <div class="form-group">
       <label for="descuentoBeneficio">Porcentaje de descuento</label>
       <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
-
-    <div id="nuevoBeneficio" class="contenido-seccion">
-      <h2 class="gold-title">Cargar nuevo beneficio</h2>
-      <form id="formNuevoBeneficio">
-        <div class="form-group">
-          <label for="uidBeneficio">UID del cliente</label>
-          <input type="text" id="uidBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="nombreBeneficio">Nombre completo</label>
-          <input type="text" id="nombreBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="emailBeneficio">Email</label>
-          <input type="email" id="emailBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="descuentoBeneficio">Porcentaje de descuento</label>
-          <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
-        </div>
-        <div class="form-group">
-          <label for="servicioBeneficio">Servicio en descuento</label>
-          <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
-        </div>
-        <div class="form-group">
-          <label for="fechaFinalizacion">Fecha de finalización</label>
-          <input type="date" id="fechaFinalizacion" required />
-        </div>
-        <button type="submit" class="btn">Guardar</button>
-      </form>
     </div>
     <div class="form-group">
       <label for="servicioBeneficio">Servicio en descuento</label>
       <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
-
-    <div id="actualizarBeneficio" class="contenido-seccion">
-      <h2 class="gold-title">Actualizar beneficios</h2>
       <div class="form-group">
   <label for="fechaFinalizacion">Fecha de finalización</label>
-  <input type="date" id="fechaFinalizacion" required />
-        <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
-      </div>
-      <div id="listaBeneficios"></div>
+  <input type="date" id="fechaFinalizacion" required />
     </div>
     <button type="submit" class="btn">Guardar</button>
       <!-- ACTUALIZAR BENEFICIOS -->
@@ -275,31 +208,9 @@
       querySnapshot.forEach((docSnap) => {
         const data = docSnap.data();
         const id = docSnap.id;
-</main>
 
         const tarjeta = document.createElement("div");
         tarjeta.className = "tarjeta-vehiculo";
-<script>
-  function mostrarSeccion(id) {
-    const secciones = document.querySelectorAll('.contenido-seccion');
-    secciones.forEach(sec => sec.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-  }
-</script>
-</head>
-<script type="module">
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  updateDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         tarjeta.innerHTML = `
           <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
@@ -310,27 +221,16 @@ import {
             <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
             <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
           </div>`;
-const firebaseConfig = {
-  apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-  authDomain: "monzariclub.firebaseapp.com",
-  projectId: "monzariclub",
-  storageBucket: "monzariclub.appspot.com",
-  messagingSenderId: "806224561650",
-  appId: "1:806224561650:web:e7b25afbcb51238928576b"
-};
 
         listaVehiculos.appendChild(tarjeta);
       });
     }
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
     document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
       .addEventListener("click", () => {
         mostrarSeccion('actualizarDocumentacion');
         cargarVehiculos();
       });
-// ===================== VEHÍCULOS =====================
 
     document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -353,93 +253,7 @@ const db = getFirestore(app);
         console.error(err);
         alert("Error al guardar el vehículo.");
       }
-const listaVehiculos = document.getElementById("listaVehiculos");
-
-async function cargarVehiculos() {
-  const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-  listaVehiculos.innerHTML = "";
-
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
-
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-vehiculo";
-
-    tarjeta.innerHTML = `
-      <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-      <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-      <p><strong>Color:</strong> ${data.color || ''}</p>
-      <p><strong>Email:</strong> ${data.email || ''}</p>
-      <div class="acciones">
-        <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-        <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-      </div>`;
-
-    listaVehiculos.appendChild(tarjeta);
-  });
-}
-
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarDocumentacion');
-    cargarVehiculos();
-  });
-
-document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = {
-    uid: document.getElementById("uid").value,
-    nombre: document.getElementById("nombre").value,
-    email: document.getElementById("email").value,
-    marca: document.getElementById("marca").value,
-    modelo: document.getElementById("modelo").value,
-    patente: document.getElementById("patente").value,
-    color: document.getElementById("color").value,
-    pdfUrl: document.getElementById("pdfUrl").value,
-    fechaCarga: new Date()
-  };
-  try {
-    await addDoc(collection(db, "usuarios_club"), data);
-    alert("Vehículo guardado exitosamente.");
-    document.getElementById("formNuevoVehiculo").reset();
-  } catch (err) {
-    console.error(err);
-    alert("Error al guardar el vehículo.");
-  }
-});
-
-window.editarVehiculo = async function (uid) {
-  const docRef = doc(db, "usuarios_club", uid);
-  const snapshot = await getDocs(collection(db, "usuarios_club"));
-  const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
-
-  if (!vehiculo) return alert("No se encontró el vehículo.");
-
-  const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
-  const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
-  const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
-  const nuevoColor = prompt("Editar color:", vehiculo.color);
-  const nuevoEmail = prompt("Editar email:", vehiculo.email);
-  const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
-
-  try {
-    await updateDoc(docRef, {
-      nombre: nuevoNombre,
-      marca: nuevaMarca,
-      modelo: nuevoModelo,
-      color: nuevoColor,
-      email: nuevoEmail,
-      pdfUrl: nuevoPdfUrl,
-      fechaCarga: new Date()
     });
-    alert("Vehículo actualizado correctamente.");
-    cargarVehiculos();
-  } catch (err) {
-    console.error(err);
-    alert("Error al actualizar.");
-  }
-}
 
     window.editarVehiculo = async function (uid) {
       const docRef = doc(db, "usuarios_club", uid);
@@ -473,9 +287,6 @@ window.editarVehiculo = async function (uid) {
       }
     }
     document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
-// ===================== BENEFICIOS =====================
-
-document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
@@ -487,14 +298,6 @@ document.getElementById("formNuevoBeneficio").addEventListener("submit", async (
   fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
   fechaCarga: new Date()
 };
-    uid: document.getElementById("uidBeneficio").value,
-    nombre: document.getElementById("nombreBeneficio").value,
-    email: document.getElementById("emailBeneficio").value,
-    descuento: document.getElementById("descuentoBeneficio").value,
-    servicio: document.getElementById("servicioBeneficio").value,
-    fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
-    fechaCarga: new Date()
-  };
 
   try {
     await addDoc(collection(db, "beneficios"), data);
@@ -506,8 +309,6 @@ document.getElementById("formNuevoBeneficio").addEventListener("submit", async (
   }
 });
     async function cargarBeneficios() {
-
-async function cargarBeneficios() {
   const querySnapshot = await getDocs(collection(db, "beneficios"));
   const listaBeneficios = document.getElementById("listaBeneficios");
   const buscador = document.getElementById("buscadorBeneficio");
@@ -544,7 +345,6 @@ async function cargarBeneficios() {
           <p><strong>UID:</strong> ${data.uid}</p>
           <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
           <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
-          <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
           <div class="acciones">
             <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
             <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
@@ -566,8 +366,6 @@ async function cargarBeneficios() {
   });
 }
     window.editarBeneficio = async function (id) {
-
-window.editarBeneficio = async function (id) {
   const ref = doc(db, "beneficios", id);
   const snapshot = await getDocs(collection(db, "beneficios"));
   const beneficio = snapshot.docs.find(d => d.id === id)?.data();
@@ -610,15 +408,10 @@ window.borrarBeneficio = async function (id) {
   }
 };
     document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
-
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
   .addEventListener("click", () => {
     mostrarSeccion('actualizarBeneficio');
     cargarBeneficios(); // esta función ya la definimos antes
-    cargarBeneficios();
   });
   </script>
 </body>
-</script>
-<body>
 </html>
