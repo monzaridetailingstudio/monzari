@@ -147,19 +147,8 @@
   </script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";const firebaseConfig = {
-  apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-  authDomain: "monzariclub.firebaseapp.com",
-  projectId: "monzariclub",
-  storageBucket: "monzariclub.appspot.com",
-  messagingSenderId: "806224561650",
-  appId: "1:806224561650:web:e7b25afbcb51238928576b"
-};
     import { getFirestore, collection, getDocs, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const listaVehiculos = document.getElementById("listaVehiculos");
     const firebaseConfig = {
       apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
       authDomain: "monzariclub.firebaseapp.com",
@@ -169,39 +158,41 @@ const listaVehiculos = document.getElementById("listaVehiculos");
       appId: "1:806224561650:web:e7b25afbcb51238928576b"
     };
 
-async function cargarVehiculos() {
-  const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-  listaVehiculos.innerHTML = "";
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const listaVehiculos = document.getElementById("listaVehiculos");
 
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
+    async function cargarVehiculos() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+      listaVehiculos.innerHTML = "";
 
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-vehiculo";
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const id = docSnap.id;
 
-    tarjeta.innerHTML = `
-      <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-      <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-      <p><strong>Color:</strong> ${data.color || ''}</p>
-      <p><strong>Email:</strong> ${data.email || ''}</p>
-      <div class="acciones">
-        <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-        <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-      </div>`;
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta-vehiculo";
 
-    listaVehiculos.appendChild(tarjeta);
-  });
-}
+        tarjeta.innerHTML = `
+          <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
+          <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
+          <p><strong>Color:</strong> ${data.color || ''}</p>
+          <p><strong>Email:</strong> ${data.email || ''}</p>
+          <div class="acciones">
+            <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
+            <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
+          </div>`;
 
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarDocumentacion');
-    cargarVehiculos();
-  });
+        listaVehiculos.appendChild(tarjeta);
+      });
+    }
+
+    document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
+      .addEventListener("click", () => {
+        mostrarSeccion('actualizarDocumentacion');
+        cargarVehiculos();
+      });
+
     document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
@@ -225,70 +216,13 @@ document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion
       }
     });
 
-window.editarVehiculo = async function (uid) {
-  const docRef = doc(db, "usuarios_club", uid);
-  const snap = await getDocs(collection(db, "usuarios_club"));
-  const vehiculo = snap.docs.find(d => d.id === uid)?.data();
-    async function cargarVehiculos() {
-      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-      listaVehiculos.innerHTML = "";
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta-vehiculo";
-        tarjeta.innerHTML = `
-          <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-          <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-          <p><strong>Color:</strong> ${data.color || ''}</p>
-          <p><strong>Email:</strong> ${data.email || ''}</p>
-          <div class="acciones">
-            <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-            <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-          </div>`;
-        listaVehiculos.appendChild(tarjeta);
-      });
-    }
-
-  if (!vehiculo) {
-    alert("No se encontró el vehículo.");
-    return;
-  }
-    document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-      .addEventListener("click", () => {
-        mostrarSeccion('actualizarDocumentacion');
-        cargarVehiculos();
-      });
-
-  const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
-  const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
-  const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
-  const nuevoColor = prompt("Editar color:", vehiculo.color);
-  const nuevoEmail = prompt("Editar email:", vehiculo.email);
-  const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
     window.editarVehiculo = async function (uid) {
       const docRef = doc(db, "usuarios_club", uid);
       const snap = await getDocs(collection(db, "usuarios_club"));
       const vehiculo = snap.docs.find(d => d.id === uid)?.data();
+
       if (!vehiculo) return alert("No se encontró el vehículo.");
 
-  try {
-    await updateDoc(docRef, {
-      nombre: nuevoNombre,
-      marca: nuevaMarca,
-      modelo: nuevoModelo,
-      color: nuevoColor,
-      email: nuevoEmail,
-      pdfUrl: nuevoPdfUrl,
-      fechaCarga: new Date()
-    });
-    alert("Vehículo actualizado correctamente.");
-    cargarVehiculos();
-  } catch (err) {
-    console.error(err);
-    alert("Error al actualizar.");
-  }
-}
       const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
       const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
       const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
