@@ -1,25 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel Admin - Monzari Club</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio - Monzari Club</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     body {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
+      background-color: #00
       color: white;
-      background: url('images/imagenlogin-panel.jpg') no-repeat center center/cover;
+      font-family: 'Playfair Display', serif;
+      margin: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #111;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    .logo-img {
+      height: 50px;
+      margin-right: 10px;
+    }
+    .logo-text {
+      font-size: 1rem;
+      color: gold;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: gold;
+      display: block;
+      border-radius: 1px;
+    }
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+    }
+    .menu li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
     }
     .main-container {
       display: flex;
       flex-direction: row;
       gap: 40px;
       padding: 30px 20px;
-      min-height: 100vh;
-      background-color: rgba(0, 0, 0, 0.8);
+      min-height: calc(100vh - 120px);
     }
     .sidebar {
       width: 200px;
@@ -34,29 +78,21 @@
       align-items: center;
     }
     .contenido-seccion {
-      display: none;
-      background-color: #111;
+      margin-top: 30px;
       padding: 20px;
+      background-color: #111;
       border-radius: 10px;
       width: 100%;
+      display: none;
     }
-    .btn {
-      padding: 10px 15px;
-      background: linear-gradient(90deg, #f3e07a, #b68d2c);
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .gold-title {
+    #bienvenida {
       font-size: 2rem;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(90deg, #f3e07a, #b68d2c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .recuadro {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/perfil-bg.jpg') no-repeat center center/cover;
+      padding: 20px;
+      border-radius: 12px;
     }
     .form-group {
       margin-bottom: 15px;
@@ -64,7 +100,6 @@
     .form-group label {
       display: block;
       margin-bottom: 5px;
-      color: #f3e07a;
     }
     .form-group input {
       width: 100%;
@@ -72,365 +107,237 @@
       border: none;
       border-radius: 6px;
     }
-    .tarjeta-vehiculo {
-      background: #222;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      color: #f3e07a;
-      display: flex;
-      flex-direction: column;
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      color: white;
     }
-    .acciones {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      justify-content: flex-end;
-    }
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       .main-container {
         flex-direction: column;
+        align-items: center;
       }
       .sidebar {
         flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
         margin-bottom: 20px;
       }
-      .acciones {
-        justify-content: center;
+      .contenido-principal {
+        width: 100%;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .menu {
+        display: none;
         flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background-color: #111;
+      }
+      .menu.active {
+        display: flex;
+      }
+      .logo-text {
+        font-size: 0.9rem;
       }
     }
   </style>
-<main class="main-container">
-  <div class="sidebar">
-    <button class="btn" onclick="mostrarSeccion('inicio')">Inicio</button>
-    <button class="btn" onclick="mostrarSeccion('nuevoVehiculo')">Cargar nuevo vehículo</button>
-    <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
-    <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
-    <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
-  </div>
-  <div class="contenido-principal">
-    <div id="inicio" class="contenido-seccion" style="display:block">
-      <h2 class="gold-title">Hola Gonzalo, bienvenido nuevamente</h2>
-      <p>Seleccioná una opción del panel lateral para comenzar.</p>
-    </div>
-
-    <div id="nuevoVehiculo" class="contenido-seccion">
-      <h2 class="gold-title">Cargar nuevo vehículo</h2>
-      <form id="formNuevoVehiculo">
-        <div class="form-group"><label for="uid">UID del cliente</label><input type="text" id="uid" required /></div>
-        <div class="form-group"><label for="nombre">Nombre del dueño</label><input type="text" id="nombre" required /></div>
-        <div class="form-group"><label for="email">Email</label><input type="email" id="email" required /></div>
-        <div class="form-group"><label for="marca">Marca</label><input type="text" id="marca" required /></div>
-        <div class="form-group"><label for="modelo">Modelo</label><input type="text" id="modelo" required /></div>
-        <div class="form-group"><label for="patente">Patente</label><input type="text" id="patente" required /></div>
-        <div class="form-group"><label for="color">Color</label><input type="text" id="color" placeholder="Ej: Negro - Código XYZ" required /></div>
-        <div class="form-group"><label for="pdfUrl">Link del documento PDF (Drive)</label><input type="url" id="pdfUrl" placeholder="Pegá acá el link de Drive" required /></div>
-        <button type="submit" class="btn">Guardar</button>
-      </form>
-    </div>
-
-    <div id="actualizarDocumentacion" class="contenido-seccion">
-      <h2 class="gold-title">Actualizar documentación</h2>
-      <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
-      <div id="listaVehiculos"></div>
-    </div>
-
-    <div id="nuevoBeneficio" class="contenido-seccion">
-      <h2 class="gold-title">Cargar nuevo beneficio</h2>
-      <form id="formNuevoBeneficio">
-        <div class="form-group">
-          <label for="uidBeneficio">UID del cliente</label>
-          <input type="text" id="uidBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="nombreBeneficio">Nombre completo</label>
-          <input type="text" id="nombreBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="emailBeneficio">Email</label>
-          <input type="email" id="emailBeneficio" required />
-        </div>
-        <div class="form-group">
-          <label for="descuentoBeneficio">Porcentaje de descuento</label>
-          <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
-        </div>
-        <div class="form-group">
-          <label for="servicioBeneficio">Servicio en descuento</label>
-          <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
-        </div>
-        <div class="form-group">
-          <label for="fechaFinalizacion">Fecha de finalización</label>
-          <input type="date" id="fechaFinalizacion" required />
-        </div>
-        <button type="submit" class="btn">Guardar</button>
-      </form>
-    </div>
-
-    <div id="actualizarBeneficio" class="contenido-seccion">
-      <h2 class="gold-title">Actualizar beneficios</h2>
-      <div class="form-group">
-        <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
-      </div>
-      <div id="listaBeneficios"></div>
-    </div>
-  </div>
-</main>
-
-<script>
-  function mostrarSeccion(id) {
-    const secciones = document.querySelectorAll('.contenido-seccion');
-    secciones.forEach(sec => sec.style.display = 'none');
-    document.getElementById(id).style.display = 'block';
-  }
-</script>
 </head>
-<script type="module">
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  updateDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-  authDomain: "monzariclub.firebaseapp.com",
-  projectId: "monzariclub",
-  storageBucket: "monzariclub.appspot.com",
-  messagingSenderId: "806224561650",
-  appId: "1:806224561650:web:e7b25afbcb51238928576b"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// ===================== VEHÍCULOS =====================
-
-const listaVehiculos = document.getElementById("listaVehiculos");
-
-async function cargarVehiculos() {
-  const querySnapshot = await getDocs(collection(db, "usuarios_club"));
-  listaVehiculos.innerHTML = "";
-
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
-
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-vehiculo";
-
-    tarjeta.innerHTML = `
-      <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-      <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-      <p><strong>Color:</strong> ${data.color || ''}</p>
-      <p><strong>Email:</strong> ${data.email || ''}</p>
-      <div class="acciones">
-        <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-        <button class="btn" onclick="editarVehiculo('${id}')">Editar</button>
-      </div>`;
-
-    listaVehiculos.appendChild(tarjeta);
-  });
-}
-
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarDocumentacion');
-    cargarVehiculos();
-  });
-
-document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = {
-    uid: document.getElementById("uid").value,
-    nombre: document.getElementById("nombre").value,
-    email: document.getElementById("email").value,
-    marca: document.getElementById("marca").value,
-    modelo: document.getElementById("modelo").value,
-    patente: document.getElementById("patente").value,
-    color: document.getElementById("color").value,
-    pdfUrl: document.getElementById("pdfUrl").value,
-    fechaCarga: new Date()
-  };
-  try {
-    await addDoc(collection(db, "usuarios_club"), data);
-    alert("Vehículo guardado exitosamente.");
-    document.getElementById("formNuevoVehiculo").reset();
-  } catch (err) {
-    console.error(err);
-    alert("Error al guardar el vehículo.");
-  }
-});
-
-window.editarVehiculo = async function (uid) {
-  const docRef = doc(db, "usuarios_club", uid);
-  const snapshot = await getDocs(collection(db, "usuarios_club"));
-  const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
-
-  if (!vehiculo) return alert("No se encontró el vehículo.");
-
-  const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
-  const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
-  const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
-  const nuevoColor = prompt("Editar color:", vehiculo.color);
-  const nuevoEmail = prompt("Editar email:", vehiculo.email);
-  const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
-
-  try {
-    await updateDoc(docRef, {
-      nombre: nuevoNombre,
-      marca: nuevaMarca,
-      modelo: nuevoModelo,
-      color: nuevoColor,
-      email: nuevoEmail,
-      pdfUrl: nuevoPdfUrl,
-      fechaCarga: new Date()
-    });
-    alert("Vehículo actualizado correctamente.");
-    cargarVehiculos();
-  } catch (err) {
-    console.error(err);
-    alert("Error al actualizar.");
-  }
-}
-
-// ===================== BENEFICIOS =====================
-
-document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const data = {
-    uid: document.getElementById("uidBeneficio").value,
-    nombre: document.getElementById("nombreBeneficio").value,
-    email: document.getElementById("emailBeneficio").value,
-    descuento: document.getElementById("descuentoBeneficio").value,
-    servicio: document.getElementById("servicioBeneficio").value,
-    fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
-    fechaCarga: new Date()
-  };
-
-  try {
-    await addDoc(collection(db, "beneficios"), data);
-    alert("Beneficio guardado exitosamente.");
-    document.getElementById("formNuevoBeneficio").reset();
-  } catch (err) {
-    console.error(err);
-    alert("Error al guardar el beneficio.");
-  }
-});
-
-async function cargarBeneficios() {
-  const querySnapshot = await getDocs(collection(db, "beneficios"));
-  const listaBeneficios = document.getElementById("listaBeneficios");
-  const buscador = document.getElementById("buscadorBeneficio");
-  listaBeneficios.innerHTML = "";
-
-  const beneficios = [];
-
-  querySnapshot.forEach((docSnap) => {
-    const data = docSnap.data();
-    const id = docSnap.id;
-    beneficios.push({ ...data, id });
-  });
-
-  function renderizarLista(filtro = "") {
-    listaBeneficios.innerHTML = "";
-    const hoy = new Date().toISOString().split("T")[0];
-
-    beneficios
-      .filter((b) =>
-        Object.values(b).some((val) =>
-          val?.toString().toLowerCase().includes(filtro.toLowerCase())
-        )
-      )
-      .forEach((data) => {
-        const vencido = data.fechaFinalizacion < hoy;
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta-vehiculo";
-        tarjeta.style.opacity = vencido ? "0.5" : "1";
-
-        tarjeta.innerHTML = `
-          <h3>${data.nombre} (${data.email})</h3>
-          <p><strong>UID:</strong> ${data.uid}</p>
-          <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
-          <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
-          <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
-          <div class="acciones">
-            <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
-            <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
-          </div>
-        `;
-
-        listaBeneficios.appendChild(tarjeta);
-      });
-  }
-
-  renderizarLista();
-
-  buscador.addEventListener("input", (e) => {
-    renderizarLista(e.target.value);
-  });
-}
-
-window.editarBeneficio = async function (id) {
-  const ref = doc(db, "beneficios", id);
-  const snapshot = await getDocs(collection(db, "beneficios"));
-  const beneficio = snapshot.docs.find(d => d.id === id)?.data();
-
-  if (!beneficio) return alert("No se encontró el beneficio.");
-
-  const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
-  const nuevoEmail = prompt("Editar email:", beneficio.email);
-  const nuevoUID = prompt("Editar UID:", beneficio.uid);
-  const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
-  const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
-  const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
-
-  try {
-    await updateDoc(ref, {
-      nombre: nuevoNombre,
-      email: nuevoEmail,
-      uid: nuevoUID,
-      descuento: nuevoDescuento,
-      servicio: nuevoServicio,
-      fechaFinalizacion: nuevaFecha
-    });
-    alert("Beneficio actualizado correctamente.");
-    cargarBeneficios();
-  } catch (err) {
-    console.error(err);
-    alert("Error al actualizar.");
-  }
-};
-
-window.borrarBeneficio = async function (id) {
-  if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
-  try {
-    await deleteDoc(doc(db, "beneficios", id));
-    alert("Beneficio eliminado.");
-    cargarBeneficios();
-  } catch (err) {
-    console.error(err);
-    alert("Error al eliminar.");
-  }
-};
-
-document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('actualizarBeneficio');
-    cargarBeneficios();
-  });
-</script>
 <body>
+  <header>
+    <div class="logo-container">
+      <img src="images/logo-encabezado-monzari.png" alt="Monzari Logo" class="logo-img"/>
+      <div class="logo-text">Monzari Detailing Studios</div>
+    </div>
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="menu" id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="historia.html">Nuestra Historia</a></li>
+        <li><a href="club.html">Monzari Club</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main-container">
+    <div class="sidebar">
+      <button class="btn" onclick="mostrarInicio()">Inicio</button>
+      <button class="btn" onclick="mostrarSeccion('perfil')">Perfil</button>
+      <button class="btn" onclick="mostrarSeccion('servicios')">Servicios</button>
+      <button class="btn" onclick="mostrarSeccion('beneficios')">Beneficios</button>
+    </div>
+    <div class="contenido-principal">
+      <h2 id="bienvenida">Hola, <span id="nombreBienvenida"></span>, bienvenido nuevamente a Monzari Club</h2>
+      <div id="perfil" class="contenido-seccion">
+        <div class="recuadro">
+          <h3>Tu Perfil</h3>
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" readonly />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" readonly />
+          </div>
+          <button onclick="cambiarContrasena()" class="btn">Cambiar contraseña</button>
+        </div>
+      </div>
+      <div id="servicios" class="contenido-seccion">
+        <h3>Servicios contratados</h3>
+        <p>Aquí verás una tabla con tu historial de autos, fechas y links para descargar en PDF.</p>
+      </div>
+      <div id="beneficios" class="contenido-seccion">
+        <h3>Beneficios exclusivos</h3>
+        <p>Promociones y descuentos activos para vos, visibles acá con posibilidad de descarga o activación.</p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Monzari Detailing Studios. Todos los derechos reservados.</p>
+  </footer>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.firebasestorage.app",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function mostrarInicio() {
+      document.getElementById('bienvenida').style.display = 'block';
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+    }
+
+    function mostrarSeccion(seccionId) {
+      document.getElementById('bienvenida').style.display = 'none';
+      const secciones = document.querySelectorAll('.contenido-seccion');
+      secciones.forEach(sec => sec.style.display = 'none');
+      document.getElementById(seccionId).style.display = 'block';
+    }
+
+    function cambiarContrasena() {
+      alert('Función para cambiar la contraseña (futura implementación).');
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        const uid = user.uid;
+        db.collection("Usuarios").doc(uid).get()
+          .then(doc => {
+            if (doc.exists) {
+              const data = doc.data();
+              document.getElementById("nombre").value = data.nombre || "";
+              document.getElementById("email").value = data.email || "";
+              document.getElementById("nombreBienvenida").textContent = data.nombre || "usuario";
+            } else {
+              console.log("No se encontró el documento del usuario.");
+            }
+          })
+          .catch(error => {
+            console.error("Error al obtener los datos:", error);
+          });
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.appspot.com",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const serviciosDiv = document.getElementById("servicios");
+
+  async function cargarServiciosCliente(uid) {
+    const q = query(collection(db, "usuarios_club"), where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    serviciosDiv.innerHTML = ""; // Limpiar contenido anterior
+
+    if (querySnapshot.empty) {
+      serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
+      return;
+    }
+
+    querySnapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-vehiculo";
+      tarjeta.innerHTML = `
+        <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
+        <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
+        <p><strong>Color:</strong> ${data.color || ''}</p>
+        <div class="acciones">
+          <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
+        </div>
+      `;
+
+      serviciosDiv.appendChild(tarjeta);
+    });
+  }
+
+  document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
+    .addEventListener("click", () => {
+      mostrarSeccion('servicios');
+
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarServiciosCliente(user.uid);
+        }
+      });
+    });
+</script>
+</script><style>
+  .tarjeta-vehiculo {
+    background: #222;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    color: #f3e07a;
+    display: flex;
+    flex-direction: column;
+  }
+  .acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+</style>
+</body>
 </html>
