@@ -160,6 +160,9 @@
     <div class="form-group">
       <label for="servicioBeneficio">Servicio en descuento</label>
       <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
+      <div class="form-group">
+  <label for="fechaFinalizacion">Fecha de finalización</label>
+  <input type="date" id="fechaFinalizacion" required />
     </div>
     <button type="submit" class="btn">Guardar</button>
   </form>
@@ -279,13 +282,14 @@
   e.preventDefault();
 
   const data = {
-    uid: document.getElementById("uidBeneficio").value,
-    nombre: document.getElementById("nombreBeneficio").value,
-    email: document.getElementById("emailBeneficio").value,
-    descuento: document.getElementById("descuentoBeneficio").value,
-    servicio: document.getElementById("servicioBeneficio").value,
-    fechaCarga: new Date()
-  };
+  uid: document.getElementById("uidBeneficio").value,
+  nombre: document.getElementById("nombreBeneficio").value,
+  email: document.getElementById("emailBeneficio").value,
+  descuento: document.getElementById("descuentoBeneficio").value,
+  servicio: document.getElementById("servicioBeneficio").value,
+  fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
+  fechaCarga: new Date()
+};
 
   try {
     await addDoc(collection(db, "beneficios"), data);
