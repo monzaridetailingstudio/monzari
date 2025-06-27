@@ -328,14 +328,10 @@
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo"; // Mismo estilo que servicios
       tarjeta.innerHTML = `
-        <h3>${data.nombre || 'Beneficio sin nombre'}</h3>
-        <p><strong>Descuento:</strong> ${data.descuento}%</p>
-        <p><strong>Servicio:</strong> ${data.servicio || 'No especificado'}</p>
-        <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion || 'Sin fecha'}</p>
-        <p><strong>Email:</strong> ${data.email || ''}</p>
-        <p><strong>UID:</strong> ${data.uid || ''}</p>
-        <p><strong>Fecha de carga:</strong> ${data.fechaCarga?.toDate ? data.fechaCarga.toDate().toLocaleString() : ''}</p>
-      `;
+     <p style="font-size: 1.2rem; font-weight: bold;">${data.descuento}% OFF</p>
+     <p style="margin: 5px 0;">EN SERVICIO ${data.servicio}</p>
+     <p style="font-size: 0.9rem;">VÁLIDO HASTA ${data.fechaFinalizacion}</p>
+    `;
 
       beneficiosDiv.appendChild(tarjeta);
     } catch (error) {
