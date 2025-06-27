@@ -790,14 +790,20 @@ footer {
   box-shadow: 0 0 15px rgba(243, 224, 122, 0.8);
   transform: scale(1.05);
 }
-      .tarjeta-beneficio {
-  cursor: default; /* Para que no parezca clickeable */
-  pointer-events: none; /* No se comporta como botón */
+.tarjeta-beneficio {
+  background-color: #000; /* fondo negro */
+  color: #f3e07a; /* color oro */
+  border: 2px solid #f3e07a; /* borde dorado */
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: 'Playfair Display', serif; /* fuente elegante */
+  font-weight: 700;
+  font-size: 1rem;
   width: fit-content;
   max-width: 90%;
-  margin: 10px auto;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 16px 20px;
+  cursor: default;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(243, 224, 122, 0.3); /* opcional: leve glow */
 }
