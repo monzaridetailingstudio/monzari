@@ -304,13 +304,17 @@
 
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo";
-      tarjeta.innerHTML = `
-        <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-        <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-        <p><strong>Color:</strong> ${data.color || ''}</p>
-        <div class="acciones">
-          <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-        </div>
+    tarjeta.innerHTML = `
+  <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
+  <div class="marca-modelo">
+    <p><strong>Marca:</strong> ${data.marca || ''}</p>
+    <p><strong>Modelo:</strong> ${data.modelo || ''}</p>
+  </div>
+  <p><strong>Color:</strong> ${data.color || ''}</p>
+  <div class="acciones">
+    <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
+  </div>
+`;
       `;
 
       serviciosDiv.appendChild(tarjeta);
