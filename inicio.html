@@ -295,7 +295,6 @@
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
-
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo";
       tarjeta.innerHTML = `
@@ -306,7 +305,6 @@
           <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
         </div>
       `;
-
       serviciosDiv.appendChild(tarjeta);
     });
   }
@@ -324,13 +322,11 @@
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
-
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo";
       tarjeta.style.border = "1px solid #f3e07a";
       tarjeta.style.padding = "10px";
       tarjeta.style.marginBottom = "10px";
-
       tarjeta.innerHTML = `
         <h4 style="margin: 0;">${data.descuento}% OFF</h4>
         <p style="margin: 5px 0;"><strong>${data.servicio}</strong></p>
@@ -339,23 +335,20 @@
           <button class="btn" onclick="usarBeneficio('${data.uid}', '${data.email}')">Usar</button>
         </div>
       `;
-
       beneficiosDiv.appendChild(tarjeta);
     });
   }
 
   window.usarBeneficio = function (uid, email) {
     alert(Enviando código de uso a ${email} (uid: ${uid}));
-    // Acá podrías agregar lógica real para enviar el código
+    // Si agregás backend, acá iría la lógica de envío real
   };
 
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
       mostrarSeccion('servicios');
       onAuthStateChanged(auth, user => {
-        if (user) {
-          cargarServiciosCliente(user.uid);
-        }
+        if (user) cargarServiciosCliente(user.uid);
       });
     });
 
@@ -363,30 +356,10 @@
     .addEventListener("click", () => {
       mostrarSeccion('beneficios');
       onAuthStateChanged(auth, user => {
-        if (user) {
-          cargarBeneficiosCliente(user.uid);
-        }
+        if (user) cargarBeneficiosCliente(user.uid);
       });
     });
 </script>
-
-<style>
-  .tarjeta-vehiculo {
-    background: #222;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    color: #f3e07a;
-    display: flex;
-    flex-direction: column;
-  }
-  .acciones {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: flex-end;
-  }
 </style>
 </body>
 </html>
