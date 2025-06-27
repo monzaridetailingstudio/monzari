@@ -351,6 +351,15 @@ async function cargarBeneficiosCliente(uid) {
         }
       });
     });
+   document.querySelector("button[onclick=\"mostrarSeccion('beneficios')\"]")
+  .addEventListener("click", () => {
+    mostrarSeccion('beneficios');
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        cargarBeneficiosCliente(user.uid);
+      }
+    });
+  });
 </script>
 </script><style>
   .tarjeta-vehiculo {
