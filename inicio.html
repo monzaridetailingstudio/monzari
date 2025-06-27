@@ -263,7 +263,7 @@
   </script>
  <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
@@ -280,6 +280,7 @@ import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "ht
   const auth = getAuth(app);
 
   const serviciosDiv = document.getElementById("servicios");
+  const beneficiosDiv = document.getElementById("beneficios");
 
   async function cargarServiciosCliente(uid) {
     const q = query(collection(db, "usuarios_club"), where("uid", "==", uid));
@@ -291,37 +292,6 @@ import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "ht
       serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
       return;
     }
-    const beneficiosDiv = document.getElementById("beneficios");
-
-async function cargarBeneficiosCliente(uid) {
-  beneficiosDiv.innerHTML = ""; // Limpiar contenido anterior
-
-  try {
-    const docRef = doc(db, "beneficios", uid);
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      beneficiosDiv.innerHTML = "<p style='color:white;'>No tenés beneficios activos en este momento.</p>";
-      return;
-    }
-
-    const data = docSnap.data();
-
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-vehiculo"; // Mismo estilo que servicios
-    tarjeta.innerHTML = `
-      <h3>${data.nombre || 'Beneficio sin nombre'}</h3>
-      <p><strong>Descuento:</strong> ${data.descuento}%</p>
-      <p><strong>Servicio:</strong> ${data.servicio || 'No especificado'}</p>
-      <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion || 'Sin fecha'}</p>
-    `;
-
-    beneficiosDiv.appendChild(tarjeta);
-  } catch (error) {
-    console.error("Error al cargar beneficios:", error);
-    beneficiosDiv.innerHTML = "<p style='color:white;'>Ocurrió un error al cargar tus beneficios.</p>";
-  }
-}
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
@@ -341,25 +311,58 @@ async function cargarBeneficiosCliente(uid) {
     });
   }
 
+  async function cargarBeneficiosCliente(uid) {
+    beneficiosDiv.innerHTML = ""; // Limpiar contenido anterior
+
+    try {
+      const docRef = doc(db, "beneficios", uid);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        beneficiosDiv.innerHTML = "<p style='color:white;'>No tenés beneficios activos en este momento.</p>";
+        return;
+      }
+
+      const data = docSnap.data();
+
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-vehiculo"; // Mismo estilo que servicios
+      tarjeta.innerHTML = `
+        <h3>${data.nombre || 'Beneficio sin nombre'}</h3>
+        <p><strong>Descuento:</strong> ${data.descuento}%</p>
+        <p><strong>Servicio:</strong> ${data.servicio || 'No especificado'}</p>
+        <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion || 'Sin fecha'}</p>
+        <p><strong>Email:</strong> ${data.email || ''}</p>
+        <p><strong>UID:</strong> ${data.uid || ''}</p>
+        <p><strong>Fecha de carga:</strong> ${data.fechaCarga?.toDate ? data.fechaCarga.toDate().toLocaleString() : ''}</p>
+      `;
+
+      beneficiosDiv.appendChild(tarjeta);
+    } catch (error) {
+      console.error("Error al cargar beneficios:", error);
+      beneficiosDiv.innerHTML = "<p style='color:white;'>Ocurrió un error al cargar tus beneficios.</p>";
+    }
+  }
+
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
       mostrarSeccion('servicios');
-
       onAuthStateChanged(auth, user => {
         if (user) {
           cargarServiciosCliente(user.uid);
         }
       });
     });
-   document.querySelector("button[onclick=\"mostrarSeccion('beneficios')\"]")
-  .addEventListener("click", () => {
-    mostrarSeccion('beneficios');
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        cargarBeneficiosCliente(user.uid);
-      }
+
+  document.querySelector("button[onclick=\"mostrarSeccion('beneficios')\"]")
+    .addEventListener("click", () => {
+      mostrarSeccion('beneficios');
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarBeneficiosCliente(user.uid);
+        }
+      });
     });
-  });
 </script>
 </script><style>
   .tarjeta-vehiculo {
