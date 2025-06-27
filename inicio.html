@@ -266,6 +266,7 @@
   import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+  // Configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
     authDomain: "monzariclub.firebaseapp.com",
@@ -295,6 +296,7 @@
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
+
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo";
       tarjeta.innerHTML = `
@@ -305,6 +307,7 @@
           <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
         </div>
       `;
+
       serviciosDiv.appendChild(tarjeta);
     });
   }
@@ -322,11 +325,13 @@
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
+
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta-vehiculo";
       tarjeta.style.border = "1px solid #f3e07a";
       tarjeta.style.padding = "10px";
       tarjeta.style.marginBottom = "10px";
+
       tarjeta.innerHTML = `
         <h4 style="margin: 0;">${data.descuento}% OFF</h4>
         <p style="margin: 5px 0;"><strong>${data.servicio}</strong></p>
@@ -335,29 +340,35 @@
           <button class="btn" onclick="usarBeneficio('${data.uid}', '${data.email}')">Usar</button>
         </div>
       `;
+
       beneficiosDiv.appendChild(tarjeta);
     });
   }
 
   window.usarBeneficio = function (uid, email) {
     alert(Enviando código de uso a ${email} (uid: ${uid}));
-    // Si agregás backend, acá iría la lógica de envío real
+    // Aquí podés agregar la lógica para enviar el código real si querés
   };
+
+  function esperarAuthYMostrarSeccion(seccionId, callback) {
+    mostrarSeccion(seccionId);
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        callback(user.uid);
+      } else {
+        window.location.href = "login.html"; // redirigir si no hay usuario logueado
+      }
+    });
+  }
 
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
-      mostrarSeccion('servicios');
-      onAuthStateChanged(auth, user => {
-        if (user) cargarServiciosCliente(user.uid);
-      });
+      esperarAuthYMostrarSeccion("servicios", cargarServiciosCliente);
     });
 
   document.querySelector("button[onclick=\"mostrarSeccion('beneficios')\"]")
     .addEventListener("click", () => {
-      mostrarSeccion('beneficios');
-      onAuthStateChanged(auth, user => {
-        if (user) cargarBeneficiosCliente(user.uid);
-      });
+      esperarAuthYMostrarSeccion("beneficios", cargarBeneficiosCliente);
     });
 </script>
 </style>
