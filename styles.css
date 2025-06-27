@@ -790,3 +790,14 @@ footer {
   box-shadow: 0 0 15px rgba(243, 224, 122, 0.8);
   transform: scale(1.05);
 }
+      .tarjeta-beneficio {
+  cursor: default; /* Para que no parezca clickeable */
+  pointer-events: none; /* No se comporta como botón */
+  width: fit-content;
+  max-width: 90%;
+  margin: 10px auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 16px 20px;
+}
