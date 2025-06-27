@@ -261,12 +261,12 @@
       menu.classList.toggle('active');
     });
   </script>
+ <script type="module">
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // Configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
     authDomain: "monzariclub.firebaseapp.com",
@@ -287,9 +287,11 @@
     const q = query(collection(db, "usuarios_club"), where("uid", "==", uid));
     const querySnapshot = await getDocs(q);
 
+    serviciosDiv.innerHTML = ""; // Limpiar contenido anterior
     serviciosDiv.innerHTML = "<h3>Servicios contratados</h3>";
 
     if (querySnapshot.empty) {
+      serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
       serviciosDiv.innerHTML += "<p style='color:white;'>No tenés servicios cargados aún.</p>";
       return;
     }
@@ -311,6 +313,42 @@
       serviciosDiv.appendChild(tarjeta);
     });
   }
+
+  document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
+    .addEventListener("click", () => {
+      mostrarSeccion('servicios');
+
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarServiciosCliente(user.uid);
+        }
+      });
+    });
+</script>
+</script><style>
+  .tarjeta-vehiculo {
+    background: #222;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    color: #f3e07a;
+    display: flex;
+    flex-direction: column;
+  }
+  .acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+  <script type="module">
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const db = getFirestore();
+  const auth = getAuth();
+  const beneficiosDiv = document.getElementById("beneficios");
 
   async function cargarBeneficiosCliente(uid) {
     const q = query(collection(db, "beneficios"), where("uid", "==", uid));
@@ -347,31 +385,48 @@
 
   window.usarBeneficio = function (uid, email) {
     alert(Enviando código de uso a ${email} (uid: ${uid}));
-    // Aquí podés agregar la lógica para enviar el código real si querés
+    // Acá podés agregar lógica para enviar por correo si tenés backend o funciones de Firebase
+    // Acá podrías agregar lógica real para enviar el código
   };
-
-  function esperarAuthYMostrarSeccion(seccionId, callback) {
-    mostrarSeccion(seccionId);
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        callback(user.uid);
-      } else {
-        window.location.href = "login.html"; // redirigir si no hay usuario logueado
-      }
-    });
-  }
 
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
-      esperarAuthYMostrarSeccion("servicios", cargarServiciosCliente);
+      mostrarSeccion('servicios');
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarServiciosCliente(user.uid);
+        }
+      });
     });
 
   document.querySelector("button[onclick=\"mostrarSeccion('beneficios')\"]")
     .addEventListener("click", () => {
-      esperarAuthYMostrarSeccion("beneficios", cargarBeneficiosCliente);
+      mostrarSeccion('beneficios');
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          cargarBeneficiosCliente(user.uid);
+        }
+      });
     });
 </script>
+
+<style>
+  .tarjeta-vehiculo {
+    background: #222;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    color: #f3e07a;
+    display: flex;
+    flex-direction: column;
+  }
+  .acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
 </style>
 </body>
 </html>
-
