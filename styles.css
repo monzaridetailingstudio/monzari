@@ -824,14 +824,3 @@ footer {
   pointer-events: none;
   box-shadow: 0 0 10px rgba(243, 224, 122, 0.3); /* opcional: leve glow */
 }
-.marca-modelo {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-}
-@media (max-width: 767px) {
-  .marca-modelo {
-    flex-direction: column;
-    gap: 4px;
-  }
-}
