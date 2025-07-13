@@ -288,39 +288,20 @@
   const serviciosDiv = document.getElementById("servicios");
   const beneficiosDiv = document.getElementById("beneficios");
 
-  async function cargarServiciosCliente(uid) {
-    const q = query(collection(db, "usuarios_club"), where("uid", "==", uid));
-    const querySnapshot = await getDocs(q);
+ async function cargarServiciosCliente(uid) {
   const q = query(collection(db, "vehiculos_club"), where("uid", "==", uid));
   const querySnapshot = await getDocs(q);
 
-    serviciosDiv.innerHTML = ""; // Limpiar contenido anterior
   serviciosDiv.innerHTML = ""; // Limpiar contenido anterior
 
-    if (querySnapshot.empty) {
-      serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
-      return;
-    }
   if (querySnapshot.empty) {
     serviciosDiv.innerHTML = "<p style='color:white;'>No tenés servicios cargados aún.</p>";
     return;
   }
 
-    querySnapshot.forEach((docSnap) => {
-      const data = docSnap.data();
   querySnapshot.forEach((docSnap) => {
     const data = docSnap.data();
 
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "tarjeta-vehiculo";
-  tarjeta.innerHTML = `
-  <h3>${data.nombre || 'Sin nombre'} (${data.patente || 'Sin patente'})</h3>
-  <p><strong>Marca:</strong> ${data.marca || ''} - <strong>Modelo:</strong> ${data.modelo || ''}</p>
-  <p><strong>Color:</strong> ${data.color || ''}</p>
-  <div class="acciones">
-    <a href="${data.pdfUrl}" target="_blank" class="btn">Ver PDF</a>
-  </div>
-`;    
     const tarjeta = document.createElement("div");
     tarjeta.className = "tarjeta-vehiculo";
     tarjeta.innerHTML = `
@@ -332,8 +313,9 @@
       </div>
     `;
 
-      serviciosDiv.appendChild(tarjeta);
-    });
+    serviciosDiv.appendChild(tarjeta);
+  });
+}
   }
     serviciosDiv.appendChild(tarjeta);
   });
