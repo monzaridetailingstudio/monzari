@@ -317,34 +317,62 @@
   });
 }
 
-  async function cargarBeneficiosCliente(uid) {
-    beneficiosDiv.innerHTML = ""; // Limpiar contenido anterior
+  import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    try {
-      const docRef = doc(db, "beneficios", uid);
-      const docSnap = await getDoc(docRef);
+async function cargarBeneficiosCliente(uid) {
+  beneficiosDiv.innerHTML = "";
 
-      if (!docSnap.exists()) {
-        beneficiosDiv.innerHTML = "<p style='color:white;'>No tenés beneficios activos en este momento.</p>";
-        return;
-      }
+  try {
+    const q = query(collection(db, "beneficios"), where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
 
-      const data = docSnap.data();
-
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "tarjeta-beneficio"; // Mismo estilo que servicios
-      tarjeta.innerHTML = `
-     <p style="font-size: 1.2rem; font-weight: bold;">${data.descuento}% OFF</p>
-     <p style="margin: 5px 0;">En Servicio: ${data.servicio}</p>
-     <p style="font-size: 0.9rem;">Valido Hasta: ${data.fechaFinalizacion}</p>
-    `;
-
-      beneficiosDiv.appendChild(tarjeta);
-    } catch (error) {
-      console.error("Error al cargar beneficios:", error);
-      beneficiosDiv.innerHTML = "<p style='color:white;'>Ocurrió un error al cargar tus beneficios.</p>";
+    if (querySnapshot.empty) {
+      beneficiosDiv.innerHTML = "<p style='color:white;'>No tenés beneficios activos.</p>";
+      return;
     }
+
+    const hoy = new Date();
+    let vigentes = [];
+    let vencidos = [];
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const fecha = new Date(data.fechaFinalizacion);
+
+      if (fecha >= hoy) {
+        vigentes.push(data);
+      } else {
+        vencidos.push(data);
+      }
+    });
+
+    vigentes.forEach(data => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-beneficio";
+      tarjeta.innerHTML = `
+        <p style="font-size: 1.2rem; font-weight: bold;">${data.descuento}% OFF</p>
+        <p style="margin: 5px 0;">En Servicio: ${data.servicio}</p>
+        <p style="font-size: 0.9rem;">Válido hasta: ${data.fechaFinalizacion}</p>
+      `;
+      beneficiosDiv.appendChild(tarjeta);
+    });
+
+    vencidos.forEach(data => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta-beneficio tarjeta-vencida";
+      tarjeta.innerHTML = `
+        <p style="font-size: 1.2rem; font-weight: bold;">${data.descuento}% OFF</p>
+        <p style="margin: 5px 0;">En Servicio: ${data.servicio}</p>
+        <p style="font-size: 0.9rem;">Venció el: ${data.fechaFinalizacion}</p>
+      `;
+      beneficiosDiv.appendChild(tarjeta);
+    });
+
+  } catch (error) {
+    console.error("Error al cargar beneficios:", error);
+    beneficiosDiv.innerHTML = "<p style='color:white;'>Ocurrió un error al cargar tus beneficios.</p>";
   }
+}
 
   document.querySelector("button[onclick=\"mostrarSeccion('servicios')\"]")
     .addEventListener("click", () => {
