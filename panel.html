@@ -453,9 +453,8 @@
         mostrarSeccion('actualizarBeneficio');  
         cargarBeneficios();  
       });  
-  </script>  // ===================== BENEFICIOS =====================
-
-document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
+  </script>
+   document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
 e.preventDefault();
 
 const uid = document.getElementById("uidBeneficio").value;
@@ -522,8 +521,7 @@ beneficios
         <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>  
       </div>  
     `;  
-
-    listaBeneficios.appendChild(tarjeta);  
+       istaBeneficios.appendChild(tarjeta);  
   });
 
 }
