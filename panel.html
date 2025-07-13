@@ -1,12 +1,11 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Admin - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -114,8 +113,6 @@
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
       <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
       <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
-      <button class="btn" onclick="mostrarSeccion('nuevoTurno')">Cargar nuevo turno</button>
-      <button class="btn" onclick="mostrarSeccion('Turnos')">Turnos</button>
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
@@ -136,102 +133,52 @@
           <button type="submit" class="btn">Guardar</button>
         </form>
       </div>
+
       <div id="actualizarDocumentacion" class="contenido-seccion">
         <h2 class="gold-title">Actualizar documentación</h2>
-        <div class="form-group">
-          <input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." />
-        </div>
+        <div class="form-group"><input type="text" id="buscador" placeholder="Buscar por nombre, patente, modelo, etc..." /></div>
         <div id="listaVehiculos"></div>
       </div>
-
       <div id="nuevoBeneficio" class="contenido-seccion">
-        <h2 class="gold-title">Cargar nuevo beneficio</h2>
-        <form id="formNuevoBeneficio">
-          <div class="form-group">
-            <label for="uidBeneficio">UID del cliente</label>
-            <input type="text" id="uidBeneficio" required />
-          </div>
-          <div class="form-group">
-            <label for="nombreBeneficio">Nombre completo</label>
-            <input type="text" id="nombreBeneficio" required />
-          </div>
-          <div class="form-group">
-            <label for="emailBeneficio">Email</label>
-            <input type="email" id="emailBeneficio" required />
-          </div>
-          <div class="form-group">
-            <label for="descuentoBeneficio">Porcentaje de descuento</label>
-            <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
-          </div>
-          <div class="form-group">
-            <label for="servicioBeneficio">Servicio en descuento</label>
-            <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
-          </div>
-          <div class="form-group">
-            <label for="fechaFinalizacion">Fecha de finalización</label>
-            <input type="date" id="fechaFinalizacion" required />
-          </div>
-          <button type="submit" class="btn">Guardar</button>
-        </form>
-      </div>
-
+  <h2 class="gold-title">Cargar nuevo beneficio</h2>
+  <form id="formNuevoBeneficio">
+    <div class="form-group">
+      <label for="uidBeneficio">UID del cliente</label>
+      <input type="text" id="uidBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="nombreBeneficio">Nombre completo</label>
+      <input type="text" id="nombreBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="emailBeneficio">Email</label>
+      <input type="email" id="emailBeneficio" required />
+    </div>
+    <div class="form-group">
+      <label for="descuentoBeneficio">Porcentaje de descuento</label>
+      <input type="number" id="descuentoBeneficio" placeholder="Ej: 10" required />
+    </div>
+    <div class="form-group">
+      <label for="servicioBeneficio">Servicio en descuento</label>
+      <input type="text" id="servicioBeneficio" placeholder="Ej: Lavado Premium" required />
+    </div>
+    <div class="form-group">
+      <label for="fechaFinalizacion">Fecha de finalización</label>
+      <input type="date" id="fechaFinalizacion" required />
+    </div>
+    <button type="submit" class="btn">Guardar</button>
+  </form>
+</div>
       <div id="actualizarBeneficio" class="contenido-seccion">
-        <h2 class="gold-title">Actualizar beneficios</h2>
-        <div class="form-group">
-          <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
-        </div>
-        <div id="listaBeneficios"></div>
-      </div>
-
-      <div id="nuevoTurno" class="contenido-seccion">
-        <h2 class="gold-title">Cargar nuevo turno</h2>
-        <form id="formNuevoTurno">
-          <div class="form-group">
-            <label for="nombreTurno">Nombre del dueño</label>
-            <input type="text" id="nombreTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="emailTurno">Email</label>
-            <input type="email" id="emailTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="telefonoTurno">Número de contacto (WhatsApp)</label>
-            <input type="tel" id="telefonoTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="marcaTurno">Marca</label>
-            <input type="text" id="marcaTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="modeloTurno">Modelo</label>
-            <input type="text" id="modeloTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="patenteTurno">Patente</label>
-            <input type="text" id="patenteTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="colorTurno">Color</label>
-            <input type="text" id="colorTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="fechaTurno">Fecha</label>
-            <input type="date" id="fechaTurno" required />
-          </div>
-          <div class="form-group">
-            <label for="horaTurno">Horario</label>
-            <input type="time" id="horaTurno" required />
-          </div>
-          <button type="submit" class="btn">Cargar Turno</button>
-        </form>
-      </div>
-
-      <div id="Turnos" class="contenido-seccion">
-        <h2 class="gold-title">Turnos</h2>
-        <div id="calendario"></div>
-      </div>
+  <h2 class="gold-title">Actualizar beneficios</h2>
+  <div class="form-group">
+    <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
+  </div>
+  <div id="listaBeneficios"></div>
+</div>
     </div>
   </main>
+
   <script>
     function mostrarSeccion(id) {
       const secciones = document.querySelectorAll('.contenido-seccion');
@@ -239,8 +186,6 @@
       document.getElementById(id).style.display = 'block';
     }
   </script>
-
-  <!-- Firebase + Firestore -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -266,17 +211,247 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Lógica para cargar vehículos (misma que ya tenías)
-    // Lógica para beneficios (submit, editar, eliminar)
-    // Lógica para actualizar vehículos
-    // Estas funciones se mantienen idénticas a como ya las tenías
+    // FORM NUEVO VEHÍCULO
+    document.getElementById("formNuevoVehiculo").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        uid: document.getElementById("uid").value,
+        nombre: document.getElementById("nombre").value,
+        email: document.getElementById("email").value,
+        marca: document.getElementById("marca").value,
+        modelo: document.getElementById("modelo").value,
+        patente: document.getElementById("patente").value,
+        color: document.getElementById("color").value,
+        pdfUrl: document.getElementById("pdfUrl").value,
+        fechaCarga: new Date()
+      };
 
-    // Asegurar que al hacer clic en la opción de beneficios, cargue los datos
+      try {
+        await setDoc(doc(db, "usuarios_club", data.uid), data);
+        alert("Vehículo guardado exitosamente.");
+        document.getElementById("formNuevoVehiculo").reset();
+      } catch (err) {
+        console.error(err);
+        alert("Error al guardar el vehículo.");
+      }
+    });
+
+    // CARGAR VEHÍCULOS
+    async function cargarVehiculos() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+      const listaVehiculos = document.getElementById("listaVehiculos");
+      const buscador = document.getElementById("buscador");
+      const vehiculos = [];
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        vehiculos.push({ ...data, id: docSnap.id });
+      });
+
+      function renderizarVehiculos(filtro = "") {
+        listaVehiculos.innerHTML = "";
+        vehiculos
+          .filter((v) =>
+            Object.values(v).some(val =>
+              val?.toString().toLowerCase().includes(filtro.toLowerCase())
+            )
+          )
+          .forEach((data) => {
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-vehiculo";
+            tarjeta.innerHTML = `
+              <h3>${data.nombre} (${data.email})</h3>
+              <p><strong>UID:</strong> ${data.uid}</p>
+              <p><strong>Patente:</strong> ${data.patente}</p>
+              <p><strong>Vehículo:</strong> ${data.marca} ${data.modelo}</p>
+              <p><strong>Color:</strong> ${data.color}</p>
+              <p><a href="${data.pdfUrl}" target="_blank" style="color: lightblue;">Ver documentación</a></p>
+              <div class="acciones">
+                <button class="btn" onclick="editarVehiculo('${data.id}')">Editar</button>
+                <button class="btn" onclick="borrarVehiculo('${data.id}')">Eliminar</button>
+              </div>
+            `;
+            listaVehiculos.appendChild(tarjeta);
+          });
+      }
+
+      renderizarVehiculos();
+
+      buscador.addEventListener("input", (e) => {
+        renderizarVehiculos(e.target.value);
+      });
+    }
+
+    window.editarVehiculo = async function (uid) {
+      const ref = doc(db, "usuarios_club", uid);
+      const snapshot = await getDocs(collection(db, "usuarios_club"));
+      const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
+
+      if (!vehiculo) return alert("No se encontró el vehículo.");
+
+      const nuevoNombre = prompt("Editar nombre:", vehiculo.nombre);
+      const nuevaMarca = prompt("Editar marca:", vehiculo.marca);
+      const nuevoModelo = prompt("Editar modelo:", vehiculo.modelo);
+      const nuevoColor = prompt("Editar color:", vehiculo.color);
+      const nuevoEmail = prompt("Editar email:", vehiculo.email);
+      const nuevoPdfUrl = prompt("Editar PDF URL:", vehiculo.pdfUrl);
+
+      try {
+        await updateDoc(ref, {
+          nombre: nuevoNombre,
+          marca: nuevaMarca,
+          modelo: nuevoModelo,
+          color: nuevoColor,
+          email: nuevoEmail,
+          pdfUrl: nuevoPdfUrl,
+          fechaCarga: new Date()
+        });
+        alert("Vehículo actualizado correctamente.");
+        cargarVehiculos();
+      } catch (err) {
+        console.error(err);
+        alert("Error al actualizar.");
+      }
+    };
+
+    window.borrarVehiculo = async function (id) {
+      if (!confirm("¿Seguro que querés eliminar este vehículo?")) return;
+      try {
+        await deleteDoc(doc(db, "usuarios_club", id));
+        alert("Vehículo eliminado.");
+        cargarVehiculos();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar.");
+      }
+    };
+
     document.querySelector("button[onclick=\"mostrarSeccion('actualizarDocumentacion')\"]")
       .addEventListener("click", () => {
         mostrarSeccion('actualizarDocumentacion');
         cargarVehiculos();
       });
+    document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const uid = document.getElementById("uidBeneficio").value;
+
+      const data = {
+        uid: uid,
+        nombre: document.getElementById("nombreBeneficio").value,
+        email: document.getElementById("emailBeneficio").value,
+        descuento: document.getElementById("descuentoBeneficio").value,
+        servicio: document.getElementById("servicioBeneficio").value,
+        fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
+        fechaCarga: new Date()
+      };
+
+      try {
+        await setDoc(doc(db, "beneficios", uid), data);
+        alert("Beneficio guardado exitosamente.");
+        document.getElementById("formNuevoBeneficio").reset();
+      } catch (err) {
+        console.error(err);
+        alert("Error al guardar el beneficio.");
+      }
+    });
+
+    async function cargarBeneficios() {
+      const querySnapshot = await getDocs(collection(db, "beneficios"));
+      const listaBeneficios = document.getElementById("listaBeneficios");
+      const buscador = document.getElementById("buscadorBeneficio");
+      listaBeneficios.innerHTML = "";
+
+      const beneficios = [];
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const id = docSnap.id;
+        beneficios.push({ ...data, id });
+      });
+
+      function renderizarLista(filtro = "") {
+        listaBeneficios.innerHTML = "";
+        const hoy = new Date().toISOString().split("T")[0];
+
+        beneficios
+          .filter((b) =>
+            Object.values(b).some((val) =>
+              val?.toString().toLowerCase().includes(filtro.toLowerCase())
+            )
+          )
+          .forEach((data) => {
+            const vencido = data.fechaFinalizacion < hoy;
+
+            const tarjeta = document.createElement("div");
+            tarjeta.className = "tarjeta-vehiculo";
+            tarjeta.style.opacity = vencido ? "0.5" : "1";
+
+            tarjeta.innerHTML = `
+              <h3>${data.nombre} (${data.email})</h3>
+              <p><strong>UID:</strong> ${data.uid}</p>
+              <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
+              <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
+              <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
+              <div class="acciones">
+                <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
+                <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
+              </div>
+            `;
+
+            listaBeneficios.appendChild(tarjeta);
+          });
+      }
+
+      renderizarLista();
+
+      buscador.addEventListener("input", (e) => {
+        renderizarLista(e.target.value);
+      });
+    }
+
+    window.editarBeneficio = async function (id) {
+      const ref = doc(db, "beneficios", id);
+      const snapshot = await getDocs(collection(db, "beneficios"));
+      const beneficio = snapshot.docs.find(d => d.id === id)?.data();
+
+      if (!beneficio) return alert("No se encontró el beneficio.");
+
+      const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
+      const nuevoEmail = prompt("Editar email:", beneficio.email);
+      const nuevoUID = prompt("Editar UID:", beneficio.uid);
+      const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
+      const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
+      const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
+
+      try {
+        await updateDoc(ref, {
+          nombre: nuevoNombre,
+          email: nuevoEmail,
+          uid: nuevoUID,
+          descuento: nuevoDescuento,
+          servicio: nuevoServicio,
+          fechaFinalizacion: nuevaFecha
+        });
+        alert("Beneficio actualizado correctamente.");
+        cargarBeneficios();
+      } catch (err) {
+        console.error(err);
+        alert("Error al actualizar.");
+      }
+    };
+
+    window.borrarBeneficio = async function (id) {
+      if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
+      try {
+        await deleteDoc(doc(db, "beneficios", id));
+        alert("Beneficio eliminado.");
+        cargarBeneficios();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar.");
+      }
+    };
 
     document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
       .addEventListener("click", () => {
@@ -284,116 +459,136 @@
         cargarBeneficios();
       });
   </script>
+  // ===================== BENEFICIOS =====================
 
-  <!-- FullCalendar -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      let calendarEl = document.getElementById('calendario');
-      let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        height: 'auto',
-        locale: 'es',
-        events: obtenerTurnos(),
-        eventClick: function(info) {
-          mostrarMenuTurno(info.event);
-        }
-      });
-      calendar.render();
+document.getElementById("formNuevoBeneficio").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      document.getElementById('formNuevoTurno').addEventListener('submit', function (e) {
-        e.preventDefault();
+  const uid = document.getElementById("uidBeneficio").value;
 
-        let nuevoTurno = {
-          id: Date.now().toString(),
-          title: document.getElementById('nombreTurno').value,
-          start: document.getElementById('fechaTurno').value + 'T' + document.getElementById('horaTurno').value,
-          extendedProps: {
-            email: document.getElementById('emailTurno').value,
-            telefono: document.getElementById('telefonoTurno').value,
-            marca: document.getElementById('marcaTurno').value,
-            modelo: document.getElementById('modeloTurno').value,
-            patente: document.getElementById('patenteTurno').value,
-            color: document.getElementById('colorTurno').value
-          }
-        };
+  const data = {
+    uid: uid,
+    nombre: document.getElementById("nombreBeneficio").value,
+    email: document.getElementById("emailBeneficio").value,
+    descuento: document.getElementById("descuentoBeneficio").value,
+    servicio: document.getElementById("servicioBeneficio").value,
+    fechaFinalizacion: document.getElementById("fechaFinalizacion").value,
+    fechaCarga: new Date()
+  };
 
-        guardarTurno(nuevoTurno);
-        calendar.addEvent(nuevoTurno);
-        alert('✅ Turno cargado con éxito.');
-        this.reset();
-      });
+  try {
+    await setDoc(doc(db, "beneficios", uid), data);
+    alert("Beneficio guardado exitosamente.");
+    document.getElementById("formNuevoBeneficio").reset();
+  } catch (err) {
+    console.error(err);
+    alert("Error al guardar el beneficio.");
+  }
+});
 
-      function guardarTurno(turno) {
-        let turnos = JSON.parse(localStorage.getItem('turnos')) || [];
-        turnos.push(turno);
-        localStorage.setItem('turnos', JSON.stringify(turnos));
-      }
+async function cargarBeneficios() {
+  const querySnapshot = await getDocs(collection(db, "beneficios"));
+  const listaBeneficios = document.getElementById("listaBeneficios");
+  const buscador = document.getElementById("buscadorBeneficio");
+  listaBeneficios.innerHTML = "";
 
-      function obtenerTurnos() {
-        return JSON.parse(localStorage.getItem('turnos')) || [];
-      }
+  const beneficios = [];
 
-      function mostrarMenuTurno(evento) {
-        let turno = evento.extendedProps;
-        let nombre = evento.title;
-        let telefono = turno.telefono.replace(/\D/g, '');
-        let mensaje = Hola ${nombre}, tu vehículo ya se encuentra listo para retirar.;
-        let link = https://wa.me/54${telefono}?text=${encodeURIComponent(mensaje)};
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    const id = docSnap.id;
+    beneficios.push({ ...data, id });
+  });
 
-        let opciones = `
-          <div style="padding:1em; background:#fff; border-radius:10px;">
-            <h3>Turno: ${nombre}</h3>
-            <p><b>Vehículo:</b> ${turno.marca} ${turno.modelo} (${turno.color})</p>
-            <p><b>Patente:</b> ${turno.patente}</p>
-            <p><b>Teléfono:</b> ${turno.telefono}</p>
-            <a href="${link}" target="_blank" class="btn">📩 Enviar mensaje por WhatsApp</a>
-            <br><br>
-            <button onclick="eliminarTurno('${evento.id}')" class="btn" style="background:red;">🗑 Eliminar turno</button>
+  function renderizarLista(filtro = "") {
+    listaBeneficios.innerHTML = "";
+    const hoy = new Date().toISOString().split("T")[0];
+
+    beneficios
+      .filter((b) =>
+        Object.values(b).some((val) =>
+          val?.toString().toLowerCase().includes(filtro.toLowerCase())
+        )
+      )
+      .forEach((data) => {
+        const vencido = data.fechaFinalizacion < hoy;
+
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "tarjeta-vehiculo";
+        tarjeta.style.opacity = vencido ? "0.5" : "1";
+
+        tarjeta.innerHTML = `
+          <h3>${data.nombre} (${data.email})</h3>
+          <p><strong>UID:</strong> ${data.uid}</p>
+          <p><strong>Descuento:</strong> ${data.descuento}% en <strong>${data.servicio}</strong></p>
+          <p><strong>Válido hasta:</strong> ${data.fechaFinalizacion}</p>
+          <p style="color: ${vencido ? 'red' : 'lightgreen'};"><strong>Estado:</strong> ${vencido ? 'Cupón vencido' : 'Activo'}</p>
+          <div class="acciones">
+            <button class="btn" onclick="editarBeneficio('${data.id}')">Editar</button>
+            <button class="btn" onclick="borrarBeneficio('${data.id}')">Eliminar</button>
           </div>
         `;
 
-        let ventana = document.createElement('div');
-        ventana.innerHTML = opciones;
-        Object.assign(ventana.style, {
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          background: '#000000aa',
-          padding: '2em',
-          borderRadius: '10px',
-          zIndex: 1000
-        });
+        listaBeneficios.appendChild(tarjeta);
+      });
+  }
 
-        let fondo = document.createElement('div');
-        Object.assign(fondo.style, {
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          background: '#00000099',
-          zIndex: 999
-        });
+  renderizarLista();
 
-        fondo.onclick = () => {
-          document.body.removeChild(fondo);
-          document.body.removeChild(ventana);
-        };
+  buscador.addEventListener("input", (e) => {
+    renderizarLista(e.target.value);
+  });
+}
 
-        document.body.appendChild(fondo);
-        document.body.appendChild(ventana);
-      }
+window.editarBeneficio = async function (id) {
+  const ref = doc(db, "beneficios", id);
+  const snapshot = await getDocs(collection(db, "beneficios"));
+  const beneficio = snapshot.docs.find(d => d.id === id)?.data();
 
-      window.eliminarTurno = function (idTurno) {
-        if (!confirm('¿Seguro que querés eliminar este turno?')) return;
-        let turnos = JSON.parse(localStorage.getItem('turnos')) || [];
-        let nuevosTurnos = turnos.filter(t => t.id !== idTurno);
-        localStorage.setItem('turnos', JSON.stringify(nuevosTurnos));
-        location.reload();
-      }
+  if (!beneficio) return alert("No se encontró el beneficio.");
+
+  const nuevoNombre = prompt("Editar nombre:", beneficio.nombre);
+  const nuevoEmail = prompt("Editar email:", beneficio.email);
+  const nuevoUID = prompt("Editar UID:", beneficio.uid);
+  const nuevoDescuento = prompt("Editar descuento (%):", beneficio.descuento);
+  const nuevoServicio = prompt("Editar servicio:", beneficio.servicio);
+  const nuevaFecha = prompt("Editar fecha de finalización:", beneficio.fechaFinalizacion);
+
+  try {
+    await updateDoc(ref, {
+      nombre: nuevoNombre,
+      email: nuevoEmail,
+      uid: nuevoUID,
+      descuento: nuevoDescuento,
+      servicio: nuevoServicio,
+      fechaFinalizacion: nuevaFecha
     });
+    alert("Beneficio actualizado correctamente.");
+    cargarBeneficios();
+  } catch (err) {
+    console.error(err);
+    alert("Error al actualizar.");
+  }
+};
+
+window.borrarBeneficio = async function (id) {
+  if (!confirm("¿Seguro que querés eliminar este beneficio?")) return;
+  try {
+    await deleteDoc(doc(db, "beneficios", id));
+    alert("Beneficio eliminado.");
+    cargarBeneficios();
+  } catch (err) {
+    console.error(err);
+    alert("Error al eliminar.");
+  }
+};
+
+// Esto asegura que al hacer clic en el botón de la sidebar, se muestre la sección y se carguen los datos
+document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"]")
+  .addEventListener("click", () => {
+    mostrarSeccion('actualizarBeneficio');
+    cargarBeneficios();
+  });
   </script>
 </body>
 </html>
