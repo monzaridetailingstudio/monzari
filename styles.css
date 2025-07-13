@@ -828,4 +828,22 @@ footer {
     align-items: flex-start;
     gap: 4px;
   }
+        .colapsable .extra {
+  display: none;
+}
+
+.colapsable.expandido .extra {
+  display: list-item;
+}
+
+.btn-vermas {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+}
 }
