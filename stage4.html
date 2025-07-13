@@ -6,6 +6,20 @@
   <title>Stage 4 - Monzari Black Label | Detailing Premium para Autos</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Ajuste específico solo para esta página */
+    .hero.overlay-ajustada {
+      padding-top: 100px;
+      padding-bottom: 80px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .hero.overlay-ajustada {
+        padding-top: 120px;
+        padding-bottom: 100px;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Encabezado con logo y menú hamburguesa -->
@@ -39,8 +53,8 @@
   </section>
 
   <!-- Sección con imagen de fondo: detalles del servicio -->
-  <section class="hero" style="background-image: url('images/stage4-content.jpg');">
-    <div class="overlay" style="padding-bottom: 400px;">
+  <section class="hero overlay-ajustada" style="background-image: url('images/stage4-content.jpg');">
+    <div class="overlay">
       <h2 class="gold-title">INCLUYE</h2>
       <ul class="listado-incluye">
         <li>✔ Lavado detallado exterior</li>
@@ -76,10 +90,10 @@
     </div>
   </section>
 
-  <!-- Extensión visual de fondo negro con imagen -->
+  <!-- Imagen extra para dar espacio visual y no pisar nada -->
   <section class="hero" style="background-image: url('images/stage4-extension.jpg'); height: 300px;">
     <div class="overlay">
-      <!-- Espacio adicional, si querés podés poner texto acá -->
+      <!-- Podés dejar este espacio vacío o agregar algo más adelante -->
     </div>
   </section>
 
@@ -87,6 +101,7 @@
   <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
+
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
     });
