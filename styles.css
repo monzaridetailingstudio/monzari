@@ -848,7 +848,7 @@ footer {
 }
         @media (max-width: 768px) {
   .hero:nth-of-type(2) .overlay {
-    margin-top: 150px !important;
+    margin-top: 80px !important;
   }
 }
 }
