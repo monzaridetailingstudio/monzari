@@ -860,5 +860,17 @@ footer {
   display: flex;
   flex-direction: column;
 }
+          .tarjeta-beneficio {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  color: white;
 }
+
+.tarjeta-vencida {
+  opacity: 0.4;
+  filter: grayscale(80%);
+}
+
 }
