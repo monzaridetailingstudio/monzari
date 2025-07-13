@@ -227,6 +227,7 @@
       };
 
       try {
+        await setDoc(doc(db, "usuarios_club", data.uid), data);
         await addDoc(collection(db, "vehiculos_club"), data);
         alert("Vehículo guardado exitosamente.");
         document.getElementById("formNuevoVehiculo").reset();
@@ -238,6 +239,7 @@
 
     // CARGAR VEHÍCULOS
     async function cargarVehiculos() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
       const querySnapshot = await getDocs(collection(db, "vehiculos_club"));
       const listaVehiculos = document.getElementById("listaVehiculos");
       const buscador = document.getElementById("buscador");
@@ -283,6 +285,8 @@
     }
 
     window.editarVehiculo = async function (uid) {
+      const ref = doc(db, "usuarios_club", uid);
+      const snapshot = await getDocs(collection(db, "usuarios_club"));
       const ref = doc(db, "vehiculos_club", uid);
       const snapshot = await getDocs(collection(db, "vehiculos_club"));
       const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
@@ -317,6 +321,7 @@
     window.borrarVehiculo = async function (id) {
       if (!confirm("¿Seguro que querés eliminar este vehículo?")) return;
       try {
+        await deleteDoc(doc(db, "usuarios_club", id));
         await deleteDoc(doc(db, "vehiculos_club", id));
         alert("Vehículo eliminado.");
         cargarVehiculos();
