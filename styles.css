@@ -846,4 +846,9 @@ footer {
   font-family: 'Playfair Display', serif;
   font-size: 1rem;
 }
+        @media (max-width: 768px) {
+  .hero:nth-of-type(2) .overlay {
+    margin-top: 60px;
+  }
+}
 }
