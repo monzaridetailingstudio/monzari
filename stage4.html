@@ -7,17 +7,21 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Ajuste específico solo para esta página */
-    .hero.overlay-ajustada {
-      padding-top: 100px;
-      padding-bottom: 80px;
+    .colapsable .extra {
+      display: none;
     }
-
-    @media screen and (max-width: 768px) {
-      .hero.overlay-ajustada {
-        padding-top: 120px;
-        padding-bottom: 100px;
-      }
+    .colapsable.expandido .extra {
+      display: list-item;
+    }
+    .btn-vermas {
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 20px 0;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -53,10 +57,10 @@
   </section>
 
   <!-- Sección con imagen de fondo: detalles del servicio -->
-  <section class="hero overlay-ajustada" style="background-image: url('images/stage4-content.jpg');">
+  <section class="hero" style="background-image: url('images/stage4-content.jpg');">
     <div class="overlay">
       <h2 class="gold-title">INCLUYE</h2>
-      <ul class="listado-incluye">
+      <ul class="listado-incluye colapsable" id="incluyeLista">
         <li>✔ Lavado detallado exterior</li>
         <li>✔ Descontaminación química y física de la carrocería</li>
         <li>✔ Aspirado interior completo (habitáculo, baúl, rieles y alfombras)</li>
@@ -67,21 +71,24 @@
         <li>✔ Corrección de pintura de hasta el 85% a 90% (medición de micras incluida)</li>
         <li>✔ Terminación High Gloss de ultra brillo</li>
         <li>✔ Preparación de superficie con IPA</li>
-        <li>✔ Doble capa de coating cerámico de alta resistencia en carrocería</li>
-        <li>✔ Sellado cerámico de llantas (cara externa)</li>
-        <li>✔ Sellado cerámico de calipers</li>
-        <li>✔ Sellado cerámico de parabrisas y techo</li>
-        <li>✔ Sellado cerámico de plásticos exteriores</li>
-        <li>✔ Sellado cerámico de ópticas delanteras y traseras</li>
-        <li>✔ Eliminación de sarro en carrocería y cristales</li>
-        <li>✔ Limpieza de cromados y detalles metálicos</li>
-        <li>✔ Aplicación de repelente hidrofóbico en cristales</li>
-        <li>✔ Acondicionado de neumáticos y molduras exteriores</li>
-        <li>✔ Fragancia premium Monzari</li>
-        <li>✔ Garantía escrita y registrada</li>
-        <li>✔ Registro digital y fotográfico del tratamiento</li>
-        <li>✔ Acceso a Monzari Black Club (seguimiento, recordatorios y auditoría)</li>
+        <li class="extra">✔ Doble capa de coating cerámico de alta resistencia en carrocería</li>
+        <li class="extra">✔ Sellado cerámico de llantas (cara externa)</li>
+        <li class="extra">✔ Sellado cerámico de calipers</li>
+        <li class="extra">✔ Sellado cerámico de parabrisas y techo</li>
+        <li class="extra">✔ Sellado cerámico de plásticos exteriores</li>
+        <li class="extra">✔ Sellado cerámico de ópticas delanteras y traseras</li>
+        <li class="extra">✔ Eliminación de sarro en carrocería y cristales</li>
+        <li class="extra">✔ Limpieza de cromados y detalles metálicos</li>
+        <li class="extra">✔ Aplicación de repelente hidrofóbico en cristales</li>
+        <li class="extra">✔ Acondicionado de neumáticos y molduras exteriores</li>
+        <li class="extra">✔ Fragancia premium Monzari</li>
+        <li class="extra">✔ Garantía escrita y registrada</li>
+        <li class="extra">✔ Registro digital y fotográfico del tratamiento</li>
+        <li class="extra">✔ Acceso a Monzari Black Club (seguimiento, recordatorios y auditoría)</li>
       </ul>
+
+      <button id="verMasBtn" class="btn-vermas">Ver más</button>
+
       <p class="duration">⏱ Duración estimada: 3 a 4 jornadas</p>
 
       <a class="btn" href="https://wa.me/541140948869?text=Hola%20Monzari%20Detailing%20Studio%2C%20estoy%20interesado%20en%20el%20servicio%20Monzari%20Black%20Label%20(Stage%204)%2C%20%C2%BFpodr%C3%ADan%20contarme%20m%C3%A1s%20y%20asesorarme%20seg%C3%BAn%20mi%20veh%C3%ADculo%3F" target="_blank">
@@ -90,20 +97,21 @@
     </div>
   </section>
 
-  <!-- Imagen extra para dar espacio visual y no pisar nada -->
-  <section class="hero" style="background-image: url('images/stage4-extension.jpg'); height: 300px;">
-    <div class="overlay">
-      <!-- Podés dejar este espacio vacío o agregar algo más adelante -->
-    </div>
-  </section>
-
-  <!-- Script para menú hamburguesa -->
+  <!-- Script para menú hamburguesa y ver más -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('menu');
 
     hamburger.addEventListener('click', () => {
       menu.classList.toggle('active');
+    });
+
+    const verMasBtn = document.getElementById('verMasBtn');
+    const incluyeLista = document.getElementById('incluyeLista');
+
+    verMasBtn.addEventListener('click', () => {
+      incluyeLista.classList.add('expandido');
+      verMasBtn.style.display = 'none';
     });
   </script>
 </body>
