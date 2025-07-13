@@ -615,6 +615,116 @@ document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"
   });
   </script>
           <!-- FullCalendar JS -->
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js">
+</script>
+ <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let calendarEl = document.getElementById('calendario');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      height: 'auto',
+      locale: 'es',
+      events: obtenerTurnos(),
+      eventClick: function(info) {
+        mostrarMenuTurno(info.event);
+      }
+    });
+    calendar.render();
+
+    document.getElementById('formNuevoTurno').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      let nuevoTurno = {
+        id: Date.now().toString(),
+        title: document.getElementById('nombreTurno').value,
+        start: document.getElementById('fechaTurno').value + 'T' + document.getElementById('horaTurno').value,
+        extendedProps: {
+          email: document.getElementById('emailTurno').value,
+          telefono: document.getElementById('telefonoTurno').value,
+          marca: document.getElementById('marcaTurno').value,
+          modelo: document.getElementById('modeloTurno').value,
+          patente: document.getElementById('patenteTurno').value,
+          color: document.getElementById('colorTurno').value
+        }
+      };
+
+      guardarTurno(nuevoTurno);
+      calendar.addEvent(nuevoTurno);
+      alert('✅ Turno cargado con éxito.');
+      this.reset();
+    });
+
+    function guardarTurno(turno) {
+      let turnos = JSON.parse(localStorage.getItem('turnos')) || [];
+      turnos.push(turno);
+      localStorage.setItem('turnos', JSON.stringify(turnos));
+    }
+
+    function obtenerTurnos() {
+      return JSON.parse(localStorage.getItem('turnos')) || [];
+    }
+
+    function mostrarMenuTurno(evento) {
+      let turno = evento.extendedProps;
+      let nombre = evento.title;
+      let telefono = turno.telefono.replace(/\D/g, ''); // limpiar número
+      let mensaje = Hola ${nombre}, tu vehículo ya se encuentra listo para retirar.;
+      let link = https://wa.me/54${telefono}?text=${encodeURIComponent(mensaje)};
+
+      let opciones = `
+        <div style="padding:1em; background:#fff; border-radius:10px;">
+          <h3>Turno: ${nombre}</h3>
+          <p><b>Vehículo:</b> ${turno.marca} ${turno.modelo} (${turno.color})</p>
+          <p><b>Patente:</b> ${turno.patente}</p>
+          <p><b>Teléfono:</b> ${turno.telefono}</p>
+          <a href="${link}" target="_blank" class="btn">📩 Enviar mensaje por WhatsApp</a>
+          <br><br>
+          <button onclick="eliminarTurno('${evento.id}')" class="btn" style="background:red;">🗑 Eliminar turno</button>
+        </div>
+      `;
+
+      let ventana = document.createElement('div');
+      ventana.innerHTML = opciones;
+      Object.assign(ventana.style, {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        background: '#000000aa',
+        padding: '2em',
+        borderRadius: '10px',
+        zIndex: 1000
+      });
+
+      let fondo = document.createElement('div');
+      Object.assign(fondo.style, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: '#00000099',
+        zIndex: 999
+      });
+
+      fondo.onclick = () => {
+        document.body.removeChild(fondo);
+        document.body.removeChild(ventana);
+      };
+
+      document.body.appendChild(fondo);
+      document.body.appendChild(ventana);
+    }
+
+    window.eliminarTurno = function (idTurno) {
+      if (!confirm('¿Seguro que querés eliminar este turno?')) return;
+      let turnos = JSON.parse(localStorage.getItem('turnos')) || [];
+      let nuevosTurnos = turnos.filter(t => t.id !== idTurno);
+      localStorage.setItem('turnos', JSON.stringify(nuevosTurnos));
+      location.reload(); // recarga para que desaparezca del calendario
+    }
+  });
+</script>         
+
 </body>
 </html>
