@@ -850,7 +850,8 @@ footer {
   .hero:nth-of-type(2) .overlay {
     margin-top: 80px !important;
   }
-          .tarjeta-vehiculo {
+  
+  .tarjeta-vehiculo {
   background: #222;
   padding: 15px;
   margin-bottom: 15px;
@@ -859,7 +860,6 @@ footer {
   color: #f3e07a;
   display: flex;
   flex-direction: column;
-
 }
 
 }
