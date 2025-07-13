@@ -850,5 +850,15 @@ footer {
   .hero:nth-of-type(2) .overlay {
     margin-top: 80px !important;
   }
+          .tarjeta-vehiculo {
+  background: #222;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  color: #f3e07a;
+  display: flex;
+  flex-direction: column;
+}
 }
 }
