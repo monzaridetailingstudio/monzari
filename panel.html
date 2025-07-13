@@ -6,6 +6,8 @@
   <title>Panel Admin - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -113,6 +115,9 @@
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
       <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
       <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
+      <button class="btn" onclick="mostrarSeccion('nuevoTurno')">Cargar nuevo turno</button>
+      <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
+      <button class="btn" onclick="mostrarSeccion('Turnos')">Turnos</button>
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
@@ -177,6 +182,39 @@
   <div id="listaBeneficios"></div>
 </div>
     </div>
+    <div id="nuevoTurno" class="contenido-seccion">
+<!-- CARGAR NUEVO TURNO -->
+<div id="nuevoTurno" class="contenido-seccion">
+  <h2 class="gold-title">Cargar nuevo turno</h2>
+  <form id="formNuevoTurno">
+    <div class="form-group"><label for="nombreTurno">Nombre del dueño</label><input type="text" id="nombreTurno" required /></div>
+    <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required /></div>
+    <div class="form-group"><label for="marcaTurno">Marca</label><input type="text" id="marcaTurno" required /></div>
+    <div class="form-group"><label for="modeloTurno">Modelo</label><input type="text" id="modeloTurno" required /></div>
+    <div class="form-group"><label for="patenteTurno">Patente</label><input type="text" id="patenteTurno" required /></div>
+    <div class="form-group"><label for="colorTurno">Color</label><input type="text" id="colorTurno" required /></div>
+    <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required /></div>
+    <div class="form-group"><label for="horaTurno">Horario</label><input type="time" id="horaTurno" required /></div>
+    <button type="submit" class="btn">Cargar nuevo turno</button>
+    <div class="form-group"><label for="nombreTurno">Nombre del dueño</label><input type="text" id="nombreTurno" required></div>
+    <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required></div>
+    <div class="form-group"><label for="telefonoTurno">Número de contacto (WhatsApp)</label><input type="tel" id="telefonoTurno" required></div>
+    <div class="form-group"><label for="marcaTurno">Marca</label><input type="text" id="marcaTurno" required></div>
+    <div class="form-group"><label for="modeloTurno">Modelo</label><input type="text" id="modeloTurno" required></div>
+    <div class="form-group"><label for="patenteTurno">Patente</label><input type="text" id="patenteTurno" required></div>
+    <div class="form-group"><label for="colorTurno">Color</label><input type="text" id="colorTurno" required></div>
+    <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required></div>
+    <div class="form-group"><label for="horaTurno">Horario</label><input type="time" id="horaTurno" required></div>
+    <button type="submit" class="btn">Cargar Turno</button>
+  </form>
+  <div id="turnos" class="contenido-seccion">
+  <h2 class="gold-title">Turnos</h2>
+  <div id="calendario"></div>
+</div>
+    <div id="verTurnos" class="contenido-seccion">
+  <h2 class="gold-title">Turnos agendados</h2>
+  <div id="listaTurnos"></div>
+</div>
   </main>
 
   <script>
@@ -227,7 +265,7 @@
       };
 
       try {
-        await setDoc(doc(db, "usuarios_club", data.uid), data);
+       await addDoc(collection(db, "vehiculos_club"), data);
         alert("Vehículo guardado exitosamente.");
         document.getElementById("formNuevoVehiculo").reset();
       } catch (err) {
@@ -238,7 +276,7 @@
 
     // CARGAR VEHÍCULOS
     async function cargarVehiculos() {
-      const querySnapshot = await getDocs(collection(db, "usuarios_club"));
+      const querySnapshot = await getDocs(collection(db, "vehiculos_club"));
       const listaVehiculos = document.getElementById("listaVehiculos");
       const buscador = document.getElementById("buscador");
       const vehiculos = [];
@@ -283,8 +321,8 @@
     }
 
     window.editarVehiculo = async function (uid) {
-      const ref = doc(db, "usuarios_club", uid);
-      const snapshot = await getDocs(collection(db, "usuarios_club"));
+      const ref = doc(db, "vehiculos_club", uid);
+const snapshot = await getDocs(collection(db, "vehiculos_club"));
       const vehiculo = snapshot.docs.find(d => d.id === uid)?.data();
 
       if (!vehiculo) return alert("No se encontró el vehículo.");
@@ -317,7 +355,7 @@
     window.borrarVehiculo = async function (id) {
       if (!confirm("¿Seguro que querés eliminar este vehículo?")) return;
       try {
-        await deleteDoc(doc(db, "usuarios_club", id));
+        await deleteDoc(doc(db, "vehiculos_club", id));
         alert("Vehículo eliminado.");
         cargarVehiculos();
       } catch (err) {
@@ -590,5 +628,7 @@ document.querySelector("button[onclick=\"mostrarSeccion('actualizarBeneficio')\"
     cargarBeneficios();
   });
   </script>
+          <!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
 </body>
 </html>
