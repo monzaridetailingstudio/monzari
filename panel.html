@@ -539,33 +539,32 @@ document.getElementById("formNuevoTurno").addEventListener("submit", async (e) =
 });
 
 // MOSTRAR TURNOS EN CALENDARIO
-document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]").addEventListener("click", async () => {
-  mostrarSeccion('verTurnos');
+document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]")
+  .addEventListener("click", async () => {
+    mostrarSeccion('verTurnos');
 
-  const querySnapshot = await getDocs(collection(db, "turnos"));
-  const eventos = querySnapshot.docs.map(doc => {
-    const data = doc.data();
-    return {
-      title: ${data.nombre} - ${data.servicio},
-      start: ${data.fecha}T${data.hora},
-    };
+    const calendarEl = document.getElementById('calendario');
+    calendarEl.innerHTML = ""; // Limpiar antes de renderizar
+
+    const eventos = [];
+
+    const querySnapshot = await getDocs(collection(db, "turnos"));
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      eventos.push({
+        title: ${data.nombre} - ${data.servicio},
+        start: ${data.fecha}T${data.hora}
+      });
+    });
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: eventos,
+      locale: 'es'
+    });
+
+    calendar.render();
   });
-
-  const calendarEl = document.getElementById('calendario');
-  calendarEl.innerHTML = "";
-
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    events: eventos,
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    }
-  });
-
-  calendar.render();
-});
   </script>
 </body>
 </html>
