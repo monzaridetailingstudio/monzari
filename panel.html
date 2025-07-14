@@ -515,13 +515,17 @@
 document.getElementById("formNuevoTurno").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = {
-    nombre: document.getElementById("nombreTurno").value,
-    email: document.getElementById("emailTurno").value,
-    fecha: document.getElementById("fechaTurno").value,
-    hora: document.getElementById("horaTurno").value,
-    servicio: document.getElementById("servicioTurno").value,
-    fechaCarga: new Date()
-  };
+  nombre: document.getElementById("nombreTurno").value,
+  email: document.getElementById("emailTurno").value,
+  telefono: document.getElementById("telefonoTurno").value,
+  marca: document.getElementById("marcaTurno").value,
+  modelo: document.getElementById("modeloTurno").value,
+  patente: document.getElementById("patenteTurno").value,
+  servicio: document.getElementById("servicioTurno").value,
+  fecha: document.getElementById("fechaTurno").value,
+  hora: document.getElementById("horaTurno").value,
+  fechaCarga: new Date()
+};
 
   try {
     await addDoc(collection(db, "turnos"), data);
