@@ -49,134 +49,127 @@
   </style>
 </head>
 <body>
-  <main class="main-container">
-    <div class="sidebar">
-      <button class="btn" onclick="mostrarSeccion('crearNuevoTurno')">Crear nuevo turno</button>
-      <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
-    </div>
+  <header>
+    <h1>Panel de Turnos</h1>
+    <nav>
+      <button class="btn" onclick="mostrarSeccion('nuevoturno')">Crear Nuevo Turno</button>
+      <button class="btn" onclick="mostrarSeccion('verturnos')">Turnos</button>
+    </nav>
+  </header>
 
-    <div class="contenido-principal">
-      <!-- Sección: Crear nuevo turno -->
-      <div id="crearNuevoTurno" class="contenido-seccion" style="display: none;">
-        <h2 class="gold-title">Crear nuevo turno</h2>
-        <form id="formNuevoTurno">
-          <div class="form-group"><label>Nombre completo</label><input type="text" id="nombreTurno" required /></div>
-          <div class="form-group"><label>Email</label><input type="email" id="emailTurno" required /></div>
-          <div class="form-group"><label>WhatsApp (opcional)</label><input type="tel" id="telefonoTurno" /></div>
-          <div class="form-group"><label>Marca</label><input type="text" id="marcaTurno" required /></div>
-          <div class="form-group"><label>Modelo</label><input type="text" id="modeloTurno" required /></div>
-          <div class="form-group"><label>Patente</label><input type="text" id="patenteTurno" required /></div>
-          <div class="form-group"><label>Servicio</label><input type="text" id="servicioTurno" required /></div>
-          <div class="form-group"><label>Fecha</label><input type="date" id="fechaTurno" required /></div>
-          <div class="form-group"><label>Hora</label><input type="time" id="horaTurno" required /></div>
-          <button type="submit" class="btn">Guardar turno</button>
-        </form>
-      </div>
+  <main>
+    <section id="nuevoturno" class="contenido-seccion" style="display:none;">
+      <h2>Nuevo Turno</h2>
+      <form id="formTurno">
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="tel" id="telefono" placeholder="Teléfono" required />
+        <input type="text" id="marca" placeholder="Marca" required />
+        <input type="text" id="modelo" placeholder="Modelo" required />
+        <input type="text" id="patente" placeholder="Patente" required />
+        <input type="text" id="servicio" placeholder="Servicio" required />
+        <input type="date" id="fecha" required />
+        <input type="time" id="hora" required />
+        <button type="submit">Guardar Turno</button>
+      </form>
+    </section>
 
-      <!-- Sección: Ver turnos -->
-      <div id="verTurnos" class="contenido-seccion" style="display: none;">
-        <h2 class="gold-title">Turnos reservados</h2>
-        <div id="calendario" style="background: white; color: black; border-radius: 10px; padding: 10px;"></div>
-      </div>
-    </div>
+    <section id="verturnos" class="contenido-seccion" style="display:none;">
+      <h2>Turnos Reservados</h2>
+      <div id="calendario"></div>
+    </section>
   </main>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    addDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-    authDomain: "monzariclub.firebaseapp.com",
-    projectId: "monzariclub",
-    storageBucket: "monzariclub.appspot.com",
-    messagingSenderId: "806224561650",
-    appId: "1:806224561650:web:e7b25afbcb51238928576b"
-  };
+  <!-- FullCalendar CSS + JS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  <!-- Firebase + Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const form = document.getElementById("formNuevoTurno");
-  if (form) {
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_AUTH_DOMAIN",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_BUCKET",
+      messagingSenderId: "TU_MESSAGING_ID",
+      appId: "TU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Mostrar secciones
+    window.mostrarSeccion = function(id) {
+      document.querySelectorAll('.contenido-seccion').forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+
+      if (id === 'verturnos') cargarCalendario();
+    };
+
+    // Guardar turno
+    const form = document.getElementById("formTurno");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const turno = {
-        nombre: document.getElementById("nombreTurno").value,
-        email: document.getElementById("emailTurno").value,
-        telefono: document.getElementById("telefonoTurno").value,
-        marca: document.getElementById("marcaTurno").value,
-        modelo: document.getElementById("modeloTurno").value,
-        patente: document.getElementById("patenteTurno").value,
-        servicio: document.getElementById("servicioTurno").value,
-        fecha: document.getElementById("fechaTurno").value,
-        hora: document.getElementById("horaTurno").value,
-        fechaCarga: new Date()
+      const data = {
+        nombre: document.getElementById("nombre").value,
+        email: document.getElementById("email").value,
+        telefono: document.getElementById("telefono").value,
+        marca: document.getElementById("marca").value,
+        modelo: document.getElementById("modelo").value,
+        patente: document.getElementById("patente").value,
+        servicio: document.getElementById("servicio").value,
+        fecha: document.getElementById("fecha").value,
+        hora: document.getElementById("hora").value,
+        creado: new Date()
       };
 
       try {
-        await addDoc(collection(db, "turnos"), turno);
+        await addDoc(collection(db, "turnos"), data);
         alert("Turno guardado con éxito.");
         form.reset();
-        mostrarSeccion("verTurnos");
-        cargarCalendario();
+        mostrarSeccion("verturnos");
       } catch (error) {
-        console.error("Error al guardar:", error);
-        alert("Error al guardar turno: " + error.message);
+        console.error("Error al guardar turno:", error);
+        alert("Error al guardar turno.");
       }
     });
-  }
 
-  function mostrarSeccion(id) {
-    const secciones = document.querySelectorAll(".contenido-seccion");
-    secciones.forEach(s => s.style.display = "none");
-    const actual = document.getElementById(id);
-    if (actual) actual.style.display = "block";
-  }
+    // Mostrar calendario
+    async function cargarCalendario() {
+      const calendarioEl = document.getElementById("calendario");
+      calendarioEl.innerHTML = ""; // limpiar
 
-  async function cargarCalendario() {
-    const calendario = document.getElementById("calendario");
-    if (!calendario) return;
+      const querySnapshot = await getDocs(collection(db, "turnos"));
+      const eventos = [];
 
-    calendario.innerHTML = "";
-
-    const { Calendar } = await import("https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js");
-    const { esLocale } = await import("https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/locales-all.global.min.js");
-
-    const snapshot = await getDocs(collection(db, "turnos"));
-    const eventos = [];
-
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      eventos.push({
-        title: ${data.nombre} - ${data.servicio},
-        start: ${data.fecha}T${data.hora}
+      querySnapshot.forEach((docSnap) => {
+        const t = docSnap.data();
+        eventos.push({
+          title: ${t.nombre} - ${t.servicio},
+          start: ${t.fecha}T${t.hora}
+        });
       });
-    });
 
-    const calendar = new Calendar(calendario, {
-      initialView: 'dayGridMonth',
-      events: eventos,
-      locale: 'es'
-    });
+      const calendar = new FullCalendar.Calendar(calendarioEl, {
+        initialView: "dayGridMonth",
+        locale: "es",
+        events: eventos
+      });
 
-    calendar.render();
-  }
+      calendar.render();
+    }
 
-  // Botón Turnos
-  const btnTurnos = document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]");
-  if (btnTurnos) {
-    btnTurnos.addEventListener("click", () => {
-      mostrarSeccion("verTurnos");
-      cargarCalendario();
-    });
-  }
-</script>
-  
+    // Mostrar por defecto una sección
+    mostrarSeccion('nuevoturno');
+  </script>
 </body>
 </html>
