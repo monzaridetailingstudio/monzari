@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turnos - Monzari Club</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      color: white;
+      background: url('images/imagenlogin-panel.jpg') no-repeat center center/cover;
+    }
+    .container {
+      background-color: rgba(0,0,0,0.8);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .btn {
+      padding: 10px 15px;
+      background: linear-gradient(90deg, #f3e07a, #b68d2c);
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .contenido {
+      margin-top: 20px;
+      display: none;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .gold-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #f3e07a, #b68d2c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      color: #f3e07a;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="btn" onclick="mostrarSeccion('crear')">Crear nuevo turno</button>
+    <button class="btn" onclick="mostrarSeccion('ver')">Turnos</button>
+
+    <div id="crear" class="contenido">
+      <h2 class="gold-title">Crear nuevo turno</h2>
+      <form id="formNuevoTurno">
+        <div class="form-group"><label for="nombreTurno">Nombre completo</label><input type="text" id="nombreTurno" required></div>
+        <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required></div>
+        <div class="form-group"><label for="telefonoTurno">WhatsApp (opcional)</label><input type="tel" id="telefonoTurno"></div>
+        <div class="form-group"><label for="marcaTurno">Marca</label><input type="text" id="marcaTurno" required></div>
+        <div class="form-group"><label for="modeloTurno">Modelo</label><input type="text" id="modeloTurno" required></div>
+        <div class="form-group"><label for="patenteTurno">Patente</label><input type="text" id="patenteTurno" required></div>
+        <div class="form-group"><label for="servicioTurno">Servicio</label><input type="text" id="servicioTurno" required></div>
+        <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required></div>
+        <div class="form-group"><label for="horaTurno">Hora</label><input type="time" id="horaTurno" required></div>
+        <button type="submit" class="btn">Guardar turno</button>
+      </form>
+    </div>
+
+    <div id="ver" class="contenido">
+      <h2 class="gold-title">Turnos reservados</h2>
+      <div id="calendario" style="background:white; color:black; padding:10px; border-radius:10px;"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      addDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+      authDomain: "monzariclub.firebaseapp.com",
+      projectId: "monzariclub",
+      storageBucket: "monzariclub.appspot.com",
+      messagingSenderId: "806224561650",
+      appId: "1:806224561650:web:e7b25afbcb51238928576b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function mostrarSeccion(id) {
+      document.getElementById('crear').style.display = 'none';
+      document.getElementById('ver').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+      if (id === 'ver') cargarCalendario();
+    }
+
+    document.getElementById("formNuevoTurno").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        nombre: document.getElementById("nombreTurno").value,
+        email: document.getElementById("emailTurno").value,
+        telefono: document.getElementById("telefonoTurno").value,
+        marca: document.getElementById("marcaTurno").value,
+        modelo: document.getElementById("modeloTurno").value,
+        patente: document.getElementById("patenteTurno").value,
+        servicio: document.getElementById("servicioTurno").value,
+        fecha: document.getElementById("fechaTurno").value,
+        hora: document.getElementById("horaTurno").value,
+        fechaCarga: new Date()
+      };
+
+      try {
+        await addDoc(collection(db, "turnos"), data);
+        alert("Turno guardado exitosamente.");
+        e.target.reset();
+        mostrarSeccion('ver');
+      } catch (err) {
+        console.error(err);
+        alert("Error al guardar turno.");
+      }
+    });
+
+    async function cargarCalendario() {
+      const calendarEl = document.getElementById('calendario');
+      calendarEl.innerHTML = "";
+
+      const querySnapshot = await getDocs(collection(db, "turnos"));
+      const eventos = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        eventos.push({
+          title: ${data.nombre} - ${data.servicio},
+          start: ${data.fecha}T${data.hora}
+        });
+      });
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: eventos,
+        locale: 'es'
+      });
+
+      calendar.render();
+    }
+
+    // Mostrar por defecto la sección de turnos
+    mostrarSeccion('ver');
+  </script>
+</body>
+</html>
