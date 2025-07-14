@@ -80,38 +80,29 @@
       </div>
     </div>
   </main>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      addDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+    authDomain: "monzariclub.firebaseapp.com",
+    projectId: "monzariclub",
+    storageBucket: "monzariclub.appspot.com",
+    messagingSenderId: "806224561650",
+    appId: "1:806224561650:web:e7b25afbcb51238928576b"
+  };
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-      authDomain: "monzariclub.firebaseapp.com",
-      projectId: "monzariclub",
-      storageBucket: "monzariclub.appspot.com",
-      messagingSenderId: "806224561650",
-      appId: "1:806224561650:web:e7b25afbcb51238928576b"
-    };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    function mostrarSeccion(id) {
-      const secciones = document.querySelectorAll(".contenido-seccion");
-      secciones.forEach(s => s.style.display = "none");
-      document.getElementById(id).style.display = "block";
-      if (id === "verTurnos") {
-        cargarCalendario();
-      }
-    }
-
-    const form = document.getElementById("formNuevoTurno");
+  const form = document.getElementById("formNuevoTurno");
+  if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -130,159 +121,62 @@
 
       try {
         await addDoc(collection(db, "turnos"), turno);
-        alert("Turno guardado con éxito");
+        alert("Turno guardado con éxito.");
         form.reset();
         mostrarSeccion("verTurnos");
+        cargarCalendario();
       } catch (error) {
-        console.error(error);
-        alert("Error al guardar el turno.");
+        console.error("Error al guardar:", error);
+        alert("Error al guardar turno: " + error.message);
       }
     });
+  }
 
-    async function cargarCalendario() {
-      const container = document.getElementById("calendario");
-      container.innerHTML = "";
+  function mostrarSeccion(id) {
+    const secciones = document.querySelectorAll(".contenido-seccion");
+    secciones.forEach(s => s.style.display = "none");
+    const actual = document.getElementById(id);
+    if (actual) actual.style.display = "block";
+  }
 
-      const querySnapshot = await getDocs(collection(db, "turnos"));
-      const eventos = [];
-
-      querySnapshot.forEach(doc => {
-        const d = doc.data();
-        eventos.push({
-          title: ${d.nombre} - ${d.servicio},
-          start: ${d.fecha}T${d.hora}
-        });
-      });
-
-      const calendar = new FullCalendar.Calendar(container, {
-        initialView: 'dayGridMonth',
-        events: eventos,
-        locale: 'es',
-        eventClick: function(info) {
-          alert(info.event.title + "\n" + info.event.start.toLocaleString());
-        }
-      });
-
-      calendar.render();
-    }
-
-    // Mostramos por defecto el formulario
-    mostrarSeccion("crearNuevoTurno");
-  </script>
-  <script>
-    function mostrarSeccion(id) {
-      const secciones = document.querySelectorAll('.contenido-seccion');
-      secciones.forEach(sec => sec.style.display = 'none');
-      const target = document.getElementById(id);
-      if (target) {
-        target.style.display = 'block';
-      } else {
-        console.warn("No se encontró la sección:", id);
-      }
-    }
-  </script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    addDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  import { esLocale } from "https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/locales-all.global.min.js";
-
-  // Config Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
-    authDomain: "monzariclub.firebaseapp.com",
-    projectId: "monzariclub",
-    storageBucket: "monzariclub.appspot.com",
-    messagingSenderId: "806224561650",
-    appId: "1:806224561650:web:e7b25afbcb51238928576b"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Guardar nuevo turno
-  const form = document.getElementById("formNuevoTurno");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const turno = {
-      nombre: document.getElementById("nombreTurno").value,
-      email: document.getElementById("emailTurno").value,
-      telefono: document.getElementById("telefonoTurno").value,
-      marca: document.getElementById("marcaTurno").value,
-      modelo: document.getElementById("modeloTurno").value,
-      patente: document.getElementById("patenteTurno").value,
-      servicio: document.getElementById("servicioTurno").value,
-      fecha: document.getElementById("fechaTurno").value,
-      hora: document.getElementById("horaTurno").value,
-      fechaCarga: new Date()
-    };
-
-    try {
-      await addDoc(collection(db, "turnos"), turno);
-      alert("Turno guardado exitosamente.");
-      form.reset();
-      mostrarSeccion("verTurnos");
-      cargarCalendario(); // actualizar el calendario con el turno recién cargado
-    } catch (err) {
-      console.error(err);
-      alert("Error al guardar el turno.");
-    }
-  });
-
-  // Mostrar el calendario y cargar turnos
   async function cargarCalendario() {
-    const contenedor = document.getElementById("calendario");
-    contenedor.innerHTML = ""; // limpiar antes de cargar
+    const calendario = document.getElementById("calendario");
+    if (!calendario) return;
 
-    const turnosSnapshot = await getDocs(collection(db, "turnos"));
+    calendario.innerHTML = "";
+
+    const { Calendar } = await import("https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js");
+    const { esLocale } = await import("https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/locales-all.global.min.js");
+
+    const snapshot = await getDocs(collection(db, "turnos"));
     const eventos = [];
 
-    turnosSnapshot.forEach((doc) => {
+    snapshot.forEach(doc => {
       const data = doc.data();
       eventos.push({
         title: ${data.nombre} - ${data.servicio},
-        start: ${data.fecha}T${data.hora},
-        extendedProps: {
-          email: data.email,
-          telefono: data.telefono,
-          patente: data.patente,
-          modelo: data.modelo,
-          marca: data.marca
-        }
+        start: ${data.fecha}T${data.hora}
       });
     });
 
-    const calendar = new FullCalendar.Calendar(contenedor, {
-      locale: 'es',
+    const calendar = new Calendar(calendario, {
       initialView: 'dayGridMonth',
       events: eventos,
-      eventClick: function (info) {
-        const props = info.event.extendedProps;
-        const mensaje = `
-Turno de: ${info.event.title}
-Email: ${props.email}
-Teléfono: ${props.telefono}
-Vehículo: ${props.marca} ${props.modelo} (${props.patente})
-        `;
-        alert(mensaje);
-      }
+      locale: 'es'
     });
 
     calendar.render();
   }
 
-  // Cuando toco "Turnos", mostrar calendario
-  document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]")
-    .addEventListener("click", () => {
+  // Botón Turnos
+  const btnTurnos = document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]");
+  if (btnTurnos) {
+    btnTurnos.addEventListener("click", () => {
       mostrarSeccion("verTurnos");
       cargarCalendario();
     });
+  }
 </script>
+  
 </body>
 </html>
