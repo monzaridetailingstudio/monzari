@@ -184,13 +184,44 @@
 <div id="crearTurno" class="contenido-seccion">
   <h2 class="gold-title">Crear nuevo turno</h2>
   <form id="formNuevoTurno">
-    <div class="form-group"><label for="nombreTurno">Nombre</label><input type="text" id="nombreTurno" required /></div>
-    <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required /></div>
-    <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required /></div>
-    <div class="form-group"><label for="horaTurno">Hora</label><input type="time" id="horaTurno" required /></div>
-    <div class="form-group"><label for="servicioTurno">Servicio</label><input type="text" id="servicioTurno" required /></div>
-    <button type="submit" class="btn">Guardar Turno</button>
-  </form>
+  <div class="form-group">
+    <label for="nombreTurno">Nombre completo</label>
+    <input type="text" id="nombreTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="emailTurno">Email</label>
+    <input type="email" id="emailTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="telefonoTurno">WhatsApp (opcional)</label>
+    <input type="tel" id="telefonoTurno" placeholder="Ej: 11-1234-5678" />
+  </div>
+  <div class="form-group">
+    <label for="marcaTurno">Marca del vehículo</label>
+    <input type="text" id="marcaTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="modeloTurno">Modelo del vehículo</label>
+    <input type="text" id="modeloTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="patenteTurno">Patente</label>
+    <input type="text" id="patenteTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="servicioTurno">Servicio</label>
+    <input type="text" id="servicioTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="fechaTurno">Fecha</label>
+    <input type="date" id="fechaTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="horaTurno">Hora</label>
+    <input type="time" id="horaTurno" required />
+  </div>
+  <button type="submit" class="btn">Guardar turno</button>
+</form>
 </div>
 
 <!-- NUEVA SECCIÓN: VER TURNOS EN CALENDARIO -->
