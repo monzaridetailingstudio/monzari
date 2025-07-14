@@ -6,6 +6,8 @@
   <title>Panel Admin - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -478,6 +480,56 @@
         mostrarSeccion('actualizarBeneficio');
         cargarBeneficios();
       });
+   // FORM NUEVO TURNO
+document.getElementById("formNuevoTurno").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    nombre: document.getElementById("nombreTurno").value,
+    email: document.getElementById("emailTurno").value,
+    fecha: document.getElementById("fechaTurno").value,
+    hora: document.getElementById("horaTurno").value,
+    servicio: document.getElementById("servicioTurno").value,
+    fechaCarga: new Date()
+  };
+
+  try {
+    await addDoc(collection(db, "turnos"), data);
+    alert("Turno guardado exitosamente.");
+    document.getElementById("formNuevoTurno").reset();
+  } catch (err) {
+    console.error(err);
+    alert("Error al guardar el turno.");
+  }
+});
+
+// MOSTRAR TURNOS EN CALENDARIO
+document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]").addEventListener("click", async () => {
+  mostrarSeccion('verTurnos');
+
+  const querySnapshot = await getDocs(collection(db, "turnos"));
+  const eventos = querySnapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      title: ${data.nombre} - ${data.servicio},
+      start: ${data.fecha}T${data.hora},
+    };
+  });
+
+  const calendarEl = document.getElementById('calendar');
+  calendarEl.innerHTML = "";
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: eventos,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    }
+  });
+
+  calendar.render();
+});
   </script>
 </body>
 </html>
