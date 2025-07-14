@@ -226,8 +226,9 @@
 
 <!-- NUEVA SECCIÓN: VER TURNOS EN CALENDARIO -->
 <div id="verTurnos" class="contenido-seccion">
-  <h2 class="gold-title">Turnos Reservados</h2>
-  <div id="calendar" style="background:white; border-radius:10px; color:black; padding:20px;"></div>
+  <h2 class="gold-title">Turnos reservados</h2>
+  <div id="calendario" style="background: white; color: black; border-radius: 10px; padding: 10px;"></div>
+</div>
 </div>
     </div>
   </main>
@@ -550,7 +551,7 @@ document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]").addEve
     };
   });
 
-  const calendarEl = document.getElementById('calendar');
+  const calendarEl = document.getElementById('calendario');
   calendarEl.innerHTML = "";
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
