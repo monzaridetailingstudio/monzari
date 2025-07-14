@@ -52,32 +52,34 @@
   <header>
     <h1>Panel de Turnos</h1>
     <nav>
-      <button class="btn" onclick="mostrarSeccion('nuevoturno')">Crear Nuevo Turno</button>
-      <button class="btn" onclick="mostrarSeccion('verturnos')">Turnos</button>
-    </nav>
-  </header>
+      <!-- BOTONES DE NAVEGACIÓN -->
+<div style="text-align:center; margin-top:20px;">
+  <button class="btn" onclick="mostrarSeccion('crearTurno')">Crear nuevo turno</button>
+  <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
+</div>
 
-  <main>
-    <section id="nuevoturno" class="contenido-seccion" style="display:none;">
-      <h2>Nuevo Turno</h2>
-      <form id="formTurno">
-        <input type="text" id="nombre" placeholder="Nombre" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="tel" id="telefono" placeholder="Teléfono" required />
-        <input type="text" id="marca" placeholder="Marca" required />
-        <input type="text" id="modelo" placeholder="Modelo" required />
-        <input type="text" id="patente" placeholder="Patente" required />
-        <input type="text" id="servicio" placeholder="Servicio" required />
-        <input type="date" id="fecha" required />
-        <input type="time" id="hora" required />
-        <button type="submit">Guardar Turno</button>
-      </form>
-    </section>
+<!-- SECCIÓN CREAR NUEVO TURNO -->
+<section id="crearTurno" class="contenido-seccion" style="display: none;">
+  <h2>Crear nuevo turno</h2>
+  <form id="formNuevoTurno">
+    <input type="text" id="nombreTurno" placeholder="Nombre" required><br>
+    <input type="email" id="emailTurno" placeholder="Email" required><br>
+    <input type="text" id="telefonoTurno" placeholder="Teléfono" required><br>
+    <input type="text" id="marcaTurno" placeholder="Marca" required><br>
+    <input type="text" id="modeloTurno" placeholder="Modelo" required><br>
+    <input type="text" id="patenteTurno" placeholder="Patente" required><br>
+    <input type="text" id="servicioTurno" placeholder="Servicio" required><br>
+    <input type="date" id="fechaTurno" required><br>
+    <input type="time" id="horaTurno" required><br>
+    <button type="submit">Guardar turno</button>
+  </form>
+</section>
 
-    <section id="verturnos" class="contenido-seccion" style="display:none;">
-      <h2>Turnos Reservados</h2>
-      <div id="calendario"></div>
-    </section>
+<!-- SECCIÓN VER TURNOS (CALENDARIO) -->
+<section id="verTurnos" class="contenido-seccion" style="display: none;">
+  <h2>Turnos reservados</h2>
+  <div id="calendario"></div>
+</section>
   </main>
 
   <!-- FullCalendar CSS + JS -->
