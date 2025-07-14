@@ -558,10 +558,9 @@ async function cargarCalendario() {
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     eventos.push({
-      title: ${data.nombre} - ${data.servicio},
-      start: ${data.fecha}T${data.hora}
-    });
-  });
+  title: data.nombre + " - " + data.servicio,
+  start: data.fecha + "T" + data.hora
+});
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
@@ -569,7 +568,7 @@ async function cargarCalendario() {
     events: eventos
   });
 
-  calendar.render();
+  setTimeout(() => calendar.render(), 100);
 }
   </script>
 </body>
