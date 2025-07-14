@@ -113,6 +113,8 @@
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
       <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
       <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
+      <button class="btn" onclick="mostrarSeccion('crearTurno')">Crear nuevo turno</button>
+      <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
@@ -175,6 +177,24 @@
     <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
   </div>
   <div id="listaBeneficios"></div>
+</div>
+      <!-- NUEVA SECCIÓN: CREAR NUEVO TURNO -->
+<div id="crearTurno" class="contenido-seccion">
+  <h2 class="gold-title">Crear nuevo turno</h2>
+  <form id="formNuevoTurno">
+    <div class="form-group"><label for="nombreTurno">Nombre</label><input type="text" id="nombreTurno" required /></div>
+    <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required /></div>
+    <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required /></div>
+    <div class="form-group"><label for="horaTurno">Hora</label><input type="time" id="horaTurno" required /></div>
+    <div class="form-group"><label for="servicioTurno">Servicio</label><input type="text" id="servicioTurno" required /></div>
+    <button type="submit" class="btn">Guardar Turno</button>
+  </form>
+</div>
+
+<!-- NUEVA SECCIÓN: VER TURNOS EN CALENDARIO -->
+<div id="verTurnos" class="contenido-seccion">
+  <h2 class="gold-title">Turnos Reservados</h2>
+  <div id="calendar" style="background:white; border-radius:10px; color:black; padding:20px;"></div>
 </div>
     </div>
   </main>
