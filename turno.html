@@ -86,92 +86,96 @@
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-  <!-- Firebase + Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY",
-      authDomain: "TU_AUTH_DOMAIN",
-      projectId: "TU_PROJECT_ID",
-      storageBucket: "TU_BUCKET",
-      messagingSenderId: "TU_MESSAGING_ID",
-      appId: "TU_APP_ID"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyDy7vpjCRM3btGVthbHT5q0GmucM50fQso",
+  authDomain: "monzariclub.firebaseapp.com",
+  projectId: "monzariclub",
+  storageBucket: "monzariclub.appspot.com",
+  messagingSenderId: "806224561650",
+  appId: "1:806224561650:web:e7b25afbcb51238928576b"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    // Mostrar secciones
-    window.mostrarSeccion = function(id) {
-      document.querySelectorAll('.contenido-seccion').forEach(sec => sec.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
+// MOSTRAR/OCULTAR SECCIONES
+window.mostrarSeccion = function (id) {
+  const secciones = document.querySelectorAll('.contenido-seccion');
+  secciones.forEach(sec => sec.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 
-      if (id === 'verturnos') cargarCalendario();
-    };
+  if (id === 'verTurnos') {
+    cargarCalendario();
+  }
+};
 
-    // Guardar turno
-    const form = document.getElementById("formTurno");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+// GUARDAR TURNO
+const formNuevoTurno = document.getElementById("formNuevoTurno");
+formNuevoTurno.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      const data = {
-        nombre: document.getElementById("nombre").value,
-        email: document.getElementById("email").value,
-        telefono: document.getElementById("telefono").value,
-        marca: document.getElementById("marca").value,
-        modelo: document.getElementById("modelo").value,
-        patente: document.getElementById("patente").value,
-        servicio: document.getElementById("servicio").value,
-        fecha: document.getElementById("fecha").value,
-        hora: document.getElementById("hora").value,
-        creado: new Date()
-      };
+  const data = {
+    nombre: document.getElementById("nombreTurno").value,
+    email: document.getElementById("emailTurno").value,
+    telefono: document.getElementById("telefonoTurno").value,
+    marca: document.getElementById("marcaTurno").value,
+    modelo: document.getElementById("modeloTurno").value,
+    patente: document.getElementById("patenteTurno").value,
+    servicio: document.getElementById("servicioTurno").value,
+    fecha: document.getElementById("fechaTurno").value,
+    hora: document.getElementById("horaTurno").value,
+    fechaCarga: new Date()
+  };
 
-      try {
-        await addDoc(collection(db, "turnos"), data);
-        alert("Turno guardado con éxito.");
-        form.reset();
-        mostrarSeccion("verturnos");
-      } catch (error) {
-        console.error("Error al guardar turno:", error);
-        alert("Error al guardar turno.");
-      }
+  try {
+    await addDoc(collection(db, "turnos"), data);
+    alert("Turno guardado exitosamente.");
+    formNuevoTurno.reset();
+    mostrarSeccion("verTurnos");
+  } catch (err) {
+    console.error(err);
+    alert("Error al guardar el turno.");
+  }
+});
+
+// CARGAR CALENDARIO
+async function cargarCalendario() {
+  const calendarEl = document.getElementById('calendario');
+  calendarEl.innerHTML = "";
+
+  const querySnapshot = await getDocs(collection(db, "turnos"));
+  const eventos = [];
+
+  querySnapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+    eventos.push({
+      title: ${data.nombre} - ${data.servicio},
+      start: ${data.fecha}T${data.hora}
     });
+  });
 
-    // Mostrar calendario
-    async function cargarCalendario() {
-      const calendarioEl = document.getElementById("calendario");
-      calendarioEl.innerHTML = ""; // limpiar
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: eventos,
+    locale: 'es'
+  });
 
-      const querySnapshot = await getDocs(collection(db, "turnos"));
-      const eventos = [];
+  calendar.render();
+}
+</script>
 
-      querySnapshot.forEach((docSnap) => {
-        const t = docSnap.data();
-        eventos.push({
-          title: ${t.nombre} - ${t.servicio},
-          start: ${t.fecha}T${t.hora}
-        });
-      });
-
-      const calendar = new FullCalendar.Calendar(calendarioEl, {
-        initialView: "dayGridMonth",
-        locale: "es",
-        events: eventos
-      });
-
-      calendar.render();
-    }
-
-    // Mostrar por defecto una sección
-    mostrarSeccion('nuevoturno');
-  </script>
+<!-- LIBRERÍA DE CALENDARIO -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  
 </body>
 </html>
