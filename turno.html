@@ -12,38 +12,25 @@
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
-      color: white;
       background: url('images/imagenlogin-panel.jpg') no-repeat center center/cover;
-    }
-    .container {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      min-height: 100vh;
+      color: white;
     }
     .btn {
-      padding: 10px 15px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
       background: linear-gradient(90deg, #f3e07a, #b68d2c);
       color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
       font-weight: bold;
-      margin-right: 10px;
+      cursor: pointer;
     }
-    .contenido {
-      margin-top: 20px;
+    .contenido-seccion {
       display: none;
-      background: #111;
+      background: rgba(0, 0, 0, 0.8);
+      margin: 20px;
       padding: 20px;
       border-radius: 10px;
-    }
-    .gold-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, #f3e07a, #b68d2c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: bold;
     }
     .form-group {
       margin-bottom: 15px;
@@ -51,41 +38,39 @@
     .form-group label {
       color: #f3e07a;
       display: block;
-      margin-bottom: 5px;
     }
     .form-group input {
-      width: 100%;
       padding: 10px;
+      width: 100%;
       border-radius: 5px;
       border: none;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <button class="btn" id="btnCrear">Crear nuevo turno</button>
-    <button class="btn" id="btnVer">Turnos</button>
+  <button class="btn" onclick="mostrarSeccion('crearNuevoTurno')">Crear nuevo turno</button>
+  <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
 
-    <div id="crear" class="contenido">
-      <h2 class="gold-title">Crear nuevo turno</h2>
-      <form id="formNuevoTurno">
-        <div class="form-group"><label for="nombreTurno">Nombre completo</label><input type="text" id="nombreTurno" required></div>
-        <div class="form-group"><label for="emailTurno">Email</label><input type="email" id="emailTurno" required></div>
-        <div class="form-group"><label for="telefonoTurno">WhatsApp (opcional)</label><input type="tel" id="telefonoTurno"></div>
-        <div class="form-group"><label for="marcaTurno">Marca</label><input type="text" id="marcaTurno" required></div>
-        <div class="form-group"><label for="modeloTurno">Modelo</label><input type="text" id="modeloTurno" required></div>
-        <div class="form-group"><label for="patenteTurno">Patente</label><input type="text" id="patenteTurno" required></div>
-        <div class="form-group"><label for="servicioTurno">Servicio</label><input type="text" id="servicioTurno" required></div>
-        <div class="form-group"><label for="fechaTurno">Fecha</label><input type="date" id="fechaTurno" required></div>
-        <div class="form-group"><label for="horaTurno">Hora</label><input type="time" id="horaTurno" required></div>
-        <button type="submit" class="btn">Guardar turno</button>
-      </form>
-    </div>
+  <div id="crearNuevoTurno" class="contenido-seccion">
+    <h2>Crear nuevo turno</h2>
+    <form id="formNuevoTurno">
+      <div class="form-group"><label>Nombre</label><input type="text" id="nombreTurno" required /></div>
+      <div class="form-group"><label>Email</label><input type="email" id="emailTurno" required /></div>
+      <div class="form-group"><label>Teléfono</label><input type="tel" id="telefonoTurno" /></div>
+      <div class="form-group"><label>Marca</label><input type="text" id="marcaTurno" required /></div>
+      <div class="form-group"><label>Modelo</label><input type="text" id="modeloTurno" required /></div>
+      <div class="form-group"><label>Patente</label><input type="text" id="patenteTurno" required /></div>
+      <div class="form-group"><label>Servicio</label><input type="text" id="servicioTurno" required /></div>
+      <div class="form-group"><label>Fecha</label><input type="date" id="fechaTurno" required /></div>
+      <div class="form-group"><label>Hora</label><input type="time" id="horaTurno" required /></div>
+      <button class="btn" type="submit">Guardar turno</button>
+    </form>
+  </div>
 
-    <div id="ver" class="contenido">
-      <h2 class="gold-title">Turnos reservados</h2>
-      <div id="calendario" style="background:white; color:black; padding:10px; border-radius:10px;"></div>
-    </div>
+  <div id="verTurnos" class="contenido-seccion">
+    <h2>Turnos reservados</h2>
+    <div id="calendario" style="background: white; color: black; padding: 10px; border-radius: 10px;"></div>
   </div>
 
   <script type="module">
@@ -109,21 +94,14 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const btnCrear = document.getElementById("btnCrear");
-    const btnVer = document.getElementById("btnVer");
-    const divCrear = document.getElementById("crear");
-    const divVer = document.getElementById("ver");
-
-    btnCrear.addEventListener("click", () => {
-      divCrear.style.display = "block";
-      divVer.style.display = "none";
-    });
-
-    btnVer.addEventListener("click", () => {
-      divCrear.style.display = "none";
-      divVer.style.display = "block";
-      cargarCalendario();
-    });
+    function mostrarSeccion(id) {
+      const secciones = document.querySelectorAll(".contenido-seccion");
+      secciones.forEach(s => s.style.display = "none");
+      document.getElementById(id).style.display = "block";
+      if (id === "verTurnos") {
+        cargarCalendario();
+      }
+    }
 
     const form = document.getElementById("formNuevoTurno");
     form.addEventListener("submit", async (e) => {
@@ -146,21 +124,21 @@
         await addDoc(collection(db, "turnos"), turno);
         alert("Turno guardado con éxito");
         form.reset();
-        btnVer.click(); // Simula hacer clic en el botón de Turnos
-      } catch (err) {
-        console.error(err);
-        alert("Error al guardar el turno");
+        mostrarSeccion("verTurnos");
+      } catch (error) {
+        console.error(error);
+        alert("Error al guardar el turno.");
       }
     });
 
     async function cargarCalendario() {
-      const contenedor = document.getElementById("calendario");
-      contenedor.innerHTML = "";
+      const container = document.getElementById("calendario");
+      container.innerHTML = "";
 
       const querySnapshot = await getDocs(collection(db, "turnos"));
       const eventos = [];
 
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const d = doc.data();
         eventos.push({
           title: ${d.nombre} - ${d.servicio},
@@ -168,7 +146,7 @@
         });
       });
 
-      const calendar = new FullCalendar.Calendar(contenedor, {
+      const calendar = new FullCalendar.Calendar(container, {
         initialView: 'dayGridMonth',
         events: eventos,
         locale: 'es',
@@ -180,8 +158,8 @@
       calendar.render();
     }
 
-    // Mostrar Turnos al cargar
-    btnVer.click();
+    // Mostramos por defecto el formulario
+    mostrarSeccion("crearNuevoTurno");
   </script>
 </body>
 </html>
