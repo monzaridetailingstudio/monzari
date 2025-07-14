@@ -860,5 +860,8 @@ footer {
   display: flex;
   flex-direction: column;
 }
-
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
 }
