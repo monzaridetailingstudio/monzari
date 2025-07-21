@@ -6,6 +6,8 @@
   <title>Panel Admin - Monzari Club</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -113,6 +115,8 @@
       <button class="btn" onclick="mostrarSeccion('actualizarDocumentacion')">Actualizar documentación</button>
       <button class="btn" onclick="mostrarSeccion('nuevoBeneficio')">Cargar nuevo beneficio</button>
       <button class="btn" onclick="mostrarSeccion('actualizarBeneficio')">Actualizar beneficio</button>
+      <button class="btn" onclick="mostrarSeccion('crearTurno')">Crear nuevo turno</button>
+      <button class="btn" onclick="mostrarSeccion('verTurnos')">Turnos</button>
     </div>
     <div class="contenido-principal">
       <div id="inicio" class="contenido-seccion" style="display:block">
@@ -175,6 +179,56 @@
     <input type="text" id="buscadorBeneficio" placeholder="Buscar por nombre, email, servicio..." />
   </div>
   <div id="listaBeneficios"></div>
+</div>
+      <!-- NUEVA SECCIÓN: CREAR NUEVO TURNO -->
+<div id="crearTurno" class="contenido-seccion">
+  <h2 class="gold-title">Crear nuevo turno</h2>
+  <form id="formNuevoTurno">
+  <div class="form-group">
+    <label for="nombreTurno">Nombre completo</label>
+    <input type="text" id="nombreTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="emailTurno">Email</label>
+    <input type="email" id="emailTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="telefonoTurno">WhatsApp (opcional)</label>
+    <input type="tel" id="telefonoTurno" placeholder="Ej: 11-1234-5678" />
+  </div>
+  <div class="form-group">
+    <label for="marcaTurno">Marca del vehículo</label>
+    <input type="text" id="marcaTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="modeloTurno">Modelo del vehículo</label>
+    <input type="text" id="modeloTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="patenteTurno">Patente</label>
+    <input type="text" id="patenteTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="servicioTurno">Servicio</label>
+    <input type="text" id="servicioTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="fechaTurno">Fecha</label>
+    <input type="date" id="fechaTurno" required />
+  </div>
+  <div class="form-group">
+    <label for="horaTurno">Hora</label>
+    <input type="time" id="horaTurno" required />
+  </div>
+  <button type="submit" class="btn">Guardar turno</button>
+</form>
+</div>
+
+<!-- NUEVA SECCIÓN: VER TURNOS EN CALENDARIO -->
+<div id="verTurnos" class="contenido-seccion">
+  <h2 class="gold-title">Turnos reservados</h2>
+  <div id="calendario" style="background: white; color: black; border-radius: 10px; padding: 10px;"></div>
+</div>
 </div>
     </div>
   </main>
@@ -458,6 +512,69 @@
         mostrarSeccion('actualizarBeneficio');
         cargarBeneficios();
       });
+   // FORM NUEVO TURNO
+document.getElementById("formNuevoTurno").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    nombre: document.getElementById("nombreTurno").value,
+    email: document.getElementById("emailTurno").value,
+    telefono: document.getElementById("telefonoTurno").value,
+    marca: document.getElementById("marcaTurno").value,
+    modelo: document.getElementById("modeloTurno").value,
+    patente: document.getElementById("patenteTurno").value,
+    servicio: document.getElementById("servicioTurno").value,
+    fecha: document.getElementById("fechaTurno").value,
+    hora: document.getElementById("horaTurno").value,
+    fechaCarga: new Date()
+  };
+
+  try {
+    await addDoc(collection(db, "turnos"), data);
+    alert("Turno guardado exitosamente.");
+    document.getElementById("formNuevoTurno").reset();
+    mostrarSeccion('verTurnos');
+    await cargarCalendario();
+  } catch (err) {
+    console.error(err);
+    alert("Error al guardar el turno.");
+  }
+});
+
+// MOSTRAR TURNOS EN CALENDARIO
+document.querySelector("button[onclick=\"mostrarSeccion('verTurnos')\"]")
+  .addEventListener("click", async () => {
+    mostrarSeccion('verTurnos');
+    await cargarCalendario();
+  });
+
+async function cargarCalendario() {
+  const calendarEl = document.getElementById('calendario');
+  calendarEl.innerHTML = ""; // Limpiar el div
+
+  const eventos = [];
+
+  const querySnapshot = await getDocs(collection(db, "turnos"));
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    eventos.push({
+      title: ${data.nombre} - ${data.servicio},
+      start: ${data.fecha}T${data.hora}
+    });
+  });
+  title: data.nombre + " - " + data.servicio,
+  start: data.fecha + "T" + data.hora
+});
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale: 'es',
+    events: eventos
+  });
+
+  calendar.render();
+  setTimeout(() => calendar.render(), 100);
+}
   </script>
 </body>
 </html>
